@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato | Protocolo Kairo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/paginas.css">
+  <script src="js/contato.js" defer></script>
+</head>
+<body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+
+  <header id="topo">
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogo.html">Jogar Agora</a></li>
+        <li><a href="historia.html">A História</a></li>
+        <li><a href="cenarios.html">Cenários</a></li>
+        <li><a href="itens.html">Itens</a></li>
+        <li><a href="como-jogar.html">Como Jogar</a></li>
+        <li><a href="conquistas.html">Finais</a></li>
+        <li><a href="tecnologias.html">Tecnologias</a></li>
+        <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+        <li><a href="contato.html" aria-current="page">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Contato</h2>
+    <p>Encontrou um bug, quer dar uma sugestão ou apenas contar como foi sua fuga? Escreva para os desenvolvedores. Este formulário é <strong>fictício</strong>: nenhuma mensagem é enviada de verdade.</p>
+
+    <section aria-labelledby="form-titulo">
+      <h3 id="form-titulo">Fale conosco</h3>
+      <form id="form-contato">
+        <fieldset>
+          <legend>Seus dados</legend>
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="name" required>
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sua mensagem</legend>
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto" required>
+            <option value="">Selecione</option>
+            <optgroup label="Sobre o jogo">
+              <option value="bug">Relatar um bug</option>
+              <option value="sugestao">Sugestão</option>
+              <option value="final">Contar meu final</option>
+            </optgroup>
+            <optgroup label="Outros">
+              <option value="outro">Outro assunto</option>
+            </optgroup>
+          </select>
+
+          <p>Você terminou o jogo?</p>
+          <input type="radio" id="fim-sim" name="terminou" value="sim">
+          <label for="fim-sim">Sim</label>
+          <input type="radio" id="fim-nao" name="terminou" value="nao">
+          <label for="fim-nao">Ainda não</label>
+
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" rows="5" maxlength="500" required></textarea>
+          <p><small id="contador">0/500</small></p>
+
+          <input type="checkbox" id="aceite" name="aceite" required>
+          <label for="aceite">Concordo em receber uma resposta (fictícia) por e-mail.</label>
+        </fieldset>
+
+        <button type="submit">Enviar</button>
+        <button type="reset">Limpar</button>
+      </form>
+      <p id="retorno" role="status"></p>
+    </section>
+
+    <section aria-labelledby="outros-titulo">
+      <h3 id="outros-titulo">Outros canais</h3>
+      <address>
+        <ul>
+          <li>E-mail: <a href="mailto:seuemail@exemplo.com">seuemail@exemplo.com</a></li>
+          <li>Repositório: <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+          <li>Equipe: <a href="desenvolvedores.html">página dos desenvolvedores</a></li>
+        </ul>
+      </address>
+    </section>
+  </main>
+
+  <a class="cta-fixo" href="jogo.html">Jogar</a>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; nomes e marcas são fictícios.</p>
+    <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A História | Protocolo Kairo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+
+  <header id="topo">
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogo.html">Jogar Agora</a></li>
+        <li><a href="historia.html" aria-current="page">A História</a></li>
+        <li><a href="cenarios.html">Cenários</a></li>
+        <li><a href="itens.html">Itens</a></li>
+        <li><a href="como-jogar.html">Como Jogar</a></li>
+        <li><a href="conquistas.html">Finais</a></li>
+        <li><a href="tecnologias.html">Tecnologias</a></li>
+        <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>A História</h2>
+
+    <nav aria-label="Nesta página">
+      <ul>
+        <li><a href="#prologo">Prólogo</a></li>
+        <li><a href="#cronologia">Cronologia</a></li>
+        <li><a href="#personagens">Personagens</a></li>
+        <li><a href="#ambiente">Ambientação sonora</a></li>
+      </ul>
+    </nav>
+
+    <section id="prologo">
+      <h3>Prólogo</h3>
+      <p>Faltam poucas horas para a grande final do campeonato mundial de <em>eSports</em>. O favorito, o jogador profissional <strong>Kairo</strong>, desapareceu da <i lang="en">gaming house</i> da organização sem avisar ninguém.</p>
+      <p>O quarto dele está trancado por uma <mark>fechadura eletrônica programável</mark>. Você, técnico de <abbr title="Tecnologia da Informação">TI</abbr> da organização, recebe a missão de entrar e descobrir o que aconteceu.</p>
+      <p>Só que a fechadura guarda uma surpresa: ao detectar a sua entrada, ela ativa o <strong>lockdown</strong>. Em 5 minutos o alarme dispara e a segurança chega.</p>
+      <figure>
+        <svg role="img" aria-labelledby="svg-porta" viewBox="0 0 200 140">
+          <title id="svg-porta">Porta trancada com uma fechadura eletrônica acesa em vermelho</title>
+          <rect x="60" y="10" width="80" height="120" fill="#1b1030" stroke="#39ff9c" stroke-width="2"/>
+          <rect x="115" y="60" width="16" height="24" fill="#000" stroke="#ff4d6d" stroke-width="2"/>
+          <circle cx="123" cy="72" r="3" fill="#ff4d6d"/>
+        </svg>
+        <figcaption>A fechadura do quarto do Kairo, em lockdown.</figcaption>
+      </figure>
+    </section>
+
+    <section id="cronologia">
+      <h3>Cronologia</h3>
+      <ol>
+        <li><time datetime="2026-11-14T22:00">Véspera da final, 22h</time>: Kairo é visto pela última vez no corredor dos quartos.</li>
+        <li><time datetime="2026-11-15T06:00">Dia da final, 6h</time>: a organização percebe a ausência e o quarto está trancado por dentro.</li>
+        <li><time datetime="2026-11-15T09:00">Dia da final, 9h</time>: você é chamado para abrir a porta.</li>
+        <li>Minuto zero: o lockdown começa e o relógio de 5 minutos é ativado.</li>
+      </ol>
+    </section>
+
+    <section id="personagens">
+      <h3>Personagens</h3>
+      <dl>
+        <dt>Kairo</dt>
+        <dd>Jogador profissional, favorito ao título. Todos queriam saber onde ele estava e ninguém perguntou como ele estava.</dd>
+        <dt>Você (técnico de TI)</dt>
+        <dd>Responsável pela rede e pelos acessos da <i lang="en">gaming house</i>. Conhece os sistemas, mas não o que aconteceu ali dentro.</dd>
+        <dt>Segurança da organização</dt>
+        <dd>Chega quando o alarme dispara. O que ela encontra depende do que você fizer.</dd>
+      </dl>
+      <blockquote>
+        <p>Qualquer acesso não autorizado ao quarto ativa o protocolo de lockdown.</p>
+        <footer>Manual interno da organização (fictício)</footer>
+      </blockquote>
+      <p>Quer saber mais sobre o mundo dos jogos competitivos? Leia sobre <a href="https://pt.wikipedia.org/wiki/Esporte_eletr%C3%B4nico" target="_blank" rel="noopener noreferrer">esportes eletrônicos na Wikipédia<span class="visually-hidden"> (abre em nova aba)</span></a>.</p>
+    </section>
+
+    <section id="ambiente">
+      <h3>Ambientação sonora</h3>
+      <figure>
+        <figcaption>Trilha ambiente do jogo</figcaption>
+        <audio controls>
+          <source src="assets/ambiente.mp3" type="audio/mpeg">
+          Seu navegador não suporta áudio.
+        </audio>
+        <p><small>Transcrição: zumbido grave de servidores, estalos de ventoinha e um alarme distante.</small></p>
+      </figure>
+    </section>
+  </main>
+
+  <a class="cta-fixo" href="jogo.html">Jogar</a>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; nomes e marcas são fictícios.</p>
+    <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+  </footer>
+</body>
+</html>

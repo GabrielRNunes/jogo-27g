@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Itens e Mecanismos | Protocolo Kairo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+
+  <header id="topo">
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogo.html">Jogar Agora</a></li>
+        <li><a href="historia.html">A História</a></li>
+        <li><a href="cenarios.html">Cenários</a></li>
+        <li><a href="itens.html" aria-current="page">Itens</a></li>
+        <li><a href="como-jogar.html">Como Jogar</a></li>
+        <li><a href="conquistas.html">Finais</a></li>
+        <li><a href="tecnologias.html">Tecnologias</a></li>
+        <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Itens e Mecanismos</h2>
+
+    <section aria-labelledby="inv-titulo">
+      <h3 id="inv-titulo">Itens do inventário</h3>
+      <p>Selecione um item no inventário e depois clique no objeto onde quer usá-lo.</p>
+      <div class="grid-cards">
+        <article class="card">
+          <h4>Pen drive</h4>
+          <p>Guarda um arquivo do Kairo. Precisa de um computador com a porta liberada.</p>
+        </article>
+        <article class="card">
+          <h4>Cartão de acesso</h4>
+          <p>Cartão magnético para o leitor de uma sala restrita.</p>
+        </article>
+        <article class="card">
+          <span class="selo">???</span>
+          <h4>Item oculto</h4>
+          <p>Nem tudo na casa está à vista. Quem descobre muda o destino da história.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="mec-titulo">
+      <h3 id="mec-titulo">Mecanismos e enigmas</h3>
+      <div class="tabela-rolagem" role="region" aria-label="Tabela de mecanismos, com rolagem horizontal" tabindex="0">
+        <table>
+          <caption>Os 10 mecanismos principais</caption>
+          <thead>
+            <tr>
+              <th scope="col">Nº</th>
+              <th scope="col">Elemento</th>
+              <th scope="col">Cenário</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Depende de</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><th scope="row">Calendário da final</th><td>Quarto</td><td>Inspeção</td><td>Nada</td></tr>
+            <tr><td>2</td><th scope="row">Gaveta com cadeado</th><td>Quarto</td><td>Código numérico</td><td>Calendário</td></tr>
+            <tr><td>3</td><th scope="row">Terminal do quarto</th><td>Quarto</td><td>Senha (erros travam a gaveta)</td><td>Calendário</td></tr>
+            <tr><td>4</td><th scope="row">Painel de comandos</th><td>Treino</td><td>Minigame de teclado</td><td>Nada</td></tr>
+            <tr><td>5</td><th scope="row">PC do setup</th><td>Treino</td><td>Uso de item e decodificação</td><td>Painel de comandos, Gaveta</td></tr>
+            <tr><td>6</td><th scope="row">Cofre do troféu</th><td>Treino</td><td>Código</td><td>PC do setup</td></tr>
+            <tr><td>7</td><th scope="row">Geladeira com cadeado</th><td>Cozinha</td><td>Código</td><td>Terminal</td></tr>
+            <tr><td>8</td><th scope="row">Quadro de fusíveis</th><td>Servidores</td><td>Minigame de clique (memória)</td><td>Nada</td></tr>
+            <tr><td>9</td><th scope="row">Rack de servidores</th><td>Servidores</td><td>Uso de item</td><td>Fusíveis, Geladeira</td></tr>
+            <tr><td>10</td><th scope="row">Fechadura programável</th><td>Corredor</td><td>PIN de 6 dígitos</td><td>Terminal, Rack, Cofre</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="dicas-titulo">
+      <h3 id="dicas-titulo">Dicas</h3>
+      <details>
+        <summary>Estou travado, o que faço?</summary>
+        <p>Leia o <strong>Diário de bordo</strong>. Toda pista encontrada fica registrada lá.</p>
+      </details>
+      <details>
+        <summary>O item não funciona no objeto</summary>
+        <p>Confira se o item está selecionado (botão destacado) e se o objeto já está liberado.</p>
+      </details>
+    </section>
+  </main>
+
+  <a class="cta-fixo" href="jogo.html">Jogar</a>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; nomes e marcas são fictícios.</p>
+    <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+  </footer>
+</body>
+</html>

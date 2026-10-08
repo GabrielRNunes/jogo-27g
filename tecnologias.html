@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tecnologias | Protocolo Kairo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+
+  <header id="topo">
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogo.html">Jogar Agora</a></li>
+        <li><a href="historia.html">A História</a></li>
+        <li><a href="cenarios.html">Cenários</a></li>
+        <li><a href="itens.html">Itens</a></li>
+        <li><a href="como-jogar.html">Como Jogar</a></li>
+        <li><a href="conquistas.html">Finais</a></li>
+        <li><a href="tecnologias.html" aria-current="page">Tecnologias</a></li>
+        <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Tecnologias</h2>
+    <p>O projeto usa apenas tecnologias da web padrão, sem frameworks nem bibliotecas.</p>
+
+    <section aria-labelledby="stack-titulo">
+      <h3 id="stack-titulo">Stack</h3>
+      <div class="tabela-rolagem" role="region" aria-label="Tabela de tecnologias, com rolagem horizontal" tabindex="0">
+        <table>
+          <caption>Tecnologias usadas</caption>
+          <thead>
+            <tr><th scope="col">Tecnologia</th><th scope="col">Uso no projeto</th><th scope="col">Referência</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><abbr title="HyperText Markup Language">HTML5</abbr></th>
+              <td>Estrutura semântica, formulários e multimídia.</td>
+              <td><a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML" target="_blank" rel="noopener noreferrer">MDN HTML<span class="visually-hidden"> (abre em nova aba)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><abbr title="Cascading Style Sheets">CSS3</abbr></th>
+              <td>Layout com grid e flex, variáveis, media queries e efeitos de hover.</td>
+              <td><a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">MDN CSS<span class="visually-hidden"> (abre em nova aba)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row">JavaScript</th>
+              <td>Motor do jogo: objetos, estado, eventos, tempo e aleatoriedade.</td>
+              <td><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer">MDN JavaScript<span class="visually-hidden"> (abre em nova aba)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row">Git</th>
+              <td>Versionamento do código.</td>
+              <td><a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">git-scm.com<span class="visually-hidden"> (abre em nova aba)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row">Vercel</th>
+              <td>Deploy do site.</td>
+              <td><a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">vercel.com<span class="visually-hidden"> (abre em nova aba)</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="req-titulo">
+      <h3 id="req-titulo">Onde cada técnica aparece</h3>
+      <ul>
+        <li><strong>Objetos:</strong> cada enigma é um objeto JavaScript com estado e métodos.</li>
+        <li><strong>Vetores de textos:</strong> as frases do formulário de <a href="contato.html">contato</a>, o diário de bordo e a lista de itens.</li>
+        <li><strong>Manipulação de estado:</strong> o objeto <code>estado</code> guarda tempo, erros, inventário e energia.</li>
+        <li><strong>Dados aleatórios:</strong> as sequências dos minigames e o protocolo do contato.</li>
+        <li><strong>Controle de tempo:</strong> o relógio de 5 minutos (<code>setInterval</code>) e a sequência dos fios (<code>setTimeout</code>).</li>
+        <li><strong>Eventos:</strong> <code>click</code>, <code>keydown</code>, <code>submit</code> e <code>input</code>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <a class="cta-fixo" href="jogo.html">Jogar</a>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; nomes e marcas são fictícios.</p>
+    <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+  </footer>
+</body>
+</html>

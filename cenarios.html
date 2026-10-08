@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cenários | Protocolo Kairo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+
+  <header id="topo">
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogo.html">Jogar Agora</a></li>
+        <li><a href="historia.html">A História</a></li>
+        <li><a href="cenarios.html" aria-current="page">Cenários</a></li>
+        <li><a href="itens.html">Itens</a></li>
+        <li><a href="como-jogar.html">Como Jogar</a></li>
+        <li><a href="conquistas.html">Finais</a></li>
+        <li><a href="tecnologias.html">Tecnologias</a></li>
+        <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Cenários</h2>
+    <p>A <i lang="en">gaming house</i> tem 5 ambientes navegáveis. Cada um tem objetos que dependem de outros, em salas diferentes.</p>
+
+    <section aria-labelledby="mapa-titulo">
+      <h3 id="mapa-titulo">Mapa da casa</h3>
+      <figure>
+        <svg class="mapa" role="img" aria-labelledby="svg-mapa" viewBox="0 0 400 220">
+          <title id="svg-mapa">Mapa com cinco salas: Quarto, Sala de Treino e Cozinha na fileira de cima; Sala de Servidores e Corredor de Saída embaixo</title>
+          <line x1="120" y1="45" x2="150" y2="45"/>
+          <line x1="260" y1="45" x2="290" y2="45"/>
+          <line x1="205" y1="70" x2="205" y2="130"/>
+          <line x1="260" y1="155" x2="290" y2="155"/>
+          <rect x="10" y="20" width="110" height="50"/>
+          <rect x="150" y="20" width="110" height="50"/>
+          <rect x="290" y="20" width="100" height="50"/>
+          <rect x="150" y="130" width="110" height="50"/>
+          <rect x="290" y="130" width="100" height="50"/>
+          <text x="65" y="49">Quarto</text>
+          <text x="205" y="49">Sala de Treino</text>
+          <text x="340" y="49">Cozinha</text>
+          <text x="205" y="159">Servidores</text>
+          <text x="340" y="159">Saída</text>
+        </svg>
+        <figcaption>As linhas laranjas são as passagens entre as salas.</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="resumo-titulo">
+      <h3 id="resumo-titulo">Resumo</h3>
+      <div class="tabela-rolagem" role="region" aria-label="Tabela de cenários, com rolagem horizontal" tabindex="0">
+        <table>
+          <caption>Cenários, objetos e passagens</caption>
+          <thead>
+            <tr>
+              <th scope="col">Cenário</th>
+              <th scope="col">Objetos</th>
+              <th scope="col">Passagens</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><a href="#quarto">Quarto do Kairo</a></th><td>3</td><td>Sala de Treino</td></tr>
+            <tr><th scope="row"><a href="#treino">Sala de Treino</a></th><td>3</td><td>Quarto, Cozinha, Servidores</td></tr>
+            <tr><th scope="row"><a href="#cozinha">Cozinha</a></th><td>1 (e algo fora do comum)</td><td>Sala de Treino</td></tr>
+            <tr><th scope="row"><a href="#servidores">Sala de Servidores</a></th><td>2</td><td>Treino, Corredor</td></tr>
+            <tr><th scope="row"><a href="#corredor">Corredor de Saída</a></th><td>1</td><td>Servidores</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="quarto">
+      <h3>Quarto do Kairo</h3>
+      <p>Pôsteres, luzes de LED e uma bagunça organizada demais. Todo o caminho começa aqui.</p>
+      <ul>
+        <li>Calendário da final</li>
+        <li>Gaveta com cadeado</li>
+        <li>Terminal do quarto</li>
+      </ul>
+    </section>
+
+    <section id="treino">
+      <h3>Sala de Treino</h3>
+      <p>O <i lang="en">setup</i> de competição, com monitores de 240 Hz e cadeiras gamer. Aqui ficam os puzzles mais mecânicos.</p>
+      <ul>
+        <li>Painel de comandos</li>
+        <li>PC do setup</li>
+        <li>Cofre do troféu</li>
+      </ul>
+    </section>
+
+    <section id="cozinha">
+      <h3>Cozinha</h3>
+      <p>Energético demais, comida de menos. <em>Olhe com calma para os cantos.</em></p>
+      <ul>
+        <li>Geladeira com cadeado</li>
+      </ul>
+    </section>
+
+    <section id="servidores">
+      <h3>Sala de Servidores</h3>
+      <p>Racks, cabos e um quadro de fusíveis que não gosta de erros.</p>
+      <ul>
+        <li>Quadro de fusíveis</li>
+        <li>Rack de servidores</li>
+      </ul>
+    </section>
+
+    <section id="corredor">
+      <h3>Corredor de Saída</h3>
+      <p>O último obstáculo: a fechadura programável. Dependendo do que você fez até aqui, o final muda.</p>
+      <ul>
+        <li>Fechadura programável</li>
+      </ul>
+    </section>
+  </main>
+
+  <a class="cta-fixo" href="jogo.html">Jogar</a>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; nomes e marcas são fictícios.</p>
+    <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+  </footer>
+</body>
+</html>

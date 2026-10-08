@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finais | Protocolo Kairo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+
+  <header id="topo">
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogo.html">Jogar Agora</a></li>
+        <li><a href="historia.html">A História</a></li>
+        <li><a href="cenarios.html">Cenários</a></li>
+        <li><a href="itens.html">Itens</a></li>
+        <li><a href="como-jogar.html">Como Jogar</a></li>
+        <li><a href="conquistas.html" aria-current="page">Finais</a></li>
+        <li><a href="tecnologias.html">Tecnologias</a></li>
+        <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Finais</h2>
+    <p>O jogo tem <strong>4 desfechos</strong>. Quais deles você consegue ver?</p>
+
+    <section aria-labelledby="tab-finais">
+      <h3 id="tab-finais">Condições</h3>
+      <div class="tabela-rolagem" role="region" aria-label="Tabela de finais, com rolagem horizontal" tabindex="0">
+        <table>
+          <caption>Os quatro finais</caption>
+          <thead>
+            <tr><th scope="col">Final</th><th scope="col">Como alcançar</th><th scope="col">Dificuldade</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Fuga Perfeita</th><td>Abrir a fechadura com pelo menos 2 minutos restantes e no máximo 1 erro.</td><td>Alta</td></tr>
+            <tr><th scope="row">Fuga com Sequelas</th><td>Abrir a fechadura, mas com pouco tempo ou muitos erros.</td><td>Média</td></tr>
+            <tr><th scope="row">Capturado</th><td>Deixar o tempo chegar a zero.</td><td>Baixa</td></tr>
+            <tr><th scope="row">Secreto</th><td>???</td><td>Muito alta</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="desc-finais">
+      <h3 id="desc-finais">Resumos</h3>
+      <ul>
+        <li><strong>Fuga Perfeita</strong>: você sai antes de qualquer alarme e a segurança encontra o corredor vazio.</li>
+        <li><strong>Fuga com Sequelas</strong>: você escapa, mas as câmeras gravam o seu rosto.</li>
+        <li><strong>Capturado</strong>: a porta se abre e a segurança encontra um técnico sem explicações.</li>
+        <li><strong>Secreto</strong>: reservado a quem olha onde ninguém olha.</li>
+      </ul>
+      <details>
+        <summary>Dica para o final secreto</summary>
+        <p>Existe um item que não aparece em nenhuma lista. Ele fica em um cenário que parece comum e perto do chão.</p>
+      </details>
+    </section>
+  </main>
+
+  <a class="cta-fixo" href="jogo.html">Jogar</a>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; nomes e marcas são fictícios.</p>
+    <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+  </footer>
+</body>
+</html>
