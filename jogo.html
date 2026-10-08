@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogar | Protocolo Kairo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/jogo.css">
+  <script src="js/jogo.js" defer></script>
+</head>
+<body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+
+  <header>
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Menu principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogo.html" aria-current="page">Jogar Agora</a></li>
+        <li><a href="historia.html">A História</a></li>
+        <li><a href="cenarios.html">Cenários</a></li>
+        <li><a href="itens.html">Itens</a></li>
+        <li><a href="como-jogar.html">Como Jogar</a></li>
+        <li><a href="finais.html">Finais</a></li>
+        <li><a href="tecnologias.html">Tecnologias</a></li>
+        <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Jogar</h2>
+
+    <section class="status" aria-label="Status da partida">
+      <p>Tempo: <strong id="relogio">5:00</strong></p>
+      <p>Erros: <strong id="erros">0</strong></p>
+      <button type="button" id="btn-diario">Diário de bordo</button>
+    </section>
+
+    <section id="intro" aria-labelledby="intro-titulo">
+      <h3 id="intro-titulo">Briefing</h3>
+      <p>Você é o técnico de TI da organização. Ao entrar no quarto do jogador Kairo, a fechadura eletrônica entra em lockdown: em 5 minutos o alarme dispara e a segurança chega. Reprograme a fechadura e descubra por que ele sumiu antes da final.</p>
+      <p>Clique (ou use Tab e Enter) nos objetos destacados. Itens do inventário precisam ser selecionados antes de usar.</p>
+      <button type="button" id="btn-iniciar">Iniciar lockdown</button>
+    </section>
+
+    <section id="jogo" aria-label="Área de jogo" hidden>
+      <h3 id="nome-cenario" tabindex="-1"></h3>
+      <div id="cenario" class="cenario"></div>
+      <p id="mensagem" role="status" aria-live="polite"></p>
+      <section aria-labelledby="inv-titulo">
+        <h3 id="inv-titulo">Inventário</h3>
+        <ul id="inventario"></ul>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="painel" aria-labelledby="painel-titulo">
+    <h3 id="painel-titulo"></h3>
+    <div id="painel-corpo"></div>
+    <button type="button" id="btn-fechar-painel">Fechar</button>
+  </dialog>
+
+  <dialog id="diario" aria-labelledby="diario-titulo">
+    <h3 id="diario-titulo">Diário de bordo</h3>
+    <ol id="lista-log"></ol>
+    <button type="button" id="btn-fechar-diario">Fechar</button>
+  </dialog>
+
+  <dialog id="final" aria-labelledby="final-titulo">
+    <h3 id="final-titulo"></h3>
+    <p id="final-texto"></p>
+    <p id="final-resumo"></p>
+    <button type="button" id="btn-reiniciar">Jogar novamente</button>
+  </dialog>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico, todos os nomes são fictícios.</p>
+  </footer>
+</body>
+</html>

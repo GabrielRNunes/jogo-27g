@@ -1,0 +1,177 @@
+/* Estilos do jogo. Carregue DEPOIS do style.css.
+   Troque só as variáveis para mudar a paleta inteira. */
+:root {
+  --bg: #07080d;
+  --painel: #11131c;
+  --texto: #e6e9f2;
+  --neon: #39ff9c;
+  --alerta: #ff4d6d;
+  --porta: #ffb347;
+  --fonte: 'Orbitron', system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--texto);
+  font-family: var(--fonte);
+}
+
+.pular {
+  position: absolute;
+  left: -999px;
+}
+.pular:focus {
+  left: 8px;
+  top: 8px;
+  background: var(--neon);
+  color: #000;
+  padding: 8px;
+  z-index: 10;
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  border: 1px solid var(--neon);
+  padding: 0.5rem 1rem;
+  background: var(--painel);
+}
+
+#relogio {
+  color: var(--neon);
+  font-size: 1.4rem;
+}
+#relogio.urgente {
+  color: var(--alerta);
+  animation: pulsar 1s infinite;
+}
+@keyframes pulsar {
+  50% { opacity: 0.4; }
+}
+
+button {
+  font-family: var(--fonte);
+  background: var(--painel);
+  color: var(--neon);
+  border: 1px solid var(--neon);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+button:hover,
+button:focus-visible {
+  background: var(--neon);
+  color: #000;
+}
+button[aria-pressed="true"] {
+  background: var(--porta);
+  color: #000;
+}
+
+/* ---------- Cenário ---------- */
+.cenario {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border: 2px solid var(--neon);
+  overflow: hidden;
+  background-size: cover;
+  transition: background 0.4s;
+}
+.cena-quarto     { background: linear-gradient(160deg, #1b1030, #0a0a14 70%); }
+.cena-treino     { background: linear-gradient(160deg, #0b2230, #07080d 70%); }
+.cena-cozinha    { background: linear-gradient(160deg, #2a1a10, #0a0806 70%); }
+.cena-servidores { background: linear-gradient(160deg, #0a2a1c, #04100a 70%); }
+.cena-corredor   { background: linear-gradient(160deg, #2a0f18, #0a0507 70%); }
+
+.hotspot {
+  position: absolute;
+  padding: 0;
+  background: rgba(57, 255, 156, 0.06);
+  border: 1px dashed rgba(57, 255, 156, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.hotspot span {
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.75);
+  color: var(--texto);
+  padding: 2px 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.hotspot:hover span,
+.hotspot:focus-visible span {
+  opacity: 1;
+}
+.hotspot.porta {
+  border-color: var(--porta);
+  background: rgba(255, 179, 71, 0.08);
+}
+.hotspot.feito {
+  border-style: solid;
+  opacity: 0.55;
+}
+.hotspot.oculto {
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  opacity: 0.35;
+}
+.hotspot.oculto.feito { opacity: 0.1; }
+
+#mensagem {
+  min-height: 3em;
+  border-left: 3px solid var(--neon);
+  padding-left: 0.75rem;
+}
+
+#inventario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+/* ---------- Dialogs ---------- */
+dialog {
+  background: var(--painel);
+  color: var(--texto);
+  border: 2px solid var(--neon);
+  max-width: min(90vw, 480px);
+}
+dialog::backdrop { background: rgba(0, 0, 0, 0.75); }
+input {
+  background: #000;
+  color: var(--neon);
+  border: 1px solid var(--neon);
+  padding: 0.4rem;
+  font-family: var(--fonte);
+}
+[role="alert"] { color: var(--alerta); min-height: 1.5em; }
+pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
+
+/* ---------- Minigame de fios ---------- */
+.fios {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+.fio { color: #000; font-weight: 700; padding: 1rem; }
+.fio-vermelho { background: #b02a3e; }
+.fio-verde    { background: #1f9d5a; }
+.fio-azul     { background: #2a64b0; }
+.fio-amarelo  { background: #b8a21f; }
+.fio.aceso { outline: 4px solid #fff; filter: brightness(1.8); }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 600px) {
+  .hotspot span { font-size: 0.55rem; }
+  .status { gap: 0.75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
