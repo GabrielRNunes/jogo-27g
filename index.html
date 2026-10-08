@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Turno | Escape Room</title>
-    <!-- Link para o CSS Externo (Requisito do trabalho) -->
+    <title>Início | Protocolo Kairo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+    <!-- CSS externo (requisito do trabalho) -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/paginas.css">
 </head>
 <body>
+    <a href="#conteudo" class="pular">Pular para o conteúdo</a>
 
-    <!-- Cabeçalho com o Menu de Navegação Global -->
-    <header>
+    <!-- Cabeçalho com o menu de navegação global -->
+    <header id="topo">
         <h1>Protocolo Kairo</h1>
         <p>Escape Room</p>
         <nav aria-label="Menu principal">
             <ul>
-                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html" aria-current="page">Início</a></li>
                 <li><a href="jogo.html">Jogar Agora</a></li>
                 <li><a href="historia.html">A História</a></li>
                 <li><a href="cenarios.html">Cenários</a></li>
                 <li><a href="itens.html">Itens</a></li>
                 <li><a href="como-jogar.html">Como Jogar</a></li>
-                <li><a href="conquistas.html">Finais</a></li>
+                <li><a href="finais.html">Finais</a></li>
                 <li><a href="tecnologias.html">Tecnologias</a></li>
                 <li><a href="desenvolvedores.html">Desenvolvedores</a></li>
                 <li><a href="contato.html">Contato</a></li>
@@ -29,32 +34,31 @@
         </nav>
     </header>
 
-    <!-- Conteúdo Principal da Página Inicial -->
-    <main>
-        <section class="apresentacao">
-            <h2>Seja Bem-vindo  </h2>
-            <p>Você é um funcionário em mais um turno exaustivo de trabalho.</p>
-            
+    <!-- Conteúdo principal da página inicial -->
+    <main id="conteudo">
+        <section class="apresentacao" aria-labelledby="boas-vindas">
+            <h2 id="boas-vindas">Seja bem-vindo</h2>
+            <p>O jogador favorito da final mundial sumiu. Você é o técnico de TI da organização e acabou de entrar no quarto dele. A fechadura entrou em lockdown: em 5 minutos o alarme dispara.</p>
+
             <div class="call-to-action">
-                <!-- Botão de destaque para iniciar o jogo -->
-                <a href="jogo.html" class="btn-iniciar">Iniciar Expediente</a>
+                <a href="jogo.html" class="botao btn-iniciar">Iniciar lockdown</a>
             </div>
         </section>
 
-        <section class="features-jogo">
-            <h3>Destaques do Jogo</h3>
+        <section class="features-jogo" aria-labelledby="destaques">
+            <h3 id="destaques">Destaques do jogo</h3>
             <ul>
-                <li>Gráficos em Pixel Art sobrepostas em fotos reais.</li>
-                <li>Mistério investigativo no estilo Dark Dome.</li>
-                <li>Múltiplos finais baseados em um sistema de Efeito Borboleta.</li>
+                <li>5 cenários, 10 enigmas e inventário de itens.</li>
+                <li>Minigames de teclado e de clique, com sequências aleatórias.</li>
+                <li>4 finais, que dependem do tempo, dos erros e do que você encontra.</li>
             </ul>
         </section>
     </main>
 
-    <!-- Rodapé Semântico -->
+    <!-- Rodapé semântico -->
     <footer>
         <p>&copy; 2026 - Desenvolvido por Gabriel Roberto Dos Santos N. Corrêa</p>
+        <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
     </footer>
-
 </body>
 </html>
