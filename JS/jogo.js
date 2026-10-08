@@ -1,7 +1,7 @@
 'use strict';
 
 /* =========================================================
-   PROTOCOLO KAIRO - Escape Room (JS puro)
+   PROTOCOLO KAIRO - Escape Room 
    Estrutura: estado global > dados > objetos interativos > UI > fim
    ========================================================= */
 
