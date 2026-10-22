@@ -1,6 +1,7 @@
 'use strict';
 
-/* Formulário FAKE: nada é enviado. Demonstra eventos, tempo e dados aleatórios. */
+/* Formulário FAKE: nada é enviado. Demonstra eventos, tempo e dados aleatórios.
+   Eventos com propriedades on... (oninput, onsubmit). */
 const form = document.querySelector('#form-contato');
 const retorno = document.querySelector('#retorno');
 const campoMensagem = document.querySelector('#mensagem');
@@ -15,12 +16,12 @@ const RESPOSTAS = [
 ];
 
 // Evento input: contador de caracteres
-campoMensagem.addEventListener('input', () => {
+campoMensagem.oninput = () => {
   contador.textContent = `${campoMensagem.value.length}/500`;
-});
+};
 
 // Evento submit + controle de tempo + dados aleatórios
-form.addEventListener('submit', (evento) => {
+form.onsubmit = (evento) => {
   evento.preventDefault();
   const nome = document.querySelector('#nome').value.trim();
   retorno.textContent = 'Enviando...';
@@ -33,4 +34,4 @@ form.addEventListener('submit', (evento) => {
     form.reset();
     contador.textContent = '0/500';
   }, 1200);
-});
+};

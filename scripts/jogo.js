@@ -1,8 +1,12 @@
 'use strict';
 
 /* =========================================================
-   PROTOCOLO KAIRO - Escape Room 
+   PROTOCOLO KAIRO - Escape Room (JS puro)
    Estrutura: estado global > dados > objetos interativos > UI > fim
+
+   Telas montadas com template literals + innerHTML.
+   Eventos com propriedades on... (onclick, onsubmit, onkeydown,
+   onclose) e delegação de eventos nos containers.
    ========================================================= */
 
 const TEMPO_TOTAL = 300; // 5 minutos
@@ -33,7 +37,7 @@ const estado = {
 const $ = (seletor) => document.querySelector(seletor);
 const formatarTempo = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
-/* ---------- Itens (vetor/objeto de textos) ---------- */
+/* ---------- Itens (objeto de textos) ---------- */
 const ITENS = {
   pendrive: { nome: 'Pen drive', descricao: 'Pen drive preto com a etiqueta "treino". Deve abrir em algum PC.' },
   cartao: { nome: 'Cartão de acesso', descricao: 'Cartão magnético com a sigla SRV. Parece servir para a sala de servidores.' },
@@ -95,13 +99,9 @@ function erro(motivo) {
 }
 
 function renderLog() {
-  const lista = $('#lista-log');
-  lista.replaceChildren();
-  estado.log.forEach((item) => {
-    const li = document.createElement('li');
-    li.textContent = `[${item.quando}] ${item.texto}`;
-    lista.append(li);
-  });
+  $('#lista-log').innerHTML = estado.log
+    .map((item) => `<li>[${item.quando}] ${item.texto}</li>`)
+    .join('');
 }
 
 /* ---------- Inventário ---------- */
@@ -111,71 +111,82 @@ function adicionarItem(id) {
 }
 
 function renderInventario() {
-  const ul = $('#inventario');
-  ul.replaceChildren();
-  if (estado.inventario.length === 0) {
-    const li = document.createElement('li');
-    li.textContent = 'Vazio.';
-    ul.append(li);
-    return;
-  }
-  estado.inventario.forEach((id) => {
-    const li = document.createElement('li');
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.textContent = ITENS[id].nome;
-    b.setAttribute('aria-pressed', String(estado.selecionado === id));
-    b.addEventListener('click', () => {
-      estado.selecionado = estado.selecionado === id ? null : id;
-      mensagem(estado.selecionado
-        ? `${ITENS[id].nome} selecionado. ${ITENS[id].descricao} Clique em um objeto para usá-lo.`
-        : 'Item desselecionado.');
-      renderInventario();
-    });
-    li.append(b);
-    ul.append(li);
-  });
+  $('#inventario').innerHTML = estado.inventario.length === 0
+    ? '<li>Vazio.</li>'
+    : estado.inventario
+      .map((id) => `<li><button type="button" data-item="${id}" aria-pressed="${estado.selecionado === id}">${ITENS[id].nome}</button></li>`)
+      .join('');
 }
 
-/* ---------- Painel (dialog nativo = acessível, Esc fecha) ---------- */
-let aoFecharPainel = null;
+// Delegação: um único onclick para todos os botões do inventário
+$('#inventario').onclick = (e) => {
+  const botao = e.target.closest('[data-item]');
+  if (!botao) return;
+  const id = botao.dataset.item;
+  estado.selecionado = estado.selecionado === id ? null : id;
+  mensagem(estado.selecionado
+    ? `${ITENS[id].nome} selecionado. ${ITENS[id].descricao} Clique em um objeto para usá-lo.`
+    : 'Item desselecionado.');
+  renderInventario();
+  const de_novo = $(`[data-item="${id}"]`);
+  if (de_novo) de_novo.focus(); // mantém o foco para quem usa teclado
+};
 
-function abrirPainel(titulo, conteudo, aoFechar) {
+/* ---------- Painel (dialog nativo = acessível, Esc fecha) ---------- */
+let painelAtual = {}; // funções do painel aberto: aoEnviar, aoClicar, aoTecla, aoFechar
+
+function abrirPainel(titulo, corpo, funcoes = {}) {
+  painelAtual = funcoes;
   $('#painel-titulo').textContent = titulo;
-  $('#painel-corpo').replaceChildren(conteudo);
-  aoFecharPainel = aoFechar || null;
+  $('#painel-corpo').innerHTML = corpo;
+  document.onkeydown = funcoes.aoTecla || null;
   $('#painel').showModal();
 }
 
-function fecharPainel() {
-  const p = $('#painel');
-  if (p.open) p.close();
+function limparPainel() {
+  if (painelAtual.aoFechar) painelAtual.aoFechar();
+  document.onkeydown = null;
+  painelAtual = {};
 }
 
-function formularioCodigo(rotulo, tamanho, aoEnviar) {
-  const form = document.createElement('form');
-  const label = document.createElement('label');
-  const campo = document.createElement('input');
-  campo.type = 'text';
-  campo.required = true;
-  campo.autocomplete = 'off';
-  campo.maxLength = tamanho;
-  label.append(`${rotulo} `, campo);
-  const enviar = document.createElement('button');
-  enviar.type = 'submit';
-  enviar.textContent = 'Confirmar';
-  const fb = document.createElement('p');
-  fb.setAttribute('role', 'alert');
-  form.append(label, enviar, fb);
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const resposta = aoEnviar(campo.value.trim().toUpperCase());
-    fb.textContent = resposta || '';
-    if (!resposta) fecharPainel();
-    else campo.select();
-  });
-  return form;
+function fecharPainel() {
+  const painel = $('#painel');
+  if (painel.open) painel.close();
+  limparPainel();
 }
+
+// Esc fecha o dialog sem passar por fecharPainel(): limpa aqui também
+$('#painel').onclose = () => {
+  if (!$('#painel').open) limparPainel();
+};
+
+// Formulário de código (HTML em texto)
+function formCodigo(rotulo, tamanho) {
+  return `
+    <form>
+      <label>${rotulo} <input type="text" required autocomplete="off" maxlength="${tamanho}"></label>
+      <button type="submit">Confirmar</button>
+      <p role="alert"></p>
+    </form>`;
+}
+
+// submit sobe (bubbles) até o container do painel
+$('#painel-corpo').onsubmit = (e) => {
+  e.preventDefault();
+  if (!painelAtual.aoEnviar) return;
+  const campo = e.target.querySelector('input');
+  const aviso = e.target.querySelector('[role="alert"]');
+  const resposta = painelAtual.aoEnviar(campo.value.trim().toUpperCase());
+  aviso.textContent = resposta || '';
+  if (!resposta) fecharPainel();
+  else campo.select();
+};
+
+// Cliques dentro do painel (minigame dos fios)
+$('#painel-corpo').onclick = (e) => {
+  const fio = e.target.closest('[data-fio]');
+  if (fio && painelAtual.aoClicar) painelAtual.aoClicar(Number(fio.dataset.fio));
+};
 
 /* =========================================================
    OBJETOS INTERATIVOS (10 enigmas + 1 oculto)
@@ -204,13 +215,15 @@ const objetos = {
     interagir() {
       if (this.resolvido) return mensagem('A gaveta está vazia.');
       if (this.bloqueada()) return mensagem('Gaveta travada pelo sistema. Aguarde alguns segundos.');
-      abrirPainel('Gaveta com cadeado', formularioCodigo('Código de 4 dígitos:', 4, (v) => {
-        if (v !== CODIGOS.gaveta) { erro('código da gaveta incorreto'); return 'Código incorreto.'; }
-        this.resolvido = true;
-        adicionarItem('pendrive');
-        registrar('Gaveta aberta. Você pegou um pen drive.');
-        return null;
-      }));
+      abrirPainel('Gaveta com cadeado', formCodigo('Código de 4 dígitos:', 4), {
+        aoEnviar: (v) => {
+          if (v !== CODIGOS.gaveta) { erro('código da gaveta incorreto'); return 'Código incorreto.'; }
+          this.resolvido = true;
+          adicionarItem('pendrive');
+          registrar('Gaveta aberta. Você pegou um pen drive.');
+          return null;
+        }
+      });
     }
   },
 
@@ -220,17 +233,19 @@ const objetos = {
     resolvido: false, falhas: 0,
     interagir() {
       if (this.resolvido) return mensagem('Terminal já liberado. Veja o diário de bordo.');
-      abrirPainel('Terminal do quarto', formularioCodigo('Senha:', 12, (v) => {
-        if (v !== CODIGOS.terminal) {
-          this.falhas++;
-          erro('senha do terminal incorreta');
-          if (this.falhas % 2 === 0) objetos.gaveta.bloquear();
-          return 'Senha incorreta.';
+      abrirPainel('Terminal do quarto', formCodigo('Senha:', 12), {
+        aoEnviar: (v) => {
+          if (v !== CODIGOS.terminal) {
+            this.falhas++;
+            erro('senha do terminal incorreta');
+            if (this.falhas % 2 === 0) objetos.gaveta.bloquear();
+            return 'Senha incorreta.';
+          }
+          this.resolvido = true;
+          registrar('Terminal liberado. Log: "cadeado da geladeira = 042". Fragmento de PIN: 26.');
+          return null;
         }
-        this.resolvido = true;
-        registrar('Terminal liberado. Log: "cadeado da geladeira = 042". Fragmento de PIN: 26.');
-        return null;
-      }));
+      });
     }
   },
 
@@ -244,14 +259,12 @@ const objetos = {
       const setas = { ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→' };
       const alvo = Array.from({ length: 5 }, () => teclas[Math.floor(Math.random() * teclas.length)]);
       let i = 0;
-      const instr = document.createElement('p');
-      instr.textContent = 'Digite a sequência usando as setas do teclado. Errou uma tecla, recomeça.';
-      const seq = document.createElement('p');
-      seq.className = 'sequencia';
-      seq.setAttribute('role', 'status');
+
       const desenhar = () => {
-        seq.textContent = alvo.map((t, n) => (n < i ? 'OK' : setas[t])).join(' ');
+        $('#painel-corpo .sequencia').textContent =
+          alvo.map((t, n) => (n < i ? 'OK' : setas[t])).join(' ');
       };
+
       const aoTecla = (e) => {
         if (!teclas.includes(e.key)) return;
         e.preventDefault();
@@ -268,11 +281,11 @@ const objetos = {
           desenhar();
         }
       };
+
+      abrirPainel('Painel de comandos', `
+        <p>Digite a sequência usando as setas do teclado. Errou uma tecla, recomeça.</p>
+        <p class="sequencia" role="status"></p>`, { aoTecla });
       desenhar();
-      document.addEventListener('keydown', aoTecla);
-      const caixa = document.createElement('div');
-      caixa.append(instr, seq);
-      abrirPainel('Painel de comandos', caixa, () => document.removeEventListener('keydown', aoTecla));
     }
   },
 
@@ -281,13 +294,9 @@ const objetos = {
     cenario: 'treino', nome: 'PC do setup', pos: [38, 30, 24, 30],
     resolvido: false,
     mostrar() {
-      const caixa = document.createElement('div');
-      const p1 = document.createElement('p');
-      p1.textContent = 'Arquivo "cofre.txt" (cada grupo de 4 bits é um dígito, de 0 a 9):';
-      const bin = document.createElement('pre');
-      bin.textContent = '0111  0011  1001';
-      caixa.append(p1, bin);
-      abrirPainel('PC do setup', caixa);
+      abrirPainel('PC do setup', `
+        <p>Arquivo "cofre.txt" (cada grupo de 4 bits é um dígito, de 0 a 9):</p>
+        <pre>0111  0011  1001</pre>`);
     },
     interagir() {
       if (!objetos.combo.resolvido) return mensagem('O PC está bloqueado. O painel de comandos ao lado parece controlá-lo.');
@@ -305,13 +314,15 @@ const objetos = {
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('A geladeira está aberta. Só sobrou energético.');
-      abrirPainel('Geladeira', formularioCodigo('Código de 3 dígitos:', 3, (v) => {
-        if (v !== CODIGOS.geladeira) { erro('código da geladeira incorreto'); return 'Código incorreto.'; }
-        this.resolvido = true;
-        adicionarItem('cartao');
-        registrar('Geladeira aberta. Dentro de uma marmita, um cartão de acesso.');
-        return null;
-      }));
+      abrirPainel('Geladeira', formCodigo('Código de 3 dígitos:', 3), {
+        aoEnviar: (v) => {
+          if (v !== CODIGOS.geladeira) { erro('código da geladeira incorreto'); return 'Código incorreto.'; }
+          this.resolvido = true;
+          adicionarItem('cartao');
+          registrar('Geladeira aberta. Dentro de uma marmita, um cartão de acesso.');
+          return null;
+        }
+      });
     }
   },
 
@@ -326,38 +337,27 @@ const objetos = {
       let i = 0;
       let aceitando = false;
       const timers = [];
-      const status = document.createElement('p');
-      status.setAttribute('role', 'status');
-      const grade = document.createElement('div');
-      grade.className = 'fios';
-      const botoes = cores.map((cor, n) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = `fio fio-${cor}`;
-        b.textContent = cor;
-        b.addEventListener('click', () => clicar(n));
-        return b;
-      });
-      grade.append(...botoes);
+      const status = () => $('#painel-corpo [role="status"]');
+      const fio = (n) => $(`#painel-corpo [data-fio="${n}"]`);
 
       const mostrarSequencia = () => {
         aceitando = false;
         i = 0;
-        status.textContent = 'Memorize a ordem dos fios...';
+        status().textContent = 'Memorize a ordem dos fios...';
         alvo.forEach((n, k) => {
           timers.push(setTimeout(() => {
-            botoes[n].classList.add('aceso');
-            status.textContent = `Fio ${k + 1}: ${cores[n]}`;
+            fio(n).classList.add('aceso');
+            status().textContent = `Fio ${k + 1}: ${cores[n]}`;
           }, 800 * (k + 1)));
-          timers.push(setTimeout(() => botoes[n].classList.remove('aceso'), 800 * (k + 1) + 450));
+          timers.push(setTimeout(() => fio(n).classList.remove('aceso'), 800 * (k + 1) + 450));
         });
         timers.push(setTimeout(() => {
           aceitando = true;
-          status.textContent = 'Sua vez: clique na mesma ordem.';
+          status().textContent = 'Sua vez: clique na mesma ordem.';
         }, 800 * alvo.length + 900));
       };
 
-      const clicar = (n) => {
+      const aoClicar = (n) => {
         if (!aceitando) return;
         if (n === alvo[i]) {
           i++;
@@ -374,9 +374,13 @@ const objetos = {
         }
       };
 
-      const caixa = document.createElement('div');
-      caixa.append(status, grade);
-      abrirPainel('Quadro de fusíveis', caixa, () => timers.forEach(clearTimeout));
+      const botoes = cores
+        .map((cor, n) => `<button type="button" class="fio fio-${cor}" data-fio="${n}">${cor}</button>`)
+        .join('');
+      abrirPainel('Quadro de fusíveis', `<p role="status"></p><div class="fios">${botoes}</div>`, {
+        aoClicar,
+        aoFechar: () => timers.forEach(clearTimeout)
+      });
       mostrarSequencia();
     }
   },
@@ -400,12 +404,14 @@ const objetos = {
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('O cofre está aberto. O troféu falso brilha lá dentro.');
-      abrirPainel('Cofre do troféu', formularioCodigo('Código de 3 dígitos:', 3, (v) => {
-        if (v !== CODIGOS.cofre) { erro('código do cofre incorreto'); return 'Código incorreto.'; }
-        this.resolvido = true;
-        registrar('Cofre aberto. Um papel: "fragmento de PIN: 81".');
-        return null;
-      }));
+      abrirPainel('Cofre do troféu', formCodigo('Código de 3 dígitos:', 3), {
+        aoEnviar: (v) => {
+          if (v !== CODIGOS.cofre) { erro('código do cofre incorreto'); return 'Código incorreto.'; }
+          this.resolvido = true;
+          registrar('Cofre aberto. Um papel: "fragmento de PIN: 81".');
+          return null;
+        }
+      });
     }
   },
 
@@ -414,13 +420,15 @@ const objetos = {
     cenario: 'corredor', nome: 'Fechadura programável', pos: [40, 18, 20, 40],
     resolvido: false,
     interagir() {
-      abrirPainel('Fechadura programável', formularioCodigo('PIN de 6 dígitos:', 6, (v) => {
-        if (v !== CODIGOS.fechadura) { erro('PIN incorreto na fechadura'); return 'PIN incorreto.'; }
-        this.resolvido = true;
-        registrar('Fechadura reprogramada. A porta se abre.');
-        decidirFinal();
-        return null;
-      }));
+      abrirPainel('Fechadura programável', formCodigo('PIN de 6 dígitos:', 6), {
+        aoEnviar: (v) => {
+          if (v !== CODIGOS.fechadura) { erro('PIN incorreto na fechadura'); return 'PIN incorreto.'; }
+          this.resolvido = true;
+          registrar('Fechadura reprogramada. A porta se abre.');
+          decidirFinal();
+          return null;
+        }
+      });
     }
   },
 
@@ -441,51 +449,41 @@ Object.entries(objetos).forEach(([id, o]) => { o.id = id; });
 /* =========================================================
    CENÁRIO (hotspots são <button>: funcionam com teclado)
    ========================================================= */
-function criarHotspot(rotulo, pos, classe, dataId, acao) {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = `hotspot ${classe}`;
-  b.style.left = `${pos[0]}%`;
-  b.style.top = `${pos[1]}%`;
-  b.style.width = `${pos[2]}%`;
-  b.style.height = `${pos[3]}%`;
-  b.setAttribute('aria-label', rotulo);
-  if (dataId) b.dataset.obj = dataId;
-  const span = document.createElement('span');
-  span.textContent = rotulo;
-  b.append(span);
-  b.addEventListener('click', acao);
-  return b;
+function hotspot(rotulo, pos, classe, dados) {
+  return `<button type="button" class="hotspot ${classe}" ${dados}
+    style="left:${pos[0]}%;top:${pos[1]}%;width:${pos[2]}%;height:${pos[3]}%"
+    aria-label="${rotulo}"><span>${rotulo}</span></button>`;
 }
 
 function renderCenario() {
   const c = CENARIOS[estado.cenario];
-  const area = $('#cenario');
-  area.className = `cenario cena-${estado.cenario}`;
-  $('#nome-cenario').textContent = c.nome;
-  area.replaceChildren();
-
-  c.portas.forEach((p) => {
-    area.append(criarHotspot(`Ir para: ${CENARIOS[p.destino].nome}`, p.pos, 'porta', null, () => {
-      if (estado.fim) return;
-      estado.cenario = p.destino;
-      renderCenario();
-      const dica = CENARIOS[p.destino].dica;
-      const achado = objetos.adesivo.resolvido;
-      mensagem(`Você entrou em: ${CENARIOS[p.destino].nome}. ${dica && !achado ? dica : ''}`);
-      $('#nome-cenario').focus();
-    }));
-  });
-
-  Object.values(objetos)
+  const portas = c.portas.map((p) =>
+    hotspot(`Ir para: ${CENARIOS[p.destino].nome}`, p.pos, 'porta', `data-destino="${p.destino}"`));
+  const itens = Object.values(objetos)
     .filter((o) => o.cenario === estado.cenario)
-    .forEach((o) => {
-      area.append(criarHotspot(o.nome, o.pos, o.oculto ? 'oculto' : 'objeto', o.id, () => {
-        if (!estado.fim) o.interagir();
-      }));
-    });
+    .map((o) => hotspot(o.nome, o.pos, o.oculto ? 'oculto' : 'objeto', `data-obj="${o.id}"`));
+
+  $('#cenario').className = `cenario cena-${estado.cenario}`;
+  $('#nome-cenario').textContent = c.nome;
+  $('#cenario').innerHTML = [...portas, ...itens].join('');
   atualizarMarcas();
 }
+
+function irPara(destino) {
+  estado.cenario = destino;
+  renderCenario();
+  const { nome, dica } = CENARIOS[destino];
+  mensagem(`Você entrou em: ${nome}. ${dica && !objetos.adesivo.resolvido ? dica : ''}`);
+  $('#nome-cenario').focus();
+}
+
+// Delegação: um único onclick para portas e objetos de qualquer cenário
+$('#cenario').onclick = (e) => {
+  const botao = e.target.closest('button');
+  if (!botao || estado.fim) return;
+  if (botao.dataset.destino) irPara(botao.dataset.destino);
+  else if (botao.dataset.obj) objetos[botao.dataset.obj].interagir();
+};
 
 function atualizarMarcas() {
   document.querySelectorAll('#cenario [data-obj]').forEach((b) => {
@@ -554,18 +552,12 @@ function finalizar(tipo) {
 }
 
 /* =========================================================
-   EVENTOS
+   EVENTOS (botões fixos da página)
    ========================================================= */
-$('#btn-iniciar').addEventListener('click', iniciar);
-$('#btn-diario').addEventListener('click', () => $('#diario').showModal());
-$('#btn-fechar-diario').addEventListener('click', () => $('#diario').close());
-$('#btn-fechar-painel').addEventListener('click', fecharPainel);
-$('#btn-reiniciar').addEventListener('click', () => location.reload());
-$('#painel').addEventListener('close', () => {
-  if (aoFecharPainel) {
-    aoFecharPainel();
-    aoFecharPainel = null;
-  }
-});
-$('#final').addEventListener('cancel', (e) => e.preventDefault());
+$('#btn-iniciar').onclick = iniciar;
+$('#btn-diario').onclick = () => $('#diario').showModal();
+$('#btn-fechar-diario').onclick = () => $('#diario').close();
+$('#btn-fechar-painel').onclick = fecharPainel;
+$('#btn-reiniciar').onclick = () => location.reload();
+$('#final').oncancel = (e) => e.preventDefault();
 atualizarRelogio();
