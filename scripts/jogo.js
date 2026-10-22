@@ -28,6 +28,7 @@ const estado = {
   inventario: [],
   log: [],
   selecionado: null,
+  fala: 0, // posição atual no diálogo da história
   energia: false,
   rodando: false,
   fim: false,
@@ -513,6 +514,68 @@ function iniciar() {
 }
 
 /* =========================================================
+   HISTÓRIA (diálogo antes do lockdown)
+   O relógio só começa quando o diálogo termina.
+   ========================================================= */
+const HISTORIA = [
+  { quem: 'narrador', nome: 'Narrador', texto: 'Gaming house da organização, 9h02. A final do campeonato mundial começa em poucas horas, e o jogador favorito sumiu.' },
+  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Técnico, aqui é a Central. O quarto do Kairo está trancado por dentro e ninguém o vê desde ontem à noite. Abra a fechadura.' },
+  { quem: 'voce', nome: 'Você', texto: 'A fechadura programável é do meu sistema. Dá para abrir sem arrombar a porta.' },
+  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Então faça isso rápido. Se a imprensa descobrir, vai ser um desastre.' },
+  { quem: 'narrador', nome: 'Narrador', texto: 'Você encosta o crachá no leitor. A luz fica verde por meio segundo. Depois, vermelha.' },
+  { quem: 'sistema', nome: 'Sistema da fechadura', texto: 'ACESSO NÃO AUTORIZADO. LOCKDOWN ATIVADO. ALARME E SEGURANÇA EM 5 MINUTOS.' },
+  { quem: 'voce', nome: 'Você', texto: 'Não, não, não. Se a segurança me encontrar aqui dentro, ninguém vai acreditar em mim.' },
+  { quem: 'narrador', nome: 'Narrador', texto: 'A única saída é reprogramar a fechadura por dentro, antes do alarme. O relógio começa agora.' }
+];
+
+function mostrarFala() {
+  const fala = HISTORIA[estado.fala];
+  const ultima = estado.fala === HISTORIA.length - 1;
+  $('#dialogo-nome').textContent = fala.nome;
+  $('#dialogo-nome').className = `falante falante-${fala.quem}`;
+  $('#dialogo-texto').textContent = fala.texto;
+  $('#dialogo-progresso').textContent = `${estado.fala + 1} / ${HISTORIA.length}`;
+  $('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
+}
+
+function comecarHistoria() {
+  $('#intro').hidden = true;
+  $('#dialogo').hidden = false;
+  estado.fala = 0;
+  mostrarFala();
+  $('#btn-proxima').focus();
+}
+
+function proximaFala() {
+  if (estado.fala < HISTORIA.length - 1) {
+    estado.fala++;
+    mostrarFala();
+  } else {
+    terminarHistoria();
+  }
+}
+
+function terminarHistoria() {
+  $('#dialogo').hidden = true;
+  iniciar();
+  $('#nome-cenario').focus();
+}
+
+/* =========================================================
+   TELA CHEIA (a página inteira, para os painéis continuarem visíveis)
+   ========================================================= */
+function alternarTelaCheia() {
+  const pedido = document.fullscreenElement
+    ? document.exitFullscreen()
+    : document.documentElement.requestFullscreen();
+  pedido.catch(() => mensagem('O navegador bloqueou a tela cheia.'));
+}
+
+function atualizarBotaoTelaCheia() {
+  $('#btn-tela-cheia').textContent = document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia';
+}
+
+/* =========================================================
    FINAIS
    ========================================================= */
 const FINAIS = {
@@ -554,7 +617,12 @@ function finalizar(tipo) {
 /* =========================================================
    EVENTOS (botões fixos da página)
    ========================================================= */
-$('#btn-iniciar').onclick = iniciar;
+$('#btn-iniciar').onclick = comecarHistoria;
+$('#btn-proxima').onclick = proximaFala;
+$('#btn-pular').onclick = terminarHistoria;
+$('#btn-tela-cheia').onclick = alternarTelaCheia;
+$('#btn-tela-cheia').hidden = !document.fullscreenEnabled; // some onde o navegador não suporta
+document.onfullscreenchange = atualizarBotaoTelaCheia;     // também reage ao Esc
 $('#btn-diario').onclick = () => $('#diario').showModal();
 $('#btn-fechar-diario').onclick = () => $('#diario').close();
 $('#btn-fechar-painel').onclick = fecharPainel;
