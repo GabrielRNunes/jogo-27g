@@ -40,3 +40,15 @@
 :fullscreen .dialogo {
   min-height: calc(100vh - 10.5rem);
 }
+
+/* o objeto escondido da cozinha pisca de leve ("algo reflete uma luz fraca") */
+.hotspot.oculto:not(.feito) {
+  animation: reflexo 2.4s ease-in-out infinite;
+}
+@keyframes reflexo {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 18px 6px rgba(255, 255, 255, 0.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hotspot.oculto:not(.feito) { animation: none; }
+}

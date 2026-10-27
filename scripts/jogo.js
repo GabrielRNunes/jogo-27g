@@ -435,7 +435,7 @@ const objetos = {
 
   // Objeto oculto (final secreto)
   adesivo: {
-    cenario: 'cozinha', nome: 'Adesivo suspeito atrás da lixeira', pos: [86.0, 84.0, 4.0, 7.0],
+    cenario: 'cozinha', nome: 'Adesivo suspeito atrás da lixeira', pos: [85.1, 82.9, 7.2, 9.1],
     oculto: true, resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('Só restou a marca do adesivo.');
@@ -475,6 +475,10 @@ function irPara(destino) {
   renderCenario();
   const { nome, dica } = CENARIOS[destino];
   mensagem(`Você entrou em: ${nome}. ${dica && !objetos.adesivo.resolvido ? dica : ''}`);
+  if (dica && !objetos.adesivo.resolvido && !objetos.adesivo.dicaNoDiario) {
+    objetos.adesivo.dicaNoDiario = true; // a dica também fica no diário, para reler depois
+    registrar(`${nome}: ${dica}`);
+  }
   $('#nome-cenario').focus();
 }
 
