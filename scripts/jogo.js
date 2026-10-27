@@ -466,11 +466,7 @@ function renderCenario() {
 
   $('#cenario').className = `cenario cena-${estado.cenario}`;
   $('#nome-cenario').textContent = c.nome;
-  // quadro decorativo da sala de treino (imagem por cima da moldura desenhada)
-  const quadro = estado.cenario === 'treino'
-    ? '<img class="quadro" src="assets/quadro.webp" alt="Quadro na parede: mão digital de linhas verdes tocando uma mão humana" width="384" height="384">'
-    : '';
-  $('#cenario').innerHTML = [quadro, ...portas, ...itens].join('');
+  $('#cenario').innerHTML = [...portas, ...itens].join('');
   atualizarMarcas();
 }
 

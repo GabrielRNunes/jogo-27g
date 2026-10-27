@@ -88,14 +88,6 @@ button[aria-pressed="true"] {
 .cena-corredor   { background-image: url("../assets/cenas/corredor.svg"); }
 .cenario { background-color: #17110f; background-size: 100% 100%; }
 
-.quadro {
-  position: absolute;
-  left: 19%; top: 14.9%; width: 12%; height: 21.3%;
-  object-fit: cover;
-  pointer-events: none;
-  filter: contrast(0.95) saturate(0.9);
-}
-
 .hotspot {
   position: absolute;
   padding: 0;
