@@ -49,31 +49,31 @@ const ITENS = {
 const CENARIOS = {
   quarto: {
     nome: 'Quarto do Kairo',
-    portas: [{ destino: 'treino', pos: [88, 30, 10, 50] }]
+    portas: [{ destino: 'treino', pos: [87.5, 27.8, 10.0, 40.0] }]
   },
   treino: {
     nome: 'Sala de Treino',
     portas: [
-      { destino: 'quarto', pos: [1, 10, 8, 40] },
-      { destino: 'cozinha', pos: [88, 8, 10, 40] },
-      { destino: 'servidores', pos: [44, 78, 18, 18] }
+      { destino: 'quarto', pos: [2.5, 27.8, 10.0, 40.0] },
+      { destino: 'cozinha', pos: [87.5, 27.8, 10.0, 40.0] },
+      { destino: 'servidores', pos: [47.5, 79.6, 15.0, 14.4] }
     ]
   },
   cozinha: {
     nome: 'Cozinha',
     dica: 'Algo reflete uma luz fraca perto do rodapé...',
-    portas: [{ destino: 'treino', pos: [88, 10, 10, 45] }]
+    portas: [{ destino: 'treino', pos: [87.5, 27.8, 10.0, 40.0] }]
   },
   servidores: {
     nome: 'Sala de Servidores',
     portas: [
-      { destino: 'treino', pos: [1, 78, 18, 18] },
-      { destino: 'corredor', pos: [86, 15, 12, 50] }
+      { destino: 'treino', pos: [1.0, 77.8, 18.0, 18.2] },
+      { destino: 'corredor', pos: [87.5, 26.7, 10.0, 41.1] }
     ]
   },
   corredor: {
     nome: 'Corredor de Saída',
-    portas: [{ destino: 'servidores', pos: [2, 20, 12, 50] }]
+    portas: [{ destino: 'servidores', pos: [2.5, 27.8, 10.0, 40.0] }]
   }
 };
 
@@ -196,7 +196,7 @@ $('#painel-corpo').onclick = (e) => {
 const objetos = {
   // 1 - Calendário: pista da data e da senha do terminal
   calendario: {
-    cenario: 'quarto', nome: 'Calendário da final', pos: [6, 12, 16, 26],
+    cenario: 'quarto', nome: 'Calendário da final', pos: [6.2, 13.3, 15.0, 25.6],
     inspecionado: false, resolvido: false,
     interagir() {
       this.inspecionado = this.resolvido = true;
@@ -206,7 +206,7 @@ const objetos = {
 
   // 2 - Gaveta com cadeado numérico (pode ser travada pelo terminal)
   gaveta: {
-    cenario: 'quarto', nome: 'Gaveta com cadeado', pos: [60, 62, 22, 18],
+    cenario: 'quarto', nome: 'Gaveta com cadeado', pos: [60.0, 48.9, 22.5, 21.1],
     resolvido: false, liberaEm: null,
     bloqueada() { return this.liberaEm !== null && estado.tempo > this.liberaEm; },
     bloquear() {
@@ -230,7 +230,7 @@ const objetos = {
 
   // 3 - Terminal: errar 2x trava a gaveta
   terminal: {
-    cenario: 'quarto', nome: 'Terminal do quarto', pos: [38, 38, 18, 24],
+    cenario: 'quarto', nome: 'Terminal do quarto', pos: [35.0, 36.7, 20.0, 23.3],
     resolvido: false, falhas: 0,
     interagir() {
       if (this.resolvido) return mensagem('Terminal já liberado. Veja o diário de bordo.');
@@ -252,7 +252,7 @@ const objetos = {
 
   // 4 - Minigame de TECLADO: sequência aleatória de setas
   combo: {
-    cenario: 'treino', nome: 'Painel de comandos', pos: [8, 55, 20, 22],
+    cenario: 'treino', nome: 'Painel de comandos', pos: [14.8, 48.7, 15.9, 21.3],
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('O painel já está liberado.');
@@ -292,7 +292,7 @@ const objetos = {
 
   // 5 - PC: usa o pen drive e mostra mensagem em binário
   pc: {
-    cenario: 'treino', nome: 'PC do setup', pos: [38, 30, 24, 30],
+    cenario: 'treino', nome: 'PC do setup', pos: [35.0, 28.9, 33.1, 33.3],
     resolvido: false,
     mostrar() {
       abrirPainel('PC do setup', `
@@ -311,7 +311,7 @@ const objetos = {
 
   // 6 - Geladeira: cadeado de 3 dígitos
   geladeira: {
-    cenario: 'cozinha', nome: 'Geladeira com cadeado', pos: [10, 15, 22, 60],
+    cenario: 'cozinha', nome: 'Geladeira com cadeado', pos: [6.2, 15.1, 20.6, 54.9],
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('A geladeira está aberta. Só sobrou energético.');
@@ -329,7 +329,7 @@ const objetos = {
 
   // 7 - Minigame de CLIQUE: memória de fios (ordem aleatória)
   fusiveis: {
-    cenario: 'servidores', nome: 'Quadro de fusíveis', pos: [8, 20, 22, 40],
+    cenario: 'servidores', nome: 'Quadro de fusíveis', pos: [6.9, 18.9, 20.6, 38.9],
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('A energia já foi restabelecida.');
@@ -388,7 +388,7 @@ const objetos = {
 
   // 8 - Rack: precisa de energia e do cartão selecionado
   rack: {
-    cenario: 'servidores', nome: 'Rack de servidores', pos: [40, 15, 26, 55],
+    cenario: 'servidores', nome: 'Rack de servidores', pos: [38.0, 13.0, 38.2, 54.4],
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('O rack já entregou o que tinha.');
@@ -401,7 +401,7 @@ const objetos = {
 
   // 9 - Cofre do troféu: código vem do binário
   cofre: {
-    cenario: 'treino', nome: 'Cofre do troféu', pos: [70, 55, 18, 26],
+    cenario: 'treino', nome: 'Cofre do troféu', pos: [72.4, 46.3, 12.5, 23.7],
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('O cofre está aberto. O troféu falso brilha lá dentro.');
@@ -418,7 +418,7 @@ const objetos = {
 
   // 10 - Fechadura final: PIN = 26 + 47 + 81
   fechadura: {
-    cenario: 'corredor', nome: 'Fechadura programável', pos: [40, 18, 20, 40],
+    cenario: 'corredor', nome: 'Fechadura programável', pos: [37.5, 15.6, 25.0, 52.2],
     resolvido: false,
     interagir() {
       abrirPainel('Fechadura programável', formCodigo('PIN de 6 dígitos:', 6), {
@@ -435,7 +435,7 @@ const objetos = {
 
   // Objeto oculto (final secreto)
   adesivo: {
-    cenario: 'cozinha', nome: 'Adesivo suspeito atrás da lixeira', pos: [86, 86, 4, 6],
+    cenario: 'cozinha', nome: 'Adesivo suspeito atrás da lixeira', pos: [86.0, 84.0, 4.0, 7.0],
     oculto: true, resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('Só restou a marca do adesivo.');
@@ -466,7 +466,11 @@ function renderCenario() {
 
   $('#cenario').className = `cenario cena-${estado.cenario}`;
   $('#nome-cenario').textContent = c.nome;
-  $('#cenario').innerHTML = [...portas, ...itens].join('');
+  // quadro decorativo da sala de treino (imagem por cima da moldura desenhada)
+  const quadro = estado.cenario === 'treino'
+    ? '<img class="quadro" src="assets/quadro.webp" alt="Quadro na parede: mão digital de linhas verdes tocando uma mão humana" width="384" height="384">'
+    : '';
+  $('#cenario').innerHTML = [quadro, ...portas, ...itens].join('');
   atualizarMarcas();
 }
 
