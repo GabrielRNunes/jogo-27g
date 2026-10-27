@@ -1,0 +1,42 @@
+/* dialogo.css - retratos e quadro de impacto da história (carregar depois do jogo.css) */
+.dialogo-cena {
+  display: block;
+  width: 100%;
+  height: 12rem;
+  margin-bottom: 0.75rem;
+  object-fit: contain;
+  background: #1a1118;
+  border: 1px solid var(--neon);
+  animation: alerta 0.6s ease-in-out 3;
+}
+.dialogo-linha {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.dialogo-linha > div {
+  flex: 1;
+  min-width: 0;
+}
+.dialogo-retrato {
+  flex: none;
+  width: 7rem;
+  height: 7rem;
+  border-radius: var(--raio);
+}
+@keyframes alerta {
+  0%, 100% { filter: none; }
+  50% { filter: brightness(1.7) saturate(1.5); }
+}
+@media (max-width: 600px) {
+  .dialogo-retrato { width: 4.5rem; height: 4.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialogo-cena { animation: none; }
+}
+:fullscreen .dialogo-cena {
+  height: 26vh;
+}
+:fullscreen .dialogo {
+  min-height: calc(100vh - 10.5rem);
+}

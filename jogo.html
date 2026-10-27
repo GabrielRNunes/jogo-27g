@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/paginas.css">
   <link rel="stylesheet" href="css/jogo.css">
+  <link rel="stylesheet" href="css/dialogo.css">
   <script src="scripts/jogo.js" defer></script>
 </head>
 <body id="topo">
@@ -54,10 +55,14 @@
 
     <section id="dialogo" class="dialogo" aria-labelledby="dialogo-titulo" hidden>
       <h3 id="dialogo-titulo" class="visually-hidden">História</h3>
+      <img id="dialogo-cena" class="dialogo-cena" src="assets/historia/impacto.svg" alt="Painel da fechadura piscando em vermelho: acesso não autorizado, lockdown ativado" width="1600" height="500" hidden>
       <div class="dialogo-caixa">
-        <div aria-live="polite" aria-atomic="true">
+        <div class="dialogo-linha">
+          <img id="dialogo-retrato" class="dialogo-retrato" src="assets/historia/narrador.svg" alt="" width="200" height="200">
+          <div aria-live="polite" aria-atomic="true">
           <p id="dialogo-nome" class="falante"></p>
           <p id="dialogo-texto" class="fala"></p>
+        </div>
         </div>
         <div class="dialogo-botoes">
           <span id="dialogo-progresso"></span>

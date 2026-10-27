@@ -523,7 +523,7 @@ const HISTORIA = [
   { quem: 'voce', nome: 'Você', texto: 'A fechadura programável é do meu sistema. Dá para abrir sem arrombar a porta.' },
   { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Então faça isso rápido. Se a imprensa descobrir, vai ser um desastre.' },
   { quem: 'narrador', nome: 'Narrador', texto: 'Você encosta o crachá no leitor. A luz fica verde por meio segundo. Depois, vermelha.' },
-  { quem: 'sistema', nome: 'Sistema da fechadura', texto: 'ACESSO NÃO AUTORIZADO. LOCKDOWN ATIVADO. ALARME E SEGURANÇA EM 5 MINUTOS.' },
+  { quem: 'sistema', nome: 'Sistema da fechadura', texto: 'ACESSO NÃO AUTORIZADO. LOCKDOWN ATIVADO. ALARME E SEGURANÇA EM 5 MINUTOS.', cena: true },
   { quem: 'voce', nome: 'Você', texto: 'Não, não, não. Se a segurança me encontrar aqui dentro, ninguém vai acreditar em mim.' },
   { quem: 'narrador', nome: 'Narrador', texto: 'A única saída é reprogramar a fechadura por dentro, antes do alarme. O relógio começa agora.' }
 ];
@@ -534,6 +534,8 @@ function mostrarFala() {
   $('#dialogo-nome').textContent = fala.nome;
   $('#dialogo-nome').className = `falante falante-${fala.quem}`;
   $('#dialogo-texto').textContent = fala.texto;
+  $('#dialogo-retrato').src = `assets/historia/${fala.quem}.svg`;
+  $('#dialogo-cena').hidden = !fala.cena; // quadro de impacto só na fala do lockdown
   $('#dialogo-progresso').textContent = `${estado.fala + 1} / ${HISTORIA.length}`;
   $('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
 }
