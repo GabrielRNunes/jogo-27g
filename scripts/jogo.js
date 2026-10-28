@@ -82,8 +82,8 @@ function mensagem(texto) {
   $('#mensagem').textContent = texto;
 }
 
-function registrar(texto) {
-  estado.log.push({ quando: formatarTempo(estado.tempo), texto });
+function registrar(texto, tipo = 'nota') {
+  estado.log.push({ quando: formatarTempo(estado.tempo), texto, tipo });
   mensagem(texto);
   renderLog();
   atualizarMarcas();
@@ -95,13 +95,13 @@ function erro(motivo) {
   estado.tempo = Math.max(0, estado.tempo - PENALIDADE_ERRO);
   $('#erros').textContent = String(estado.erros);
   atualizarRelogio();
-  registrar(`Erro: ${motivo} (-${PENALIDADE_ERRO} s)`);
+  registrar(`Erro: ${motivo} (-${PENALIDADE_ERRO} s)`, 'erro');
   if (estado.tempo === 0) finalizar('capturado');
 }
 
 function renderLog() {
   $('#lista-log').innerHTML = estado.log
-    .map((item) => `<li>[${item.quando}] ${item.texto}</li>`)
+    .map((item) => `<li class="${item.tipo}"><span class="hora">${item.quando}</span> ${item.texto}</li>`)
     .join('');
 }
 
@@ -640,7 +640,10 @@ $('#btn-pular').onclick = terminarHistoria;
 $('#btn-tela-cheia').onclick = alternarTelaCheia;
 $('#btn-tela-cheia').hidden = !document.fullscreenEnabled; // some onde o navegador não suporta
 document.onfullscreenchange = atualizarBotaoTelaCheia;     // também reage ao Esc
-$('#btn-diario').onclick = () => $('#diario').showModal();
+$('#btn-diario').onclick = () => {
+  $('#diario').showModal();
+  $('#diario').scrollTop = $('#diario').scrollHeight; // abre na anotação mais recente
+};
 $('#btn-fechar-diario').onclick = () => $('#diario').close();
 $('#btn-fechar-painel').onclick = fecharPainel;
 $('#btn-reiniciar').onclick = () => location.reload();
