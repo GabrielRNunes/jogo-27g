@@ -401,3 +401,29 @@ footer p {
   }
   .cena-img { grid-column: 2; grid-row: 2 / span 3; margin-top: 0; }
 }
+/* ---------- Galeria dos finais ---------- */
+.final-quadro {
+  margin: 1.5rem 0;
+}
+.final-quadro img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--neon);
+  border-radius: var(--raio);
+}
+.final-quadro figcaption,
+.final-secreto {
+  margin-top: 0.5rem;
+}
+.fim {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0 0.6rem;
+  border: 2px solid var(--porta);
+  border-radius: var(--raio);
+  font-family: var(--fonte-titulo);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--porta);
+}
