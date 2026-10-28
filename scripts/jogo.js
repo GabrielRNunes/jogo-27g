@@ -587,19 +587,27 @@ function atualizarBotaoTelaCheia() {
 const FINAIS = {
   perfeito: {
     titulo: 'Final: Fuga Perfeita',
-    texto: 'Você reprogramou a fechadura com tempo de sobra, saiu sem acionar nada e a segurança chegou a um corredor vazio.'
+    texto: 'Você reprogramou a fechadura com tempo de sobra, saiu sem acionar nada e a segurança chegou a um corredor vazio.',
+    imagem: 'assets/finais/perfeito.svg',
+    alt: 'Tira de quadrinhos em três quadros: sua mão digita o PIN no teclado, e o aviso BIP confirma; a porta destrava com um CLAC; você, aliviado e de fone no pescoço, vê o corredor vazio e livre diante do amanhecer.'
   },
   sequelas: {
     titulo: 'Final: Fuga com Sequelas',
-    texto: 'Você saiu, mas os erros e a demora dispararam o alarme parcial. Câmeras gravaram seu rosto e a organização vai pedir explicações.'
+    texto: 'Você saiu, mas os erros e a demora dispararam o alarme parcial. Câmeras gravaram seu rosto e a organização vai pedir explicações.',
+    imagem: 'assets/finais/sequelas.svg',
+    alt: 'Tira de quadrinhos em três quadros: o teclado mostra ERRO e faz BZZT; uma câmera de segurança com olho vermelho e a marca REC vigia você; você, assustado, foge sob a luz vermelha do alarme.'
   },
   capturado: {
     titulo: 'Final: Capturado',
-    texto: 'O relógio zerou. A segurança abriu a porta e encontrou um técnico de TI, um quarto revirado e nenhuma explicação.'
+    texto: 'O relógio zerou. A segurança abriu a porta e encontrou um técnico de TI, um quarto revirado e nenhuma explicação.',
+    imagem: 'assets/finais/capturado.svg',
+    alt: 'Tira de quadrinhos em três quadros: um relógio digital marca 0:00 com o alarme tocando; dois guardas em silhueta abrem a porta com um CLAC; você, assustado, ergue as mãos. Game over.'
   },
   secreto: {
     titulo: 'Final Secreto: Ele Quis Sumir',
-    texto: 'Com o bilhete em mãos você entende: Kairo fugiu por vontade própria. Você sai e apaga os registros da fechadura. Ninguém jamais saberá onde ele está.'
+    texto: 'Com o bilhete em mãos você entende: Kairo fugiu por vontade própria. Você sai e apaga os registros da fechadura. Ninguém jamais saberá onde ele está.',
+    imagem: 'assets/finais/secreto.svg',
+    alt: 'Tira de quadrinhos em três quadros: você lê o bilhete do Kairo, que diz que ele foi por vontade própria; o painel da fechadura apaga os registros até 100 por cento; ao longe, a silhueta de Kairo caminha por uma estrada sob a lua.'
   }
 };
 
@@ -615,6 +623,9 @@ function finalizar(tipo) {
   clearInterval(estado.timer);
   fecharPainel();
   $('#final-titulo').textContent = FINAIS[tipo].titulo;
+  $('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
+  $('#final-imagem').src = FINAIS[tipo].imagem;
+  $('#final-imagem').alt = FINAIS[tipo].alt;
   $('#final-texto').textContent = FINAIS[tipo].texto;
   $('#final-resumo').textContent = `Tempo restante: ${formatarTempo(estado.tempo)} | Erros: ${estado.erros}`;
   $('#final').showModal();
