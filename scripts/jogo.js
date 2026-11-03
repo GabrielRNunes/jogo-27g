@@ -522,14 +522,19 @@ function iniciar() {
    O relógio só começa quando o diálogo termina.
    ========================================================= */
 const HISTORIA = [
-  { quem: 'narrador', nome: 'Narrador', texto: 'Gaming house da organização, 9h02. A final do campeonato mundial começa em poucas horas, e o jogador favorito sumiu.' },
-  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Técnico, aqui é a Central. O quarto do Kairo está trancado por dentro e ninguém o vê desde ontem à noite. Abra a fechadura.' },
-  { quem: 'voce', nome: 'Você', texto: 'A fechadura programável é do meu sistema. Dá para abrir sem arrombar a porta.' },
-  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Então faça isso rápido. Se a imprensa descobrir, vai ser um desastre.' },
-  { quem: 'narrador', nome: 'Narrador', texto: 'Você encosta o crachá no leitor. A luz fica verde por meio segundo. Depois, vermelha.' },
+  { quem: 'narrador', nome: 'Narrador', texto: 'Gaming house da organização, 9h02 da manhã da final. O ar-condicionado zumbe, os corredores estão vazios e há uma notícia que ninguém quer dar: o jogador favorito sumiu.' },
+  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Técnico, aqui é a Central. O quarto do Kairo está trancado por dentro e ninguém o vê desde as 22h de ontem. A final começa às 18h. Preciso dessa porta aberta.' },
+  { quem: 'voce', nome: 'Você', texto: 'A fechadura programável é do meu sistema, eu mesmo a configurei no mês passado. Dá para abrir sem arrombar a porta.' },
+  { quem: 'voce', nome: 'Você', texto: 'Alguém tentou ligar para ele?' },
+  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Dezenas de vezes. Celular desligado. A última coisa que ele pediu foi para não ser incomodado, e o registro da fechadura mostra a entrada dele às 23h41. Saída, nenhuma.' },
+  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Faça isso rápido e sem barulho. Se a imprensa descobrir que o favorito sumiu horas antes da final, a organização perde patrocinador antes do almoço.' },
+  { quem: 'narrador', nome: 'Narrador', texto: 'Você respira fundo e encosta o crachá no leitor. A luz fica verde por meio segundo. Depois, vermelha.' },
+  { quem: 'sistema', nome: 'Sistema da fechadura', texto: 'Credencial reconhecida. Verificando permissão de acesso ao quarto...' },
   { quem: 'sistema', nome: 'Sistema da fechadura', texto: 'ACESSO NÃO AUTORIZADO. LOCKDOWN ATIVADO. ALARME E SEGURANÇA EM 5 MINUTOS.', cena: true },
-  { quem: 'voce', nome: 'Você', texto: 'Não, não, não. Se a segurança me encontrar aqui dentro, ninguém vai acreditar em mim.' },
-  { quem: 'narrador', nome: 'Narrador', texto: 'A única saída é reprogramar a fechadura por dentro, antes do alarme. O relógio começa agora.' }
+  { quem: 'voce', nome: 'Você', texto: 'Não, não, não. Eu tenho autorização, isso devia abrir!' },
+  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Técnico? O alerta apareceu aqui na Central. O protocolo isola tudo por dentro e a equipe chega em cinco minutos. Dê um jeito de sair antes disso.' },
+  { quem: 'voce', nome: 'Você', texto: 'Se me encontrarem dentro do quarto dele, ninguém vai acreditar que eu só vim abrir a porta.' },
+  { quem: 'narrador', nome: 'Narrador', texto: 'A única saída é reprogramar a fechadura pelo painel do corredor, antes do alarme. Cada sala guarda uma peça e cada erro custa dez segundos. O relógio começa agora.' }
 ];
 
 function mostrarFala() {
