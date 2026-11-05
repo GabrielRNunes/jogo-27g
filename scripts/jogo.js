@@ -35,7 +35,10 @@ const estado = {
   timer: null
 };
 
-const $ = (seletor) => document.querySelector(seletor);
+// Busca o primeiro elemento da página que corresponde ao seletor CSS informado.
+function selecionarElemento(seletor) {
+  return document.querySelector(seletor);
+}
 const formatarTempo = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
 /* ---------- Itens (objeto de textos) ---------- */
@@ -79,7 +82,7 @@ const CENARIOS = {
 
 /* ---------- Mensagens, log, erros ---------- */
 function mensagem(texto) {
-  $('#mensagem').textContent = texto;
+  selecionarElemento('#mensagem').textContent = texto;
 }
 
 function registrar(texto, tipo = 'nota') {
@@ -93,14 +96,14 @@ function erro(motivo) {
   if (estado.fim) return;
   estado.erros++;
   estado.tempo = Math.max(0, estado.tempo - PENALIDADE_ERRO);
-  $('#erros').textContent = String(estado.erros);
+  selecionarElemento('#erros').textContent = String(estado.erros);
   atualizarRelogio();
   registrar(`Erro: ${motivo} (-${PENALIDADE_ERRO} s)`, 'erro');
   if (estado.tempo === 0) finalizar('capturado');
 }
 
 function renderLog() {
-  $('#lista-log').innerHTML = estado.log
+  selecionarElemento('#lista-log').innerHTML = estado.log
     .map((item) => `<li class="${item.tipo}"><span class="hora">${item.quando}</span> ${item.texto}</li>`)
     .join('');
 }
@@ -112,7 +115,7 @@ function adicionarItem(id) {
 }
 
 function renderInventario() {
-  $('#inventario').innerHTML = estado.inventario.length === 0
+  selecionarElemento('#inventario').innerHTML = estado.inventario.length === 0
     ? '<li>Vazio.</li>'
     : estado.inventario
       .map((id) => `<li><button type="button" data-item="${id}" aria-pressed="${estado.selecionado === id}">${ITENS[id].nome}</button></li>`)
@@ -120,7 +123,7 @@ function renderInventario() {
 }
 
 // Delegação: um único onclick para todos os botões do inventário
-$('#inventario').onclick = (e) => {
+selecionarElemento('#inventario').onclick = (e) => {
   const botao = e.target.closest('[data-item]');
   if (!botao) return;
   const id = botao.dataset.item;
@@ -129,7 +132,7 @@ $('#inventario').onclick = (e) => {
     ? `${ITENS[id].nome} selecionado. ${ITENS[id].descricao} Clique em um objeto para usá-lo.`
     : 'Item desselecionado.');
   renderInventario();
-  const de_novo = $(`[data-item="${id}"]`);
+  const de_novo = selecionarElemento(`[data-item="${id}"]`);
   if (de_novo) de_novo.focus(); // mantém o foco para quem usa teclado
 };
 
@@ -138,10 +141,10 @@ let painelAtual = {}; // funções do painel aberto: aoEnviar, aoClicar, aoTecla
 
 function abrirPainel(titulo, corpo, funcoes = {}) {
   painelAtual = funcoes;
-  $('#painel-titulo').textContent = titulo;
-  $('#painel-corpo').innerHTML = corpo;
+  selecionarElemento('#painel-titulo').textContent = titulo;
+  selecionarElemento('#painel-corpo').innerHTML = corpo;
   document.onkeydown = funcoes.aoTecla || null;
-  $('#painel').showModal();
+  selecionarElemento('#painel').showModal();
 }
 
 function limparPainel() {
@@ -151,14 +154,14 @@ function limparPainel() {
 }
 
 function fecharPainel() {
-  const painel = $('#painel');
+  const painel = selecionarElemento('#painel');
   if (painel.open) painel.close();
   limparPainel();
 }
 
 // Esc fecha o dialog sem passar por fecharPainel(): limpa aqui também
-$('#painel').onclose = () => {
-  if (!$('#painel').open) limparPainel();
+selecionarElemento('#painel').onclose = () => {
+  if (!selecionarElemento('#painel').open) limparPainel();
 };
 
 // Formulário de código (HTML em texto)
@@ -172,7 +175,7 @@ function formCodigo(rotulo, tamanho) {
 }
 
 // submit sobe (bubbles) até o container do painel
-$('#painel-corpo').onsubmit = (e) => {
+selecionarElemento('#painel-corpo').onsubmit = (e) => {
   e.preventDefault();
   if (!painelAtual.aoEnviar) return;
   const campo = e.target.querySelector('input');
@@ -184,7 +187,7 @@ $('#painel-corpo').onsubmit = (e) => {
 };
 
 // Cliques dentro do painel (minigame dos fios)
-$('#painel-corpo').onclick = (e) => {
+selecionarElemento('#painel-corpo').onclick = (e) => {
   const fio = e.target.closest('[data-fio]');
   if (fio && painelAtual.aoClicar) painelAtual.aoClicar(Number(fio.dataset.fio));
 };
@@ -262,7 +265,7 @@ const objetos = {
       let i = 0;
 
       const desenhar = () => {
-        $('#painel-corpo .sequencia').textContent =
+        selecionarElemento('#painel-corpo .sequencia').textContent =
           alvo.map((t, n) => (n < i ? 'OK' : setas[t])).join(' ');
       };
 
@@ -338,8 +341,8 @@ const objetos = {
       let i = 0;
       let aceitando = false;
       const timers = [];
-      const status = () => $('#painel-corpo [role="status"]');
-      const fio = (n) => $(`#painel-corpo [data-fio="${n}"]`);
+      const status = () => selecionarElemento('#painel-corpo [role="status"]');
+      const fio = (n) => selecionarElemento(`#painel-corpo [data-fio="${n}"]`);
 
       const mostrarSequencia = () => {
         aceitando = false;
@@ -464,9 +467,9 @@ function renderCenario() {
     .filter((o) => o.cenario === estado.cenario)
     .map((o) => hotspot(o.nome, o.pos, o.oculto ? 'oculto' : 'objeto', `data-obj="${o.id}"`));
 
-  $('#cenario').className = `cenario cena-${estado.cenario}`;
-  $('#nome-cenario').textContent = c.nome;
-  $('#cenario').innerHTML = [...portas, ...itens].join('');
+  selecionarElemento('#cenario').className = `cenario cena-${estado.cenario}`;
+  selecionarElemento('#nome-cenario').textContent = c.nome;
+  selecionarElemento('#cenario').innerHTML = [...portas, ...itens].join('');
   atualizarMarcas();
 }
 
@@ -479,11 +482,11 @@ function irPara(destino) {
     objetos.adesivo.dicaNoDiario = true; // a dica também fica no diário, para reler depois
     registrar(`${nome}: ${dica}`);
   }
-  $('#nome-cenario').focus();
+  selecionarElemento('#nome-cenario').focus();
 }
 
 // Delegação: um único onclick para portas e objetos de qualquer cenário
-$('#cenario').onclick = (e) => {
+selecionarElemento('#cenario').onclick = (e) => {
   const botao = e.target.closest('button');
   if (!botao || estado.fim) return;
   if (botao.dataset.destino) irPara(botao.dataset.destino);
@@ -498,15 +501,15 @@ function atualizarMarcas() {
 
 /* ---------- Relógio ---------- */
 function atualizarRelogio() {
-  const el = $('#relogio');
+  const el = selecionarElemento('#relogio');
   el.textContent = formatarTempo(estado.tempo);
   el.classList.toggle('urgente', estado.tempo <= 60);
 }
 
 function iniciar() {
   estado.rodando = true;
-  $('#intro').hidden = true;
-  $('#jogo').hidden = false;
+  selecionarElemento('#intro').hidden = true;
+  selecionarElemento('#jogo').hidden = false;
   renderCenario();
   renderInventario();
   registrar('Lockdown ativado. Você tem 5 minutos para reprogramar a fechadura antes da segurança chegar.');
@@ -540,21 +543,21 @@ const HISTORIA = [
 function mostrarFala() {
   const fala = HISTORIA[estado.fala];
   const ultima = estado.fala === HISTORIA.length - 1;
-  $('#dialogo-nome').textContent = fala.nome;
-  $('#dialogo-nome').className = `falante falante-${fala.quem}`;
-  $('#dialogo-texto').textContent = fala.texto;
-  $('#dialogo-retrato').src = `assets/historia/${fala.quem}.svg`;
-  $('#dialogo-cena').hidden = !fala.cena; // quadro de impacto só na fala do lockdown
-  $('#dialogo-progresso').textContent = `${estado.fala + 1} / ${HISTORIA.length}`;
-  $('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
+  selecionarElemento('#dialogo-nome').textContent = fala.nome;
+  selecionarElemento('#dialogo-nome').className = `falante falante-${fala.quem}`;
+  selecionarElemento('#dialogo-texto').textContent = fala.texto;
+  selecionarElemento('#dialogo-retrato').src = `assets/historia/${fala.quem}.svg`;
+  selecionarElemento('#dialogo-cena').hidden = !fala.cena; // quadro de impacto só na fala do lockdown
+  selecionarElemento('#dialogo-progresso').textContent = `${estado.fala + 1} / ${HISTORIA.length}`;
+  selecionarElemento('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
 }
 
 function comecarHistoria() {
-  $('#intro').hidden = true;
-  $('#dialogo').hidden = false;
+  selecionarElemento('#intro').hidden = true;
+  selecionarElemento('#dialogo').hidden = false;
   estado.fala = 0;
   mostrarFala();
-  $('#btn-proxima').focus();
+  selecionarElemento('#btn-proxima').focus();
 }
 
 function proximaFala() {
@@ -567,9 +570,9 @@ function proximaFala() {
 }
 
 function terminarHistoria() {
-  $('#dialogo').hidden = true;
+  selecionarElemento('#dialogo').hidden = true;
   iniciar();
-  $('#nome-cenario').focus();
+  selecionarElemento('#nome-cenario').focus();
 }
 
 /* =========================================================
@@ -583,7 +586,7 @@ function alternarTelaCheia() {
 }
 
 function atualizarBotaoTelaCheia() {
-  $('#btn-tela-cheia').textContent = document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia';
+  selecionarElemento('#btn-tela-cheia').textContent = document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia';
 }
 
 /* =========================================================
@@ -627,30 +630,30 @@ function finalizar(tipo) {
   estado.fim = true;
   clearInterval(estado.timer);
   fecharPainel();
-  $('#final-titulo').textContent = FINAIS[tipo].titulo;
-  $('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
-  $('#final-imagem').src = FINAIS[tipo].imagem;
-  $('#final-imagem').alt = FINAIS[tipo].alt;
-  $('#final-texto').textContent = FINAIS[tipo].texto;
-  $('#final-resumo').textContent = `Tempo restante: ${formatarTempo(estado.tempo)} | Erros: ${estado.erros}`;
-  $('#final').showModal();
+  selecionarElemento('#final-titulo').textContent = FINAIS[tipo].titulo;
+  selecionarElemento('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
+  selecionarElemento('#final-imagem').src = FINAIS[tipo].imagem;
+  selecionarElemento('#final-imagem').alt = FINAIS[tipo].alt;
+  selecionarElemento('#final-texto').textContent = FINAIS[tipo].texto;
+  selecionarElemento('#final-resumo').textContent = `Tempo restante: ${formatarTempo(estado.tempo)} | Erros: ${estado.erros}`;
+  selecionarElemento('#final').showModal();
 }
 
 /* =========================================================
    EVENTOS (botões fixos da página)
    ========================================================= */
-$('#btn-iniciar').onclick = comecarHistoria;
-$('#btn-proxima').onclick = proximaFala;
-$('#btn-pular').onclick = terminarHistoria;
-$('#btn-tela-cheia').onclick = alternarTelaCheia;
-$('#btn-tela-cheia').hidden = !document.fullscreenEnabled; // some onde o navegador não suporta
+selecionarElemento('#btn-iniciar').onclick = comecarHistoria;
+selecionarElemento('#btn-proxima').onclick = proximaFala;
+selecionarElemento('#btn-pular').onclick = terminarHistoria;
+selecionarElemento('#btn-tela-cheia').onclick = alternarTelaCheia;
+selecionarElemento('#btn-tela-cheia').hidden = !document.fullscreenEnabled; // some onde o navegador não suporta
 document.onfullscreenchange = atualizarBotaoTelaCheia;     // também reage ao Esc
-$('#btn-diario').onclick = () => {
-  $('#diario').showModal();
-  $('#diario').scrollTop = $('#diario').scrollHeight; // abre na anotação mais recente
+selecionarElemento('#btn-diario').onclick = () => {
+  selecionarElemento('#diario').showModal();
+  selecionarElemento('#diario').scrollTop = selecionarElemento('#diario').scrollHeight; // abre na anotação mais recente
 };
-$('#btn-fechar-diario').onclick = () => $('#diario').close();
-$('#btn-fechar-painel').onclick = fecharPainel;
-$('#btn-reiniciar').onclick = () => location.reload();
-$('#final').oncancel = (e) => e.preventDefault();
+selecionarElemento('#btn-fechar-diario').onclick = () => selecionarElemento('#diario').close();
+selecionarElemento('#btn-fechar-painel').onclick = fecharPainel;
+selecionarElemento('#btn-reiniciar').onclick = () => location.reload();
+selecionarElemento('#final').oncancel = (e) => e.preventDefault();
 atualizarRelogio();
