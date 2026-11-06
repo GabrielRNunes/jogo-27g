@@ -44,6 +44,7 @@
       <p>Tempo: <strong id="relogio">5:00</strong></p>
       <p>Erros: <strong id="erros">0</strong></p>
       <button type="button" id="btn-diario">Diário de bordo</button>
+      <button type="button" id="btn-calculadora">Calculadora binária</button>
       <button type="button" id="btn-tela-cheia">Tela cheia</button>
     </section>
 
@@ -94,6 +95,21 @@
     <h3 id="diario-titulo">Diário de bordo</h3>
     <ol id="lista-log"></ol>
     <button type="button" id="btn-fechar-diario">Fechar</button>
+  </dialog>
+
+  <dialog id="calculadora-binaria" aria-labelledby="calculadora-titulo">
+    <h3 id="calculadora-titulo">Calculadora binária</h3>
+    <p>Use se precisar: digite um grupo de quatro bits para ver como a conta funciona. Os pesos são <strong>8, 4, 2 e 1</strong>, da esquerda para a direita.</p>
+    <form id="form-binario">
+      <label for="numero-binario">Grupo de quatro bits</label>
+      <input id="numero-binario" type="text" inputmode="numeric" pattern="[01]{4}" minlength="4" maxlength="4" placeholder="Ex.: 0101" aria-describedby="orientacao-binaria" required>
+      <p id="orientacao-binaria">Use apenas 0 e 1. Cada 1 inclui o peso da posição; cada 0 vale zero na soma.</p>
+      <button type="submit">Calcular e entender</button>
+      <button type="reset">Limpar conta</button>
+    </form>
+    <div id="resultado-binario" role="status" aria-live="polite" aria-atomic="true"></div>
+    <p>Converta cada grupo separadamente e mantenha a ordem dos dígitos. O relógio do jogo continua enquanto você usa a calculadora.</p>
+    <button type="button" id="btn-fechar-calculadora">Fechar calculadora</button>
   </dialog>
 
   <dialog id="final" aria-labelledby="final-titulo">

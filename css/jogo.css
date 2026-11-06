@@ -177,6 +177,27 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
   outline-offset: 3px;
 }
 
+/* ---------- Calculadora binária ---------- */
+#calculadora-binaria {
+  font-family: var(--fonte-corpo);
+  line-height: 1.6;
+}
+#numero-binario {
+  display: block;
+  width: 100%;
+  max-width: 12rem;
+  margin-top: 0.5rem;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 1.25rem;
+  letter-spacing: 0.25em;
+}
+#form-binario button {
+  margin-bottom: 0.5rem;
+}
+#resultado-binario {
+  overflow-wrap: anywhere;
+}
+
 /* ---------- Minigame de fios ---------- */
 .fios {
   display: grid;

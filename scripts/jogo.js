@@ -230,6 +230,52 @@ function clicarNoFio(evento) {
 buscarElemento('#painel-corpo').onsubmit = enviarCodigo;
 buscarElemento('#painel-corpo').onclick = clicarNoFio;
 
+/* ---------- Calculadora opcional: mostra a conta digitada pelo jogador ---------- */
+function abrirCalculadoraBinaria() {
+  buscarElemento('#calculadora-binaria').showModal();
+  buscarElemento('#numero-binario').focus();
+}
+
+function fecharCalculadoraBinaria() {
+  const calculadora = buscarElemento('#calculadora-binaria');
+  if (calculadora.open) calculadora.close();
+}
+
+function calcularBinario(evento) {
+  evento.preventDefault();
+  const numeroBinario = buscarElemento('#numero-binario').value.trim();
+  const resultado = buscarElemento('#resultado-binario');
+  if (!/^[01]{4}$/.test(numeroBinario)) {
+    resultado.textContent = 'Digite exatamente quatro bits, usando apenas 0 e 1.';
+    return;
+  }
+
+  const pesos = [8, 4, 2, 1];
+  const etapas = [];
+  const parcelas = [];
+  let total = 0;
+  for (let posicao = 0; posicao < pesos.length; posicao++) {
+    const bit = Number(numeroBinario[posicao]);
+    const peso = pesos[posicao];
+    const valor = bit * peso;
+    etapas.push(bit + ' × ' + peso + ' = ' + valor);
+    parcelas.push(valor);
+    total += valor;
+  }
+
+  // Só os valores validados acima entram no HTML; o código do cofre não é preenchido.
+  resultado.innerHTML = '<p>' + etapas.join('<br>') + '</p>' +
+    '<p><strong>Soma: ' + parcelas.join(' + ') + ' = ' + total + '</strong></p>' +
+    '<p>O grupo <code>' + numeroBinario + '</code> representa <strong>' + total + '</strong> em decimal.</p>';
+  if (total > 9) {
+    resultado.innerHTML += '<p>Este resultado tem dois dígitos. No arquivo do PC, cada grupo representa um único dígito de 0 a 9; confira os bits que você digitou.</p>';
+  }
+}
+
+function limparCalculoBinario() {
+  buscarElemento('#resultado-binario').textContent = '';
+}
+
 /* =========================================================
    OBJETOS INTERATIVOS (10 enigmas + 1 oculto)
    pos = [left%, top%, largura%, altura%]
@@ -360,6 +406,7 @@ const objetos = {
       abrirPainel('PC do setup', `
         <p>Arquivo "cofre.txt" (cada grupo de 4 bits é um dígito, de 0 a 9):</p>
         <pre>0111  0011  1001</pre>
+        <button type="button" id="btn-calculadora-pc">Abrir calculadora binária</button>
         <details class="ajuda-binaria">
           <summary>Precisa de ajuda para ler o binário?</summary>
           <p>Abra as dicas conforme precisar. O exemplo usa outro número para você aprender o caminho e resolver o arquivo.</p>
@@ -390,6 +437,7 @@ const objetos = {
             <p>Converta um grupo por vez. Depois, junte os três dígitos na ordem em que aparecem, da esquerda para a direita. Não some os resultados dos grupos entre si.</p>
           </details>
         </details>`);
+      buscarElemento('#btn-calculadora-pc').onclick = abrirCalculadoraBinaria;
     },
     interagir() {
       if (!objetos.combo.resolvido) return mensagem('O PC está bloqueado. O painel de comandos ao lado parece controlá-lo.');
@@ -777,6 +825,7 @@ function finalizar(tipo) {
   estado.fim = true;
   estado.rodando = false;
   clearInterval(estado.cronometro);
+  fecharCalculadoraBinaria();
   fecharPainel();
   buscarElemento('#final-titulo').textContent = FINAIS[tipo].titulo;
   buscarElemento('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
@@ -815,6 +864,10 @@ function manterFinalAberto(evento) {
 }
 
 buscarElemento('#btn-diario').onclick = abrirDiario;
+buscarElemento('#btn-calculadora').onclick = abrirCalculadoraBinaria;
+buscarElemento('#btn-fechar-calculadora').onclick = fecharCalculadoraBinaria;
+buscarElemento('#form-binario').onsubmit = calcularBinario;
+buscarElemento('#form-binario').onreset = limparCalculoBinario;
 buscarElemento('#btn-fechar-diario').onclick = fecharDiario;
 buscarElemento('#btn-fechar-painel').onclick = fecharPainel;
 buscarElemento('#btn-reiniciar').onclick = reiniciarJogo;
