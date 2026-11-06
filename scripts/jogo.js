@@ -26,17 +26,25 @@ const estado = {
   erros: 0,
   cenario: 'quarto',
   inventario: [],
-  log: [],
+  diario: [],
   selecionado: null,
   fala: 0, // posição atual no diálogo da história
   energia: false,
   rodando: false,
   fim: false,
-  timer: null
+  cronometro: null
 };
 
-const $ = (seletor) => document.querySelector(seletor);
-const formatarTempo = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+function buscarElemento(seletor) {
+  return document.querySelector(seletor);
+}
+
+function formatarTempo(segundosTotais) {
+  const minutos = Math.floor(segundosTotais / 60);
+  const segundos = segundosTotais % 60;
+  const segundosFormatados = String(segundos).padStart(2, '0');
+  return minutos + ':' + segundosFormatados;
+}
 
 /* ---------- Itens (objeto de textos) ---------- */
 const ITENS = {
@@ -79,13 +87,13 @@ const CENARIOS = {
 
 /* ---------- Mensagens, log, erros ---------- */
 function mensagem(texto) {
-  $('#mensagem').textContent = texto;
+  buscarElemento('#mensagem').textContent = texto;
 }
 
 function registrar(texto, tipo = 'nota') {
-  estado.log.push({ quando: formatarTempo(estado.tempo), texto, tipo });
+  estado.diario.push({ quando: formatarTempo(estado.tempo), texto, tipo });
   mensagem(texto);
-  renderLog();
+  atualizarDiario();
   atualizarMarcas();
 }
 
@@ -93,55 +101,71 @@ function erro(motivo) {
   if (estado.fim) return;
   estado.erros++;
   estado.tempo = Math.max(0, estado.tempo - PENALIDADE_ERRO);
-  $('#erros').textContent = String(estado.erros);
+  buscarElemento('#erros').textContent = String(estado.erros);
   atualizarRelogio();
   registrar(`Erro: ${motivo} (-${PENALIDADE_ERRO} s)`, 'erro');
   if (estado.tempo === 0) finalizar('capturado');
 }
 
-function renderLog() {
-  $('#lista-log').innerHTML = estado.log
-    .map((item) => `<li class="${item.tipo}"><span class="hora">${item.quando}</span> ${item.texto}</li>`)
-    .join('');
+function atualizarDiario() {
+  let conteudo = '';
+  for (const registro of estado.diario) {
+    conteudo += `<li class="${registro.tipo}"><span class="hora">${registro.quando}</span> ${registro.texto}</li>`;
+  }
+  buscarElemento('#lista-log').innerHTML = conteudo;
 }
 
 /* ---------- Inventário ---------- */
 function adicionarItem(id) {
   if (!estado.inventario.includes(id)) estado.inventario.push(id);
-  renderInventario();
+  atualizarInventario();
 }
 
-function renderInventario() {
-  $('#inventario').innerHTML = estado.inventario.length === 0
-    ? '<li>Vazio.</li>'
-    : estado.inventario
-      .map((id) => `<li><button type="button" data-item="${id}" aria-pressed="${estado.selecionado === id}">${ITENS[id].nome}</button></li>`)
-      .join('');
+function atualizarInventario() {
+  let conteudo = '<li>Vazio.</li>';
+  if (estado.inventario.length > 0) {
+    conteudo = '';
+    for (const idItem of estado.inventario) {
+      const item = ITENS[idItem];
+      const selecionado = estado.selecionado === idItem;
+      conteudo += `<li><button type="button" data-item="${idItem}" aria-pressed="${selecionado}">${item.nome}</button></li>`;
+    }
+  }
+  buscarElemento('#inventario').innerHTML = conteudo;
 }
 
-// Delegação: um único onclick para todos os botões do inventário
-$('#inventario').onclick = (e) => {
-  const botao = e.target.closest('[data-item]');
+// Um único evento atende todos os botões, inclusive após atualizar o inventário.
+function selecionarItem(evento) {
+  const botao = evento.target.closest('[data-item]');
   if (!botao) return;
-  const id = botao.dataset.item;
-  estado.selecionado = estado.selecionado === id ? null : id;
-  mensagem(estado.selecionado
-    ? `${ITENS[id].nome} selecionado. ${ITENS[id].descricao} Clique em um objeto para usá-lo.`
-    : 'Item desselecionado.');
-  renderInventario();
-  const de_novo = $(`[data-item="${id}"]`);
-  if (de_novo) de_novo.focus(); // mantém o foco para quem usa teclado
-};
+
+  const idItem = botao.dataset.item;
+  if (estado.selecionado === idItem) {
+    estado.selecionado = null;
+    mensagem('Item desselecionado.');
+  } else {
+    estado.selecionado = idItem;
+    const item = ITENS[idItem];
+    mensagem(`${item.nome} selecionado. ${item.descricao} Clique em um objeto para usá-lo.`);
+  }
+
+  atualizarInventario();
+  // O botão foi recriado: devolvemos o foco para continuar usando o teclado.
+  const botaoAtualizado = buscarElemento(`[data-item="${idItem}"]`);
+  if (botaoAtualizado) botaoAtualizado.focus();
+}
+
+buscarElemento('#inventario').onclick = selecionarItem;
 
 /* ---------- Painel (dialog nativo = acessível, Esc fecha) ---------- */
 let painelAtual = {}; // funções do painel aberto: aoEnviar, aoClicar, aoTecla, aoFechar
 
 function abrirPainel(titulo, corpo, funcoes = {}) {
   painelAtual = funcoes;
-  $('#painel-titulo').textContent = titulo;
-  $('#painel-corpo').innerHTML = corpo;
+  buscarElemento('#painel-titulo').textContent = titulo;
+  buscarElemento('#painel-corpo').innerHTML = corpo;
   document.onkeydown = funcoes.aoTecla || null;
-  $('#painel').showModal();
+  buscarElemento('#painel').showModal();
 }
 
 function limparPainel() {
@@ -151,18 +175,20 @@ function limparPainel() {
 }
 
 function fecharPainel() {
-  const painel = $('#painel');
+  const painel = buscarElemento('#painel');
   if (painel.open) painel.close();
   limparPainel();
 }
 
 // Esc fecha o dialog sem passar por fecharPainel(): limpa aqui também
-$('#painel').onclose = () => {
-  if (!$('#painel').open) limparPainel();
-};
+function aoFecharPainel() {
+  if (!buscarElemento('#painel').open) limparPainel();
+}
+
+buscarElemento('#painel').onclose = aoFecharPainel;
 
 // Formulário de código (HTML em texto)
-function formCodigo(rotulo, tamanho) {
+function criarFormularioCodigo(rotulo, tamanho) {
   return `
     <form>
       <label>${rotulo} <input type="text" required autocomplete="off" maxlength="${tamanho}"></label>
@@ -172,22 +198,37 @@ function formCodigo(rotulo, tamanho) {
 }
 
 // submit sobe (bubbles) até o container do painel
-$('#painel-corpo').onsubmit = (e) => {
-  e.preventDefault();
+function enviarCodigo(evento) {
+  evento.preventDefault();
   if (!painelAtual.aoEnviar) return;
-  const campo = e.target.querySelector('input');
-  const aviso = e.target.querySelector('[role="alert"]');
-  const resposta = painelAtual.aoEnviar(campo.value.trim().toUpperCase());
-  aviso.textContent = resposta || '';
-  if (!resposta) fecharPainel();
-  else campo.select();
-};
 
-// Cliques dentro do painel (minigame dos fios)
-$('#painel-corpo').onclick = (e) => {
-  const fio = e.target.closest('[data-fio]');
-  if (fio && painelAtual.aoClicar) painelAtual.aoClicar(Number(fio.dataset.fio));
-};
+  const formulario = evento.target;
+  const campo = formulario.querySelector('input');
+  const aviso = formulario.querySelector('[role="alert"]');
+  const codigoDigitado = campo.value.trim().toUpperCase();
+  const resposta = painelAtual.aoEnviar(codigoDigitado);
+
+  // Uma resposta vazia significa que o código foi aceito.
+  // Se o erro zerou o tempo, finalizar() já fechou o painel.
+  if (estado.fim) return;
+  aviso.textContent = resposta || '';
+  if (!resposta) {
+    fecharPainel();
+  } else {
+    campo.select();
+  }
+}
+
+function clicarNoFio(evento) {
+  const botaoFio = evento.target.closest('[data-fio]');
+  if (botaoFio && painelAtual.aoClicar) {
+    const indiceFio = Number(botaoFio.dataset.fio);
+    painelAtual.aoClicar(indiceFio);
+  }
+}
+
+buscarElemento('#painel-corpo').onsubmit = enviarCodigo;
+buscarElemento('#painel-corpo').onclick = clicarNoFio;
 
 /* =========================================================
    OBJETOS INTERATIVOS (10 enigmas + 1 oculto)
@@ -199,7 +240,8 @@ const objetos = {
     cenario: 'quarto', nome: 'Calendário da final', pos: [6.2, 13.3, 15.0, 25.6],
     inspecionado: false, resolvido: false,
     interagir() {
-      this.inspecionado = this.resolvido = true;
+      this.inspecionado = true;
+      this.resolvido = true;
       registrar('Calendário: a final é dia 15/11. Um post-it colado diz: "senha do terminal = ORBITA".');
     }
   },
@@ -208,18 +250,25 @@ const objetos = {
   gaveta: {
     cenario: 'quarto', nome: 'Gaveta com cadeado', pos: [60.0, 48.9, 22.5, 21.1],
     resolvido: false, liberaEm: null,
-    bloqueada() { return this.liberaEm !== null && estado.tempo > this.liberaEm; },
+    bloqueada() {
+      // O relógio é regressivo: a gaveta libera quando chega ao tempo marcado.
+      return this.liberaEm !== null && estado.tempo > this.liberaEm;
+    },
     bloquear() {
       this.liberaEm = estado.tempo - 45;
       registrar('A gaveta eletrônica travou por 45 segundos (erros no terminal).');
     },
     interagir() {
+      const gaveta = this;
       if (this.resolvido) return mensagem('A gaveta está vazia.');
       if (this.bloqueada()) return mensagem('Gaveta travada pelo sistema. Aguarde alguns segundos.');
-      abrirPainel('Gaveta com cadeado', formCodigo('Código de 4 dígitos:', 4), {
-        aoEnviar: (v) => {
-          if (v !== CODIGOS.gaveta) { erro('código da gaveta incorreto'); return 'Código incorreto.'; }
-          this.resolvido = true;
+      abrirPainel('Gaveta com cadeado', criarFormularioCodigo('Código de 4 dígitos:', 4), {
+        aoEnviar: function (codigoDigitado) {
+          if (codigoDigitado !== CODIGOS.gaveta) {
+            erro('código da gaveta incorreto');
+            return 'Código incorreto.';
+          }
+          gaveta.resolvido = true;
           adicionarItem('pendrive');
           registrar('Gaveta aberta. Você pegou um pen drive.');
           return null;
@@ -233,16 +282,17 @@ const objetos = {
     cenario: 'quarto', nome: 'Terminal do quarto', pos: [35.0, 36.7, 20.0, 23.3],
     resolvido: false, falhas: 0,
     interagir() {
+      const terminal = this;
       if (this.resolvido) return mensagem('Terminal já liberado. Veja o diário de bordo.');
-      abrirPainel('Terminal do quarto', formCodigo('Senha:', 12), {
-        aoEnviar: (v) => {
-          if (v !== CODIGOS.terminal) {
-            this.falhas++;
+      abrirPainel('Terminal do quarto', criarFormularioCodigo('Senha:', 12), {
+        aoEnviar: function (codigoDigitado) {
+          if (codigoDigitado !== CODIGOS.terminal) {
+            terminal.falhas++;
             erro('senha do terminal incorreta');
-            if (this.falhas % 2 === 0) objetos.gaveta.bloquear();
+            if (terminal.falhas % 2 === 0) objetos.gaveta.bloquear();
             return 'Senha incorreta.';
           }
-          this.resolvido = true;
+          terminal.resolvido = true;
           registrar('Terminal liberado. Log: "cadeado da geladeira = 042". Fragmento de PIN: 26.');
           return null;
         }
@@ -256,37 +306,49 @@ const objetos = {
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('O painel já está liberado.');
+      const painelComandos = this;
       const teclas = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
       const setas = { ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→' };
-      const alvo = Array.from({ length: 5 }, () => teclas[Math.floor(Math.random() * teclas.length)]);
-      let i = 0;
+      const sequencia = [];
+      for (let quantidade = 0; quantidade < 5; quantidade++) {
+        const indiceSorteado = Math.floor(Math.random() * teclas.length);
+        sequencia.push(teclas[indiceSorteado]);
+      }
+      let passoAtual = 0;
 
-      const desenhar = () => {
-        $('#painel-corpo .sequencia').textContent =
-          alvo.map((t, n) => (n < i ? 'OK' : setas[t])).join(' ');
-      };
+      function mostrarSetas() {
+        const partes = [];
+        for (let indice = 0; indice < sequencia.length; indice++) {
+          if (indice < passoAtual) {
+            partes.push('OK');
+          } else {
+            partes.push(setas[sequencia[indice]]);
+          }
+        }
+        buscarElemento('#painel-corpo .sequencia').textContent = partes.join(' ');
+      }
 
-      const aoTecla = (e) => {
-        if (!teclas.includes(e.key)) return;
-        e.preventDefault();
-        if (e.key === alvo[i]) {
-          i++;
-          desenhar();
-          if (i === alvo.length) {
-            this.resolvido = true;
+      function verificarTecla(evento) {
+        if (!teclas.includes(evento.key)) return;
+        evento.preventDefault();
+        if (evento.key === sequencia[passoAtual]) {
+          passoAtual++;
+          mostrarSetas();
+          if (passoAtual === sequencia.length) {
+            painelComandos.resolvido = true;
             fecharPainel();
             registrar('Painel de comandos liberado: o PC do setup agora aceita mídia.');
           }
         } else {
-          i = 0;
-          desenhar();
+          passoAtual = 0;
+          mostrarSetas();
         }
-      };
+      }
 
       abrirPainel('Painel de comandos', `
         <p>Digite a sequência usando as setas do teclado. Errou uma tecla, recomeça.</p>
-        <p class="sequencia" role="status"></p>`, { aoTecla });
-      desenhar();
+        <p class="sequencia" role="status"></p>`, { aoTecla: verificarTecla });
+      mostrarSetas();
     }
   },
 
@@ -297,7 +359,37 @@ const objetos = {
     mostrar() {
       abrirPainel('PC do setup', `
         <p>Arquivo "cofre.txt" (cada grupo de 4 bits é um dígito, de 0 a 9):</p>
-        <pre>0111  0011  1001</pre>`);
+        <pre>0111  0011  1001</pre>
+        <details class="ajuda-binaria">
+          <summary>Precisa de ajuda para ler o binário?</summary>
+          <p>Abra as dicas conforme precisar. O exemplo usa outro número para você aprender o caminho e resolver o arquivo.</p>
+
+          <details>
+            <summary>1. Entenda o valor de cada posição</summary>
+            <p>Em um grupo de quatro bits, as posições valem <strong>8, 4, 2 e 1</strong>, da esquerda para a direita. Lendo da direita para a esquerda, cada valor é o dobro do anterior.</p>
+            <p>O bit <strong>1</strong> significa “some o valor desta posição”. O bit <strong>0</strong> significa “ignore esta posição”.</p>
+          </details>
+
+          <details>
+            <summary>2. Veja um exemplo diferente do arquivo</summary>
+            <table>
+              <caption>Exemplo: 0101. Pesos no cabeçalho, bits na linha abaixo.</caption>
+              <thead>
+                <tr><th scope="col">8</th><th scope="col">4</th><th scope="col">2</th><th scope="col">1</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+              </tbody>
+            </table>
+            <p>Os bits 1 estão nas posições de valor 4 e 1. Portanto, <strong>4 + 1 = 5</strong>: o grupo <code>0101</code> representa o dígito 5.</p>
+          </details>
+
+          <details>
+            <summary>3. Aplique o método ao arquivo</summary>
+            <p>Alinhe cada grupo do arquivo com os pesos <strong>8 · 4 · 2 · 1</strong>. Some apenas os pesos que têm um bit 1 abaixo deles. Você pode anotar as somas em um papel.</p>
+            <p>Converta um grupo por vez. Depois, junte os três dígitos na ordem em que aparecem, da esquerda para a direita. Não some os resultados dos grupos entre si.</p>
+          </details>
+        </details>`);
     },
     interagir() {
       if (!objetos.combo.resolvido) return mensagem('O PC está bloqueado. O painel de comandos ao lado parece controlá-lo.');
@@ -314,11 +406,15 @@ const objetos = {
     cenario: 'cozinha', nome: 'Geladeira com cadeado', pos: [6.2, 15.1, 20.6, 54.9],
     resolvido: false,
     interagir() {
+      const geladeira = this;
       if (this.resolvido) return mensagem('A geladeira está aberta. Só sobrou energético.');
-      abrirPainel('Geladeira', formCodigo('Código de 3 dígitos:', 3), {
-        aoEnviar: (v) => {
-          if (v !== CODIGOS.geladeira) { erro('código da geladeira incorreto'); return 'Código incorreto.'; }
-          this.resolvido = true;
+      abrirPainel('Geladeira', criarFormularioCodigo('Código de 3 dígitos:', 3), {
+        aoEnviar: function (codigoDigitado) {
+          if (codigoDigitado !== CODIGOS.geladeira) {
+            erro('código da geladeira incorreto');
+            return 'Código incorreto.';
+          }
+          geladeira.resolvido = true;
           adicionarItem('cartao');
           registrar('Geladeira aberta. Dentro de uma marmita, um cartão de acesso.');
           return null;
@@ -333,54 +429,79 @@ const objetos = {
     resolvido: false,
     interagir() {
       if (this.resolvido) return mensagem('A energia já foi restabelecida.');
+      const quadroFusiveis = this;
       const cores = ['vermelho', 'verde', 'azul', 'amarelo'];
-      const alvo = Array.from({ length: 4 }, () => Math.floor(Math.random() * cores.length));
-      let i = 0;
-      let aceitando = false;
-      const timers = [];
-      const status = () => $('#painel-corpo [role="status"]');
-      const fio = (n) => $(`#painel-corpo [data-fio="${n}"]`);
+      const sequencia = [];
+      for (let quantidade = 0; quantidade < 4; quantidade++) {
+        sequencia.push(Math.floor(Math.random() * cores.length));
+      }
+      let passoAtual = 0;
+      let podeClicar = false;
+      const temporizadores = [];
 
-      const mostrarSequencia = () => {
-        aceitando = false;
-        i = 0;
-        status().textContent = 'Memorize a ordem dos fios...';
-        alvo.forEach((n, k) => {
-          timers.push(setTimeout(() => {
-            fio(n).classList.add('aceso');
-            status().textContent = `Fio ${k + 1}: ${cores[n]}`;
-          }, 800 * (k + 1)));
-          timers.push(setTimeout(() => fio(n).classList.remove('aceso'), 800 * (k + 1) + 450));
-        });
-        timers.push(setTimeout(() => {
-          aceitando = true;
-          status().textContent = 'Sua vez: clique na mesma ordem.';
-        }, 800 * alvo.length + 900));
-      };
+      function mostrarStatus(texto) {
+        buscarElemento('#painel-corpo [role="status"]').textContent = texto;
+      }
 
-      const aoClicar = (n) => {
-        if (!aceitando) return;
-        if (n === alvo[i]) {
-          i++;
-          if (i === alvo.length) {
-            this.resolvido = true;
+      function buscarFio(indiceFio) {
+        return buscarElemento(`#painel-corpo [data-fio="${indiceFio}"]`);
+      }
+
+      function mostrarSequencia() {
+        podeClicar = false;
+        passoAtual = 0;
+        mostrarStatus('Memorize a ordem dos fios...');
+        for (let passo = 0; passo < sequencia.length; passo++) {
+          const indiceFio = sequencia[passo];
+          const momentoDeAcender = 800 * (passo + 1);
+          const acender = setTimeout(function () {
+            buscarFio(indiceFio).classList.add('aceso');
+            mostrarStatus(`Fio ${passo + 1}: ${cores[indiceFio]}`);
+          }, momentoDeAcender);
+          const apagar = setTimeout(function () {
+            buscarFio(indiceFio).classList.remove('aceso');
+          }, momentoDeAcender + 450);
+          temporizadores.push(acender, apagar);
+        }
+        const liberarCliques = setTimeout(function () {
+          podeClicar = true;
+          mostrarStatus('Sua vez: clique na mesma ordem.');
+        }, 800 * sequencia.length + 900);
+        temporizadores.push(liberarCliques);
+      }
+
+      function verificarFio(indiceFio) {
+        if (!podeClicar) return;
+        if (indiceFio === sequencia[passoAtual]) {
+          passoAtual++;
+          if (passoAtual === sequencia.length) {
+            quadroFusiveis.resolvido = true;
             estado.energia = true;
             fecharPainel();
             registrar('Energia restabelecida na sala de servidores.');
           }
         } else {
-          aceitando = false;
+          podeClicar = false;
           erro('fio errado no quadro de fusíveis');
           if (!estado.fim) mostrarSequencia();
         }
-      };
+      }
 
-      const botoes = cores
-        .map((cor, n) => `<button type="button" class="fio fio-${cor}" data-fio="${n}">${cor}</button>`)
-        .join('');
+      function cancelarTemporizadores() {
+        // Fechar o painel também deve interromper as luzes da sequência.
+        for (const temporizador of temporizadores) {
+          clearTimeout(temporizador);
+        }
+      }
+
+      let botoes = '';
+      for (let indiceFio = 0; indiceFio < cores.length; indiceFio++) {
+        const cor = cores[indiceFio];
+        botoes += `<button type="button" class="fio fio-${cor}" data-fio="${indiceFio}">${cor}</button>`;
+      }
       abrirPainel('Quadro de fusíveis', `<p role="status"></p><div class="fios">${botoes}</div>`, {
-        aoClicar,
-        aoFechar: () => timers.forEach(clearTimeout)
+        aoClicar: verificarFio,
+        aoFechar: cancelarTemporizadores
       });
       mostrarSequencia();
     }
@@ -404,11 +525,15 @@ const objetos = {
     cenario: 'treino', nome: 'Cofre do troféu', pos: [72.4, 46.3, 12.5, 23.7],
     resolvido: false,
     interagir() {
+      const cofre = this;
       if (this.resolvido) return mensagem('O cofre está aberto. O troféu falso brilha lá dentro.');
-      abrirPainel('Cofre do troféu', formCodigo('Código de 3 dígitos:', 3), {
-        aoEnviar: (v) => {
-          if (v !== CODIGOS.cofre) { erro('código do cofre incorreto'); return 'Código incorreto.'; }
-          this.resolvido = true;
+      abrirPainel('Cofre do troféu', criarFormularioCodigo('Código de 3 dígitos:', 3), {
+        aoEnviar: function (codigoDigitado) {
+          if (codigoDigitado !== CODIGOS.cofre) {
+            erro('código do cofre incorreto');
+            return 'Código incorreto.';
+          }
+          cofre.resolvido = true;
           registrar('Cofre aberto. Um papel: "fragmento de PIN: 81".');
           return null;
         }
@@ -421,10 +546,14 @@ const objetos = {
     cenario: 'corredor', nome: 'Fechadura programável', pos: [37.5, 15.6, 25.0, 52.2],
     resolvido: false,
     interagir() {
-      abrirPainel('Fechadura programável', formCodigo('PIN de 6 dígitos:', 6), {
-        aoEnviar: (v) => {
-          if (v !== CODIGOS.fechadura) { erro('PIN incorreto na fechadura'); return 'PIN incorreto.'; }
-          this.resolvido = true;
+      const fechadura = this;
+      abrirPainel('Fechadura programável', criarFormularioCodigo('PIN de 6 dígitos:', 6), {
+        aoEnviar: function (codigoDigitado) {
+          if (codigoDigitado !== CODIGOS.fechadura) {
+            erro('PIN incorreto na fechadura');
+            return 'PIN incorreto.';
+          }
+          fechadura.resolvido = true;
           registrar('Fechadura reprogramada. A porta se abre.');
           decidirFinal();
           return null;
@@ -445,76 +574,95 @@ const objetos = {
     }
   }
 };
-Object.entries(objetos).forEach(([id, o]) => { o.id = id; });
+// Guarda o identificador em cada objeto para montar os botões do cenário.
+for (const idObjeto of Object.keys(objetos)) {
+  objetos[idObjeto].id = idObjeto;
+}
 
 /* =========================================================
    CENÁRIO (hotspots são <button>: funcionam com teclado)
    ========================================================= */
-function hotspot(rotulo, pos, classe, dados) {
+function criarBotaoCenario(rotulo, posicao, classe, dados) {
+  const [esquerda, topo, largura, altura] = posicao;
   return `<button type="button" class="hotspot ${classe}" ${dados}
-    style="left:${pos[0]}%;top:${pos[1]}%;width:${pos[2]}%;height:${pos[3]}%"
+    style="left:${esquerda}%;top:${topo}%;width:${largura}%;height:${altura}%"
     aria-label="${rotulo}"><span>${rotulo}</span></button>`;
 }
 
-function renderCenario() {
-  const c = CENARIOS[estado.cenario];
-  const portas = c.portas.map((p) =>
-    hotspot(`Ir para: ${CENARIOS[p.destino].nome}`, p.pos, 'porta', `data-destino="${p.destino}"`));
-  const itens = Object.values(objetos)
-    .filter((o) => o.cenario === estado.cenario)
-    .map((o) => hotspot(o.nome, o.pos, o.oculto ? 'oculto' : 'objeto', `data-obj="${o.id}"`));
+function atualizarCenario() {
+  const cenarioAtual = CENARIOS[estado.cenario];
+  let conteudo = '';
 
-  $('#cenario').className = `cenario cena-${estado.cenario}`;
-  $('#nome-cenario').textContent = c.nome;
-  $('#cenario').innerHTML = [...portas, ...itens].join('');
+  for (const porta of cenarioAtual.portas) {
+    const rotulo = 'Ir para: ' + CENARIOS[porta.destino].nome;
+    conteudo += criarBotaoCenario(rotulo, porta.pos, 'porta', `data-destino="${porta.destino}"`);
+  }
+  for (const objeto of Object.values(objetos)) {
+    if (objeto.cenario !== estado.cenario) continue;
+    let classe = 'objeto';
+    if (objeto.oculto) classe = 'oculto';
+    conteudo += criarBotaoCenario(objeto.nome, objeto.pos, classe, `data-obj="${objeto.id}"`);
+  }
+
+  const areaCenario = buscarElemento('#cenario');
+  areaCenario.className = `cenario cena-${estado.cenario}`;
+  areaCenario.innerHTML = conteudo;
+  buscarElemento('#nome-cenario').textContent = cenarioAtual.nome;
   atualizarMarcas();
 }
 
 function irPara(destino) {
   estado.cenario = destino;
-  renderCenario();
+  atualizarCenario();
   const { nome, dica } = CENARIOS[destino];
   mensagem(`Você entrou em: ${nome}. ${dica && !objetos.adesivo.resolvido ? dica : ''}`);
   if (dica && !objetos.adesivo.resolvido && !objetos.adesivo.dicaNoDiario) {
     objetos.adesivo.dicaNoDiario = true; // a dica também fica no diário, para reler depois
     registrar(`${nome}: ${dica}`);
   }
-  $('#nome-cenario').focus();
+  buscarElemento('#nome-cenario').focus();
 }
 
 // Delegação: um único onclick para portas e objetos de qualquer cenário
-$('#cenario').onclick = (e) => {
-  const botao = e.target.closest('button');
+function interagirComCenario(evento) {
+  const botao = evento.target.closest('button');
   if (!botao || estado.fim) return;
   if (botao.dataset.destino) irPara(botao.dataset.destino);
   else if (botao.dataset.obj) objetos[botao.dataset.obj].interagir();
-};
+}
+
+buscarElemento('#cenario').onclick = interagirComCenario;
 
 function atualizarMarcas() {
-  document.querySelectorAll('#cenario [data-obj]').forEach((b) => {
-    b.classList.toggle('feito', Boolean(objetos[b.dataset.obj].resolvido));
-  });
+  const botoes = document.querySelectorAll('#cenario [data-obj]');
+  for (const botao of botoes) {
+    const objeto = objetos[botao.dataset.obj];
+    botao.classList.toggle('feito', Boolean(objeto.resolvido));
+  }
 }
 
 /* ---------- Relógio ---------- */
 function atualizarRelogio() {
-  const el = $('#relogio');
-  el.textContent = formatarTempo(estado.tempo);
-  el.classList.toggle('urgente', estado.tempo <= 60);
+  const relogio = buscarElemento('#relogio');
+  relogio.textContent = formatarTempo(estado.tempo);
+  relogio.classList.toggle('urgente', estado.tempo <= 60);
 }
 
 function iniciar() {
+  if (estado.rodando || estado.fim) return;
   estado.rodando = true;
-  $('#intro').hidden = true;
-  $('#jogo').hidden = false;
-  renderCenario();
-  renderInventario();
+  buscarElemento('#intro').hidden = true;
+  buscarElemento('#jogo').hidden = false;
+  atualizarCenario();
+  atualizarInventario();
   registrar('Lockdown ativado. Você tem 5 minutos para reprogramar a fechadura antes da segurança chegar.');
-  estado.timer = setInterval(() => {
-    estado.tempo--;
-    atualizarRelogio();
-    if (estado.tempo <= 0) finalizar('capturado');
-  }, 1000);
+  estado.cronometro = setInterval(contarSegundo, 1000);
+}
+
+function contarSegundo() {
+  estado.tempo = Math.max(0, estado.tempo - 1);
+  atualizarRelogio();
+  if (estado.tempo === 0) finalizar('capturado');
 }
 
 /* =========================================================
@@ -540,21 +688,21 @@ const HISTORIA = [
 function mostrarFala() {
   const fala = HISTORIA[estado.fala];
   const ultima = estado.fala === HISTORIA.length - 1;
-  $('#dialogo-nome').textContent = fala.nome;
-  $('#dialogo-nome').className = `falante falante-${fala.quem}`;
-  $('#dialogo-texto').textContent = fala.texto;
-  $('#dialogo-retrato').src = `assets/historia/${fala.quem}.svg`;
-  $('#dialogo-cena').hidden = !fala.cena; // quadro de impacto só na fala do lockdown
-  $('#dialogo-progresso').textContent = `${estado.fala + 1} / ${HISTORIA.length}`;
-  $('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
+  buscarElemento('#dialogo-nome').textContent = fala.nome;
+  buscarElemento('#dialogo-nome').className = `falante falante-${fala.quem}`;
+  buscarElemento('#dialogo-texto').textContent = fala.texto;
+  buscarElemento('#dialogo-retrato').src = `assets/historia/${fala.quem}.svg`;
+  buscarElemento('#dialogo-cena').hidden = !fala.cena; // quadro de impacto só na fala do lockdown
+  buscarElemento('#dialogo-progresso').textContent = `${estado.fala + 1} / ${HISTORIA.length}`;
+  buscarElemento('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
 }
 
 function comecarHistoria() {
-  $('#intro').hidden = true;
-  $('#dialogo').hidden = false;
+  buscarElemento('#intro').hidden = true;
+  buscarElemento('#dialogo').hidden = false;
   estado.fala = 0;
   mostrarFala();
-  $('#btn-proxima').focus();
+  buscarElemento('#btn-proxima').focus();
 }
 
 function proximaFala() {
@@ -567,9 +715,9 @@ function proximaFala() {
 }
 
 function terminarHistoria() {
-  $('#dialogo').hidden = true;
+  buscarElemento('#dialogo').hidden = true;
   iniciar();
-  $('#nome-cenario').focus();
+  buscarElemento('#nome-cenario').focus();
 }
 
 /* =========================================================
@@ -579,11 +727,13 @@ function alternarTelaCheia() {
   const pedido = document.fullscreenElement
     ? document.exitFullscreen()
     : document.documentElement.requestFullscreen();
-  pedido.catch(() => mensagem('O navegador bloqueou a tela cheia.'));
+  pedido.catch(function () {
+    mensagem('O navegador bloqueou a tela cheia.');
+  });
 }
 
 function atualizarBotaoTelaCheia() {
-  $('#btn-tela-cheia').textContent = document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia';
+  buscarElemento('#btn-tela-cheia').textContent = document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia';
 }
 
 /* =========================================================
@@ -625,32 +775,48 @@ function decidirFinal() {
 function finalizar(tipo) {
   if (estado.fim) return;
   estado.fim = true;
-  clearInterval(estado.timer);
+  estado.rodando = false;
+  clearInterval(estado.cronometro);
   fecharPainel();
-  $('#final-titulo').textContent = FINAIS[tipo].titulo;
-  $('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
-  $('#final-imagem').src = FINAIS[tipo].imagem;
-  $('#final-imagem').alt = FINAIS[tipo].alt;
-  $('#final-texto').textContent = FINAIS[tipo].texto;
-  $('#final-resumo').textContent = `Tempo restante: ${formatarTempo(estado.tempo)} | Erros: ${estado.erros}`;
-  $('#final').showModal();
+  buscarElemento('#final-titulo').textContent = FINAIS[tipo].titulo;
+  buscarElemento('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
+  buscarElemento('#final-imagem').src = FINAIS[tipo].imagem;
+  buscarElemento('#final-imagem').alt = FINAIS[tipo].alt;
+  buscarElemento('#final-texto').textContent = FINAIS[tipo].texto;
+  buscarElemento('#final-resumo').textContent = `Tempo restante: ${formatarTempo(estado.tempo)} | Erros: ${estado.erros}`;
+  buscarElemento('#final').showModal();
 }
 
 /* =========================================================
    EVENTOS (botões fixos da página)
    ========================================================= */
-$('#btn-iniciar').onclick = comecarHistoria;
-$('#btn-proxima').onclick = proximaFala;
-$('#btn-pular').onclick = terminarHistoria;
-$('#btn-tela-cheia').onclick = alternarTelaCheia;
-$('#btn-tela-cheia').hidden = !document.fullscreenEnabled; // some onde o navegador não suporta
+buscarElemento('#btn-iniciar').onclick = comecarHistoria;
+buscarElemento('#btn-proxima').onclick = proximaFala;
+buscarElemento('#btn-pular').onclick = terminarHistoria;
+buscarElemento('#btn-tela-cheia').onclick = alternarTelaCheia;
+buscarElemento('#btn-tela-cheia').hidden = !document.fullscreenEnabled; // some onde o navegador não suporta
 document.onfullscreenchange = atualizarBotaoTelaCheia;     // também reage ao Esc
-$('#btn-diario').onclick = () => {
-  $('#diario').showModal();
-  $('#diario').scrollTop = $('#diario').scrollHeight; // abre na anotação mais recente
-};
-$('#btn-fechar-diario').onclick = () => $('#diario').close();
-$('#btn-fechar-painel').onclick = fecharPainel;
-$('#btn-reiniciar').onclick = () => location.reload();
-$('#final').oncancel = (e) => e.preventDefault();
+function abrirDiario() {
+  const diario = buscarElemento('#diario');
+  diario.showModal();
+  diario.scrollTop = diario.scrollHeight; // abre na anotação mais recente
+}
+
+function fecharDiario() {
+  buscarElemento('#diario').close();
+}
+
+function reiniciarJogo() {
+  location.reload();
+}
+
+function manterFinalAberto(evento) {
+  evento.preventDefault();
+}
+
+buscarElemento('#btn-diario').onclick = abrirDiario;
+buscarElemento('#btn-fechar-diario').onclick = fecharDiario;
+buscarElemento('#btn-fechar-painel').onclick = fecharPainel;
+buscarElemento('#btn-reiniciar').onclick = reiniciarJogo;
+buscarElemento('#final').oncancel = manterFinalAberto;
 atualizarRelogio();

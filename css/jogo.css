@@ -159,6 +159,24 @@ input {
 [role="alert"] { color: var(--alerta); min-height: 1.5em; }
 pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
 
+/* A ajuda do PC abre em etapas, sem revelar o código do cofre. */
+.ajuda-binaria {
+  font-family: var(--fonte-corpo);
+  line-height: 1.6;
+}
+.ajuda-binaria details {
+  padding: 0.5rem;
+}
+.ajuda-binaria th,
+.ajuda-binaria td {
+  text-align: center;
+  padding: 0.5rem;
+}
+.ajuda-binaria summary:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+}
+
 /* ---------- Minigame de fios ---------- */
 .fios {
   display: grid;
