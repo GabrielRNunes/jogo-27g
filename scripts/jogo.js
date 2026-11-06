@@ -69,7 +69,7 @@ const CENARIOS = {
   },
   cozinha: {
     nome: 'Cozinha',
-    dica: 'Algo reflete uma luz fraca perto do rodapé...',
+    dica: 'Nem toda pista fica sobre uma mesa. Vale olhar perto do chão...',
     portas: [{ destino: 'treino', pos: [87.5, 27.8, 10.0, 40.0] }]
   },
   servidores: {
@@ -282,7 +282,7 @@ function limparCalculoBinario() {
 }
 
 /* =========================================================
-   OBJETOS INTERATIVOS (10 enigmas + 1 oculto)
+   OBJETOS INTERATIVOS (10 enigmas + lixeira com o bilhete secreto)
    pos = [left%, top%, largura%, altura%]
    ========================================================= */
 const objetos = {
@@ -630,15 +630,26 @@ const objetos = {
     }
   },
 
-  // Objeto oculto (final secreto)
-  adesivo: {
-    cenario: 'cozinha', nome: 'Adesivo suspeito atrás da lixeira', pos: [85.1, 82.9, 7.2, 9.1],
-    oculto: true, resolvido: false,
+  // A lixeira precisa ser examinada, e o bilhete deve ser recolhido pelo jogador.
+  lixeira: {
+    cenario: 'cozinha', nome: 'Lixeira', pos: [83.4, 78.2, 9.0, 18.0],
+    resolvido: false,
     interagir() {
-      if (this.resolvido) return mensagem('Só restou a marca do adesivo.');
-      this.resolvido = true;
-      adicionarItem('bilhete');
-      registrar('Atrás do adesivo havia um bilhete: "Fui por vontade própria. Se achar isto, não chame a segurança."');
+      if (this.resolvido) return mensagem('Você já recolheu o bilhete. Só restaram embalagens na lixeira.');
+      const lixeira = this;
+      abrirPainel('Lixeira', `
+        <p>Você afasta algumas embalagens e encontra um papel dobrado no fundo da lixeira. Há um nome escrito nele: Kairo.</p>
+        <button type="button" id="btn-recolher-bilhete">Recolher e ler o bilhete</button>`);
+
+      function recolherBilhete() {
+        if (estado.fim || lixeira.resolvido) return;
+        lixeira.resolvido = true;
+        adicionarItem('bilhete');
+        registrar('Bilhete encontrado na lixeira: "Fui por vontade própria. Se achar isto, não chame a segurança."');
+        fecharPainel();
+      }
+
+      buscarElemento('#btn-recolher-bilhete').onclick = recolherBilhete;
     }
   }
 };
@@ -683,9 +694,9 @@ function irPara(destino) {
   estado.cenario = destino;
   atualizarCenario();
   const { nome, dica } = CENARIOS[destino];
-  mensagem(`Você entrou em: ${nome}. ${dica && !objetos.adesivo.resolvido ? dica : ''}`);
-  if (dica && !objetos.adesivo.resolvido && !objetos.adesivo.dicaNoDiario) {
-    objetos.adesivo.dicaNoDiario = true; // a dica também fica no diário, para reler depois
+  mensagem(`Você entrou em: ${nome}. ${dica && !objetos.lixeira.resolvido ? dica : ''}`);
+  if (dica && !objetos.lixeira.resolvido && !objetos.lixeira.dicaNoDiario) {
+    objetos.lixeira.dicaNoDiario = true; // a dica também fica no diário, para reler depois
     registrar(`${nome}: ${dica}`);
   }
   buscarElemento('#nome-cenario').focus();
