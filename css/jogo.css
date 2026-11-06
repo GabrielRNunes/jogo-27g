@@ -178,7 +178,14 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
 }
 
 /* ---------- Calculadora binária ---------- */
+#painel {
+  max-height: 85vh;
+  overflow-y: auto;
+}
 #calculadora-binaria {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--neon);
   font-family: var(--fonte-corpo);
   line-height: 1.6;
 }

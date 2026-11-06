@@ -231,18 +231,23 @@ buscarElemento('#painel-corpo').onsubmit = enviarCodigo;
 buscarElemento('#painel-corpo').onclick = clicarNoFio;
 
 /* ---------- Calculadora opcional: mostra a conta digitada pelo jogador ---------- */
-function abrirCalculadoraBinaria() {
-  buscarElemento('#calculadora-binaria').showModal();
-  buscarElemento('#numero-binario').focus();
-}
-
-function fecharCalculadoraBinaria() {
+function alternarCalculadoraBinaria() {
   const calculadora = buscarElemento('#calculadora-binaria');
-  if (calculadora.open) calculadora.close();
+  const botao = buscarElemento('#btn-calculadora-pc');
+  calculadora.hidden = !calculadora.hidden;
+  botao.setAttribute('aria-expanded', String(!calculadora.hidden));
+  if (calculadora.hidden) {
+    botao.textContent = 'Abrir calculadora binária';
+    botao.focus();
+  } else {
+    botao.textContent = 'Recolher calculadora binária';
+    buscarElemento('#numero-binario').focus();
+  }
 }
 
 function calcularBinario(evento) {
   evento.preventDefault();
+  evento.stopPropagation();
   const numeroBinario = buscarElemento('#numero-binario').value.trim();
   const resultado = buscarElemento('#resultado-binario');
   if (!/^[01]{4}$/.test(numeroBinario)) {
@@ -406,7 +411,19 @@ const objetos = {
       abrirPainel('PC do setup', `
         <p>Arquivo "cofre.txt" (cada grupo de 4 bits é um dígito, de 0 a 9):</p>
         <pre>0111  0011  1001</pre>
-        <button type="button" id="btn-calculadora-pc">Abrir calculadora binária</button>
+        <button type="button" id="btn-calculadora-pc" aria-expanded="false" aria-controls="calculadora-binaria">Abrir calculadora binária</button>
+        <section id="calculadora-binaria" aria-label="Apoio para converter binário" hidden>
+          <p>Use se precisar: digite um grupo de quatro bits para ver como a conta funciona. Os pesos são <strong>8, 4, 2 e 1</strong>, da esquerda para a direita.</p>
+          <form id="form-binario">
+            <label for="numero-binario">Grupo de quatro bits</label>
+            <input id="numero-binario" type="text" inputmode="numeric" pattern="[01]{4}" minlength="4" maxlength="4" placeholder="Ex.: 0101" aria-describedby="orientacao-binaria" required>
+            <p id="orientacao-binaria">Use apenas 0 e 1. Cada 1 inclui o peso da posição; cada 0 vale zero na soma.</p>
+            <button type="submit">Calcular e entender</button>
+            <button type="reset">Limpar conta</button>
+          </form>
+          <div id="resultado-binario" role="status" aria-live="polite" aria-atomic="true"></div>
+          <p>Converta cada grupo separadamente e mantenha a ordem dos dígitos. O relógio do jogo continua enquanto você usa a calculadora.</p>
+
         <details class="ajuda-binaria">
           <summary>Precisa de ajuda para ler o binário?</summary>
           <p>Abra as dicas conforme precisar. O exemplo usa outro número para você aprender o caminho e resolver o arquivo.</p>
@@ -436,8 +453,11 @@ const objetos = {
             <p>Alinhe cada grupo do arquivo com os pesos <strong>8 · 4 · 2 · 1</strong>. Some apenas os pesos que têm um bit 1 abaixo deles. Você pode anotar as somas em um papel.</p>
             <p>Converta um grupo por vez. Depois, junte os três dígitos na ordem em que aparecem, da esquerda para a direita. Não some os resultados dos grupos entre si.</p>
           </details>
-        </details>`);
-      buscarElemento('#btn-calculadora-pc').onclick = abrirCalculadoraBinaria;
+        </details>
+        </section>`);
+      buscarElemento('#btn-calculadora-pc').onclick = alternarCalculadoraBinaria;
+      buscarElemento('#form-binario').onsubmit = calcularBinario;
+      buscarElemento('#form-binario').onreset = limparCalculoBinario;
     },
     interagir() {
       if (!objetos.combo.resolvido) return mensagem('O PC está bloqueado. O painel de comandos ao lado parece controlá-lo.');
@@ -825,7 +845,6 @@ function finalizar(tipo) {
   estado.fim = true;
   estado.rodando = false;
   clearInterval(estado.cronometro);
-  fecharCalculadoraBinaria();
   fecharPainel();
   buscarElemento('#final-titulo').textContent = FINAIS[tipo].titulo;
   buscarElemento('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
@@ -864,10 +883,6 @@ function manterFinalAberto(evento) {
 }
 
 buscarElemento('#btn-diario').onclick = abrirDiario;
-buscarElemento('#btn-calculadora').onclick = abrirCalculadoraBinaria;
-buscarElemento('#btn-fechar-calculadora').onclick = fecharCalculadoraBinaria;
-buscarElemento('#form-binario').onsubmit = calcularBinario;
-buscarElemento('#form-binario').onreset = limparCalculoBinario;
 buscarElemento('#btn-fechar-diario').onclick = fecharDiario;
 buscarElemento('#btn-fechar-painel').onclick = fecharPainel;
 buscarElemento('#btn-reiniciar').onclick = reiniciarJogo;
