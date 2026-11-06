@@ -83,7 +83,7 @@ button[aria-pressed="true"] {
 /* Arte original em SVG (estilo quadrinho: contorno grosso, cores foscas) */
 .cena-quarto     { background-image: url("../assets/cenas/quarto.svg"); }
 .cena-treino     { background-image: url("../assets/cenas/treino.svg"); }
-.cena-cozinha    { background-image: url("../assets/cenas/cozinha.svg"); }
+.cena-cozinha    { background-image: url("../assets/cenas/cozinha.svg?v=20261106-sem-bilhete"); }
 .cena-servidores { background-image: url("../assets/cenas/servidores.svg"); }
 .cena-corredor   { background-image: url("../assets/cenas/corredor.svg"); }
 .cenario { background-color: #17110f; background-size: 100% 100%; }
