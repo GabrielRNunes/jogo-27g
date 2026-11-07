@@ -4,7 +4,7 @@ Português · [English](README.md)
 
 Escape room para navegador feito com HTML, CSS e JavaScript puro. Investigue o desaparecimento de um jogador de esports, conecte pistas em cinco ambientes e reprograme a saída antes de terminar a contagem de cinco minutos.
 
-Projeto acadêmico e de portfólio de **Gabriel Roberto Dos Santos N. Corrêa**, estudante do segundo ano de um curso de quatro anos de Desenvolvimento de Sistemas. O projeto registra um aprendizado em evolução e declara o apoio de IA recebido.
+Projeto acadêmico e de portfólio de **Gabriel Roberto Dos Santos N. Corrêa**, com o apoio de IA declarado abaixo.
 
 ![Entrada da suíte do Kairo em estilo de quadrinhos](assets/historia/porta-kairo.png)
 
@@ -29,7 +29,7 @@ São 42 verificações de lógica e estrutura, com DOM e APIs simulados, sem bib
 ## O que o projeto oferece
 
 - Cinco ambientes conectados, dez objetos dos enigmas principais e uma investigação opcional na lixeira.
-- Quatro finais, inventário e diário de investigação com local e tempo das descobertas.
+- Quatro finais, inventário, tempo e controles reunidos ao lado da cena em telas largas e antes dela em telas menores, além do diário de investigação com local e tempo das descobertas.
 - Apoio binário opcional com explicação dos pesos, exemplo e dicas progressivas. Pausa o relógio enquanto aberto e não preenche respostas dos enigmas.
 - Trilha instrumental opcional, painéis legíveis, foco visível e botões textuais alternativos às áreas da imagem.
 - Português e inglês, incluindo os textos nas ilustrações, com a mesma lógica de jogo.
@@ -46,7 +46,7 @@ São 42 verificações de lógica e estrutura, com DOM e APIs simulados, sem bib
 | Vercel | Hospedagem do site estático |
 | Node.js | Testes durante o desenvolvimento; não é requisito para jogar |
 
-**Python e C fazem parte dos meus estudos e não são usados neste projeto. PHP está previsto para o próximo ano do curso e não integra esta implementação.** O formulário de contato é demonstrativo: não envia mensagens.
+O formulário de contato é demonstrativo: não envia mensagens.
 
 ## Organização e aprendizado
 
@@ -55,8 +55,6 @@ As páginas em português ficam na raiz e as equivalentes em inglês em `en/`. O
 `scripts/jogo.js` concentra regras e interações; `scripts/contato.js` contém a simulação do formulário; `scripts/idioma.js` traduz a interface e resolve caminhos de recursos; `scripts/dados/ingles.js` reúne as traduções. Os nomes no código permanecem em português para apoiar o aprendizado, e as duas versões compartilham as regras.
 
 O trabalho exercita HTML semântico, CSS responsivo, funções, objetos, arrays, manipulação do DOM, delegação de eventos, controle de estado e Git. O relógio considera o tempo decorrido, inclusive após a suspensão de uma aba, e preserva frações de segundo durante a pausa da calculadora. Tela cheia é opcional e os diálogos têm alternativa quando a API nativa não existe.
-
-Meu próximo foco é compreender, explicar e modificar o JavaScript com autonomia, aprofundar acessibilidade e concluir a matriz de testes em navegadores e dispositivos reais.
 
 ## Autoria e apoio de IA
 

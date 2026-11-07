@@ -7,7 +7,6 @@
   --neon: #b892ff;
   --alerta: #e2697d;
   --porta: #d8a948;
-  --fonte: 'Orbitron', system-ui, sans-serif;
 }
 
 body {
@@ -32,24 +31,85 @@ body {
 }
 
 .status {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  align-items: center;
+  display: grid;
+  gap: 1rem;
+  align-content: start;
   border: 1px solid var(--neon);
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   background: var(--painel);
+  border-radius: 10px;
+  min-width: 0;
+}
+
+/* Cena e painel compartilham a mesma área; o inventário não fica após as dicas. */
+.pagina-jogo > header { position: static; }
+.pagina-jogo main { max-width: 1320px; width: calc(100% - 2rem); }
+.interface-jogo, .area-investigacao { min-width: 0; }
+.interface-jogo { display: grid; gap: 1.25rem; align-items: start; }
+.area-investigacao > section { margin: 0; border-top: 0; padding-top: 0; }
+.interface-jogo > .status { margin: 0; padding: 1rem; }
+.area-investigacao > #jogo > h3 { margin: 0 0 .75rem; }
+.metricas-partida {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: .5rem 1rem;
+}
+.metricas-partida p { margin: 0; font-size: 1rem; }
+.metricas-partida strong { display: block; line-height: 1.2; }
+#erros { font-size: 1.5rem; padding-top: .375rem; }
+.controles-partida { display: flex; flex-wrap: wrap; gap: .5rem; }
+.controles-partida button { flex: 1 1 8rem; padding-inline: .65rem; }
+.status > #painel-inventario {
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid #67547e;
+}
+#painel-inventario h3 {
+  margin: 0;
+  font-family: var(--fonte-corpo);
+  font-size: 1.125rem;
+}
+.orientacao-inventario { margin: .5rem 0; font-size: .9375rem; line-height: 1.6; }
+.status #inventario {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: .75rem 0 0;
+}
+.status #inventario button { width: 100%; text-align: left; }
+@media (max-width: 999px) {
+  .status #inventario { display: flex; }
+  .status #inventario li { flex: 1 1 8rem; min-width: 0; }
+}
+@media (min-width: 1000px) {
+  .interface-jogo { grid-template-columns: minmax(0, 1fr) 19rem; }
+  .interface-jogo > .status { grid-column: 2; grid-row: 1; }
+  .area-investigacao { grid-column: 1; grid-row: 1; }
+}
+@media (min-width: 1000px) and (min-height: 700px) {
+  .interface-jogo > .status {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+  }
 }
 
 #relogio {
   color: var(--neon);
-  font-size: 1.4rem;
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 2.25rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .025em;
+  white-space: nowrap;
 }
 #relogio.urgente:not(.pausado) {
   color: var(--alerta);
   animation: pulsar 1s infinite;
 }
 #status-cronometro {
+  grid-column: 1 / -1;
   display: block;
   font-size: 0.875rem;
   color: #d8d0e5;
@@ -63,6 +123,8 @@ button {
   font-size: 1rem;
   line-height: 1.5;
   min-height: 44px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   background: var(--painel);
   color: var(--neon);
   border: 1px solid var(--neon);
@@ -424,7 +486,7 @@ pre, .sequencia {
 }
 :fullscreen .cenario {
   width: 100%;
-  width: min(100%, max(20rem, calc((100vh - 19.5rem) * 16 / 9)));
+  width: min(100%, max(16rem, calc((100vh - 14rem) * 16 / 9)));
   margin-inline: auto;
 }
 :fullscreen .dialogo {

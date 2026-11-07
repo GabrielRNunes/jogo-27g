@@ -11,20 +11,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
-  <link rel="stylesheet" href="../css/style.css?v=20261106-idiomas">
-  <link rel="stylesheet" href="../css/paginas.css?v=20261106-idiomas">
-  <link rel="stylesheet" href="../css/jogo.css?v=20261106-idiomas">
-  <link rel="stylesheet" href="../css/dialogo.css?v=20261106-idiomas">
-  <script src="../scripts/dados/ingles.js?v=20261106-idiomas" defer></script>
-  <script src="../scripts/idioma.js?v=20261106-idiomas" defer></script>
-  <script src="../scripts/jogo.js?v=20261106-idiomas" defer></script>
+  <link rel="stylesheet" href="../css/style.css?v=20261107-interface">
+  <link rel="stylesheet" href="../css/paginas.css?v=20261107-interface">
+  <link rel="stylesheet" href="../css/jogo.css?v=20261107-interface">
+  <link rel="stylesheet" href="../css/dialogo.css?v=20261107-interface">
+  <script src="../scripts/dados/ingles.js?v=20261107-interface" defer></script>
+  <script src="../scripts/idioma.js?v=20261107-interface" defer></script>
+  <script src="../scripts/jogo.js?v=20261107-interface" defer></script>
 </head>
-<body id="topo">
+<body id="topo" class="pagina-jogo">
   <a href="#conteudo" class="pular">Skip to content</a>
 
   <header>
     <h1>Protocolo Kairo</h1>
     <p>Escape Room</p>
+    <nav class="seletor-idioma" aria-label="Language">
+      <a href="../jogo.html" lang="pt-BR" hreflang="pt-BR" aria-label="Português">PT</a>
+      <a href="jogo.html" lang="en" hreflang="en" aria-current="true" aria-label="English">EN</a>
+    </nav>
     <nav aria-label="Main navigation">
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -40,11 +44,6 @@
         <li><a href="contato.html">Contact</a></li>
       </ul>
     </nav>
-    <nav class="seletor-idioma" aria-label="Language">
-      <a href="../jogo.html" lang="pt-BR" hreflang="pt-BR">Português</a>
-      <a href="jogo.html" lang="en" hreflang="en" aria-current="true">English</a>
-    </nav>
-    <p class="aviso-idioma">Switching languages restarts the game.</p>
   </header>
 
   <noscript><p class="aviso-compatibilidade">Enable JavaScript to play. The story, instructions and location pages remain available through the menu.</p></noscript>
@@ -52,62 +51,73 @@
   <main id="conteudo">
     <h2>Play</h2>
 
-    <section class="status" aria-label="Game status">
-      <p>Time: <strong id="relogio">5:00</strong><span id="status-cronometro" role="status" aria-live="polite">Waiting to start</span></p>
-      <p>Mistakes: <strong id="erros">0</strong></p>
-      <button type="button" id="btn-diario" disabled>Investigation log</button>
-      <button type="button" id="btn-tela-cheia" hidden>Fullscreen</button>
-      <details class="controle-audio">
-        <summary>Ambient sound (optional)</summary>
-        <audio id="audio-ambiente" controls loop preload="none" aria-label="Protocolo Kairo instrumental soundtrack">
-          <source src="../assets/ambiente-kairo.wav" type="audio/wav">
-          Your browser does not support audio.
-        </audio>
-        <p>Play or pause the soundtrack whenever you like. The game countdown continues.</p>
-      </details>
-    </section>
-
-    <section id="intro" aria-labelledby="intro-titulo">
-      <h3 id="intro-titulo">Mission briefing</h3>
-      <p id="estado-carregamento" role="status">Loading controls. If this message remains, reload the page and check that JavaScript is enabled in an up-to-date browser.</p>
-      <p>The world final starts at 6 p.m., but Kairo has been missing since the previous night. As the organization’s IT technician, you enter his private suite to check the records. Your badge permits entry, but the missing occupant permission activates containment: you are trapped with five minutes to investigate and reprogram the Exit Corridor lock.</p>
-      <p>Explore five rooms, collect clues and discover what Kairo left behind. When the countdown ends, security takes over and stops your investigation. Invalid codes and wrong wires cost ten seconds; time, mistakes and discoveries determine the ending.</p>
-      <p>Use the mouse or <kbd>Tab</kbd> and <kbd>Enter</kbd> to interact. Select inventory items before using them. The countdown starts after you finish or skip the introduction. During a run, opening the binary calculator pauses time; collapsing it or closing the panel resumes the countdown. Other panels do not pause.</p>
-      <button type="button" id="btn-iniciar" disabled>Start</button>
-    </section>
-
-    <section id="dialogo" class="dialogo" aria-labelledby="dialogo-titulo" hidden>
-      <h3 id="dialogo-titulo" class="visually-hidden">Story</h3>
-      <img id="dialogo-cena" class="dialogo-cena" src="../assets/en/historia/impacto.svg" alt="Lock panel flashing red: access denied, lockdown activated" width="1600" height="500" hidden>
-      <div class="dialogo-caixa">
-        <div class="dialogo-linha">
-          <img id="dialogo-retrato" class="dialogo-retrato" src="../assets/historia/narrador.svg" alt="" width="200" height="200">
-          <div aria-live="polite" aria-atomic="true">
-          <p id="dialogo-nome" class="falante"></p>
-          <p id="dialogo-texto" class="fala"></p>
+    <div class="interface-jogo">
+      <section class="status" aria-label="Game controls and inventory">
+        <div class="metricas-partida">
+          <p>Time: <strong id="relogio">5:00</strong></p>
+          <p>Mistakes: <strong id="erros">0</strong></p>
+          <span id="status-cronometro" role="status" aria-live="polite">Waiting to start</span>
         </div>
+        <div class="controles-partida">
+          <button type="button" id="btn-diario" disabled>Investigation log</button>
+          <button type="button" id="btn-tela-cheia" hidden>Fullscreen</button>
         </div>
-        <div class="dialogo-botoes">
-          <button type="button" id="btn-pular">Skip story</button>
-          <button type="button" id="btn-proxima">Next</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="jogo" aria-label="Game area" hidden>
-      <h3 id="nome-cenario" tabindex="-1">Location</h3>
-      <div id="cenario" class="cenario"></div>
-      <p id="mensagem" role="status" aria-live="polite"></p>
-      <details id="atalhos-cenario">
-        <summary>Objects and connections in this room</summary>
-        <p>You can also explore with the buttons below, without having to select small targets in the scene.</p>
-        <div id="lista-acoes-cenario" class="acoes-cenario"></div>
-      </details>
-      <section aria-labelledby="inv-titulo">
-        <h3 id="inv-titulo">Inventory</h3>
-        <ul id="inventario"></ul>
+        <section id="painel-inventario" aria-labelledby="inv-titulo">
+          <h3 id="inv-titulo">Inventory</h3>
+          <p class="orientacao-inventario">Select an item to use it.</p>
+          <ul id="inventario"><li>Empty.</li></ul>
+        </section>
+        <details class="controle-audio">
+          <summary>Ambient sound (optional)</summary>
+          <audio id="audio-ambiente" controls loop preload="none" aria-label="Protocolo Kairo instrumental soundtrack">
+            <source src="../assets/ambiente-kairo.wav" type="audio/wav">
+            Your browser does not support audio.
+          </audio>
+          <p>Play or pause the soundtrack whenever you like. The game countdown continues.</p>
+        </details>
       </section>
-    </section>
+
+      <div class="area-investigacao">
+        <section id="intro" aria-labelledby="intro-titulo">
+          <h3 id="intro-titulo">Mission briefing</h3>
+          <p id="estado-carregamento" role="status">Loading controls. If this message remains, reload the page and check that JavaScript is enabled in an up-to-date browser.</p>
+          <p>The world final starts at 6 p.m., but Kairo has been missing since the previous night. As the organization’s IT technician, you enter his private suite to check the records. Your badge permits entry, but the missing occupant permission activates containment: you are trapped with five minutes to investigate and reprogram the Exit Corridor lock.</p>
+          <p>Explore five rooms, collect clues and discover what Kairo left behind. When the countdown ends, security takes over and stops your investigation. Invalid codes and wrong wires cost ten seconds; time, mistakes and discoveries determine the ending.</p>
+          <p>Use the mouse or <kbd>Tab</kbd> and <kbd>Enter</kbd> to interact. Select inventory items before using them. The countdown starts after you finish or skip the introduction. During a run, opening the binary calculator pauses time; collapsing it or closing the panel resumes the countdown. Other panels do not pause.</p>
+          <p class="aviso-idioma">Switching languages restarts the game.</p>
+          <button type="button" id="btn-iniciar" disabled>Start</button>
+        </section>
+
+        <section id="dialogo" class="dialogo" aria-labelledby="dialogo-titulo" hidden>
+          <h3 id="dialogo-titulo" class="visually-hidden">Story</h3>
+          <img id="dialogo-cena" class="dialogo-cena" src="../assets/en/historia/impacto.svg" alt="Lock panel flashing red: access denied, lockdown activated" width="1600" height="500" hidden>
+          <div class="dialogo-caixa">
+            <div class="dialogo-linha">
+              <img id="dialogo-retrato" class="dialogo-retrato" src="../assets/historia/narrador.svg" alt="" width="200" height="200">
+              <div aria-live="polite" aria-atomic="true">
+              <p id="dialogo-nome" class="falante"></p>
+              <p id="dialogo-texto" class="fala"></p>
+            </div>
+            </div>
+            <div class="dialogo-botoes">
+              <button type="button" id="btn-pular">Skip story</button>
+              <button type="button" id="btn-proxima">Next</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="jogo" aria-label="Game area" hidden>
+          <h3 id="nome-cenario" tabindex="-1">Location</h3>
+          <div id="cenario" class="cenario"></div>
+          <p id="mensagem" role="status" aria-live="polite"></p>
+          <details id="atalhos-cenario">
+            <summary>Objects and connections in this room</summary>
+            <p>You can also explore with the buttons below, without having to select small targets in the scene.</p>
+            <div id="lista-acoes-cenario" class="acoes-cenario"></div>
+          </details>
+        </section>
+      </div>
+    </div>
   </main>
 
   <div id="fundo-dialogo" class="fundo-dialogo" hidden aria-hidden="true"></div>

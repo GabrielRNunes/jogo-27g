@@ -1,6 +1,6 @@
 # Robustez e compatibilidade do Protocolo Kairo
 
-Revisão local de 6 de novembro de 2026. Esta revisão não inclui commit, push ou publicação.
+Revisão local atualizada em 7 de novembro de 2026. Esta revisão não inclui commit, push ou publicação.
 
 ## O que pode ser afirmado
 
@@ -20,17 +20,27 @@ Revisão local de 6 de novembro de 2026. Esta revisão não inclui commit, push 
 6. **Tela cheia:** recurso opcional, oculto quando indisponível. Ausência de métodos, retorno sem Promise e erro síncrono são tratados. A falha do recurso não interrompe o jogo.
 7. **Carregamento:** Começar e Diário só são habilitados quando a inicialização conclui. Uma mensagem permanece se o script não carregar; com JavaScript desativado, o site informa como continuar pelas páginas estáticas.
 8. **Contato:** múltiplos envios não criam respostas concorrentes. Os campos ficam bloqueados durante a simulação. Limpar cancela a resposta pendente e devolve os controles. A confirmação não desaparece com o reset interno.
-9. **Layout:** alternativas para proporção do cenário, largura do conteúdo e altura de painéis; cenário em tela cheia sem largura calculada negativa; campos e cartões com largura mínima flexível; botão Jogar deixa de cobrir o conteúdo em telas pequenas; cabeçalho não fica fixo em janelas baixas.
+9. **Layout:** alternativas para proporção do cenário, largura do conteúdo e altura de painéis; cenário em tela cheia sem largura calculada negativa; campos e cartões com largura mínima flexível; atalho Jogar integrado ao rodapé, sem sobrepor conteúdo em qualquer largura; cabeçalho não fica fixo em janelas baixas.
 10. **Desempenho:** o calendário não duplica indefinidamente uma pista já consultada. A lista completa do diário só é reconstruída quando necessária. Fontes externas continuam com alternativas locais de leitura.
 
 ## Idiomas e apresentação de portfólio
 
-- Seletor Português / English nas 24 páginas. A troca no jogo reinicia a partida e é informada junto ao seletor.
+- Seletor Português / English nas 24 páginas. A troca no jogo reinicia a partida; o aviso aparece no briefing.
 - As regras, os códigos e as condições dos finais são compartilhados pelo mesmo JavaScript. A introdução, os erros, o inventário, o diário, a calculadora e os finais recebem tradução.
 - Onze variantes SVG traduzem as placas e legendas; a porta e a trilha sem vozes são compartilhadas.
 - O nome digitado no contato é preservado, sem passar pelo dicionário de tradução.
 - Metadados, idioma do documento e links de alternância conferidos. Seletores funcionam como links mesmo sem JavaScript.
-- README em português e inglês e créditos de autoria e IA preparados. Python, C e PHP são identificados como estudos, sem serem apresentados como tecnologias usadas no jogo.
+- README em português e inglês e créditos de autoria e IA preparados, com apresentação das tecnologias utilizadas no projeto.
+
+## Revisão do rodapé e cabeçalho — 7 de novembro
+
+- Retirada a posição fixa do atalho Jogar. Nas 20 páginas que oferecem esse atalho, ele está dentro do rodapé e acompanha o fluxo do documento.
+- Removido o preenchimento inferior de 5rem que deixava espaço extra inclusive nas páginas sem atalho.
+- Rodapé com texto e botão em colunas no desktop, empilhados em larguras de até 700px.
+- Marca com quebra de linha e colunas flexíveis; seletor permite reorganização quando falta espaço. Layout compacto do cabeçalho aplicado até 700px.
+- Atualizadas as versões das URLs de CSS e JavaScript para evitar reutilização de recursos antigos após a publicação.
+- Após os ajustes: 42 testes simulados aprovados; fechamento e aninhamento de elementos, IDs e referências locais das 24 páginas conferidos; cinco arquivos JavaScript com sintaxe válida e 28 SVGs com XML válido.
+- Estas conferências de estrutura e lógica não renderizam o layout. A matriz visual abaixo continua pendente.
 
 ## Como repetir os testes de lógica
 
@@ -80,3 +90,14 @@ Não existe garantia de ausência absoluta de bugs em qualquer navegador, extens
 - [MDN: elemento dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog) — modalidade, foco e comportamento nativo.
 - [MDN: temporizadores](https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout) — atrasos e restrições em abas inativas.
 - [MDN: Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) — disponibilidade, permissões e falhas de tela cheia.
+
+## Inventário e tipografia — 7 de novembro de 2026
+
+- Inventário, relógio, erros, diário e áudio reunidos em um painel, separado da lista opcional de objetos.
+- Em larguras a partir de 1000px, painel ao lado da cena; em telas menores, painel antes da cena e itens distribuídos em botões que quebram linha.
+- Em desktop com pelo menos 700px de altura, painel acompanha a rolagem dentro da área do jogo, com altura limitada e rolagem própria quando necessária. Em janelas baixas, usa o fluxo normal.
+- Cabeçalho do jogo deixa de ficar preso ao topo, liberando espaço para a investigação. Não há duplicação de inventário nem de relógio.
+- Relógio com algarismos maiores, monoespaçados e de largura fixa, sem depender de fonte externa. Menus, botões e textos usam fontes do sistema; a identidade decorativa permanece nos títulos.
+- Mantidos os mesmos IDs e eventos, as regras, os códigos dos enigmas e a pausa pedagógica.
+- Percursos em português e inglês, uso dos itens e demais verificações continuam aprovados nos 42 testes simulados. Validação visual em navegadores reais permanece pendente.
+- Alterações locais, sem commit ou push nesta etapa.

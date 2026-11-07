@@ -69,10 +69,3 @@ p, li, dd, a { overflow-wrap: anywhere; }
   outline: 3px solid var(--porta);
   outline-offset: 2px;
 }
-
-
-/* O seletor usa links: permanece disponível mesmo sem JavaScript. */
-.seletor-idioma { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-top: .8rem; }
-.seletor-idioma a { padding: .4rem .8rem; border: 1px solid var(--borda, #b892ff); border-radius: .35rem; }
-.seletor-idioma a[aria-current="true"] { color: #ffd24a; text-decoration: underline; text-underline-offset: .25rem; }
-.aviso-idioma { font: .875rem/1.5 system-ui, sans-serif; margin: .5rem auto 0; }

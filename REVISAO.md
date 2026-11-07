@@ -111,8 +111,40 @@
 - Introdução, enigmas, mensagens, inventário, diário, calculadora e quatro finais traduzidos, mantendo um único código para as regras.
 - Criadas 11 variantes SVG com textos em inglês. Arte da porta e trilha instrumental compartilhadas; nenhuma resposta dos enigmas foi alterada.
 - Seletor informa que a troca de idioma reinicia a partida. Não foi adicionado salvamento de progresso.
-- Apresentação do desenvolvedor registra o segundo ano de um curso de quatro anos, as tecnologias usadas e os estudos de Python, C e PHP sem atribuir seu uso ao site.
+- Apresentação do desenvolvedor concentra-se no projeto, nas tecnologias utilizadas e no processo de desenvolvimento.
 - README.md, README.pt-BR.md e CREDITOS.md documentam execução, estrutura, autoria, apoio de IA, aprendizado e limites de validação.
 - 42 verificações automatizadas aprovadas com DOM e APIs simulados; sintaxe dos quatro scripts de produção e da suíte válida; 28 SVGs com XML válido; referências locais, âncoras e metadados das 24 páginas conferidos.
 - A validação visual em navegadores e sistemas reais continua pendente, conforme COMPATIBILIDADE.md.
 - Todas as alterações desta etapa permanecem locais, sem commit, push ou deploy.
+
+## Ajuste de apresentação
+
+- Retiradas das duas versões do site e dos READMEs as informações de contexto pessoal que não se destinavam à publicação.
+- Mantidas a apresentação técnica, a autoria e a transparência sobre o apoio de IA.
+
+## Posição do seletor de idioma
+
+- Seletor PT / EN integrado ao canto superior direito do cabeçalho, sem uma linha adicional abaixo do menu no desktop.
+- Em telas pequenas, o seletor divide a linha com o subtítulo, preservando o espaço do título.
+- Links com nomes completos para leitores de tela, foco visível, indicação do idioma atual e áreas de toque de pelo menos 44 × 44 pixels.
+- Aviso de reinício transferido para o briefing. Seletores conferidos nas 24 páginas quanto a rótulos, ordem no documento e referências locais; validação visual em navegador continua pendente.
+
+## Revisão após ajustes de interface — 7 de novembro de 2026
+
+- Eliminada a reserva inferior excessiva do rodapé; atalho Jogar inserido no próprio rodapé em 20 páginas, sem posição fixa sobre o conteúdo.
+- Cabeçalho com título flexível, quebra de linha e seletor reorganizável; disposição compacta até 700px.
+- Atualizadas as versões dos recursos para publicação.
+- Repetidos os 42 testes simulados após os ajustes; estrutura das 24 páginas, referências locais, sintaxe dos scripts e XML dos 28 SVGs conferidos.
+- Conferência visual real permanece pendente; não há declaração de ausência absoluta de bugs nem homologação universal de browsers ou sistemas operacionais.
+- Sem commit, push ou publicação executados nesta etapa.
+
+## Inventário e tipografia — 7 de novembro de 2026
+
+- Inventário, relógio, erros, diário e áudio reunidos em um painel, separado da lista opcional de objetos.
+- Em larguras a partir de 1000px, painel ao lado da cena; em telas menores, painel antes da cena e itens distribuídos em botões que quebram linha.
+- Em desktop com pelo menos 700px de altura, painel acompanha a rolagem dentro da área do jogo, com altura limitada e rolagem própria quando necessária. Em janelas baixas, usa o fluxo normal.
+- Cabeçalho do jogo deixa de ficar preso ao topo, liberando espaço para a investigação. Não há duplicação de inventário nem de relógio.
+- Relógio com algarismos maiores, monoespaçados e de largura fixa, sem depender de fonte externa. Menus, botões e textos usam fontes do sistema; a identidade decorativa permanece nos títulos.
+- Mantidos os mesmos IDs e eventos, as regras, os códigos dos enigmas e a pausa pedagógica.
+- Percursos em português e inglês, uso dos itens e demais verificações continuam aprovados nos 42 testes simulados. Validação visual em navegadores reais permanece pendente.
+- Alterações locais, sem commit ou push nesta etapa.

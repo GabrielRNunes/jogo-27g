@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261106-idiomas">
-  <link rel="stylesheet" href="css/paginas.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="css/style.css?v=20261107-interface">
+  <link rel="stylesheet" href="css/paginas.css?v=20261107-interface">
 </head>
 <body id="topo">
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -20,6 +20,10 @@
   <header>
     <h1>Protocolo Kairo</h1>
     <p>Escape Room</p>
+    <nav class="seletor-idioma" aria-label="Idioma">
+      <a href="apoio.html" lang="pt-BR" hreflang="pt-BR" aria-current="true" aria-label="Português">PT</a>
+      <a href="en/apoio.html" lang="en" hreflang="en" aria-label="English">EN</a>
+    </nav>
     <nav aria-label="Menu principal">
       <ul>
         <li><a href="index.html">Início</a></li>
@@ -34,10 +38,6 @@
         <li><a href="apoio.html" aria-current="page">Apoio ao Projeto</a></li>
         <li><a href="contato.html">Contato</a></li>
       </ul>
-    </nav>
-    <nav class="seletor-idioma" aria-label="Idioma">
-      <a href="apoio.html" lang="pt-BR" hreflang="pt-BR" aria-current="true">Português</a>
-      <a href="en/apoio.html" lang="en" hreflang="en">English</a>
     </nav>
   </header>
 
@@ -78,11 +78,12 @@
     </section>
   </main>
 
-  <aside aria-label="Atalho para o jogo"><a class="cta-fixo" href="jogo.html">Jogar</a></aside>
-
-  <footer>
-    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico desenvolvido por Gabriel Roberto Dos Santos N. Corrêa.</p>
-    <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+  <footer class="rodape-com-atalho">
+    <div class="rodape-conteudo">
+      <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico desenvolvido por Gabriel Roberto Dos Santos N. Corrêa.</p>
+      <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
+    </div>
+    <aside class="rodape-atalho" aria-label="Atalho para o jogo"><a class="cta-jogo" href="jogo.html">Jogar</a></aside>
   </footer>
 </body>
 </html>

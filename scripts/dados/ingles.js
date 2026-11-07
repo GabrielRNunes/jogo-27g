@@ -666,10 +666,7 @@ window.KAIRO_INGLES = {
   "Você entrou em:": "You entered:",
   "Pistas e ocorrências": "Clues and incidents",
   "Um projeto de portfólio em evolução": "A growing portfolio project",
-  "Estou no segundo ano de um curso de quatro anos de Desenvolvimento de Sistemas. O Protocolo Kairo reúne minha prática com HTML, CSS, JavaScript e Git em um jogo completo para navegador.": "I am in the second year of a four-year Systems Development course. Protocolo Kairo brings together my practice with HTML, CSS, JavaScript and Git in a complete browser game.",
   "O projeto trabalha estrutura de páginas, interfaces responsivas, eventos, estado do jogo, temporizadores e testes de regressão. A revisão de acessibilidade e os recursos de apoio à leitura e ao cálculo fazem parte desse aprendizado.": "The project covers page structure, responsive interfaces, events, game state, timers and regression tests. Accessibility reviews and tools that support reading and calculation are part of this learning process.",
-  "Python e C fazem parte dos meus estudos, mas não são utilizados neste site. PHP está previsto para o próximo ano do curso; o jogo atual funciona sem servidor de aplicação ou banco de dados.": "Python and C are part of my studies, but are not used on this website. PHP is planned for next year of my course; the current game works without an application server or database.",
-  "Meu próximo foco é aprofundar JavaScript, acessibilidade e testes em navegadores, compreendendo e explicando as decisões do código.": "My next focus is to deepen my knowledge of JavaScript, accessibility and browser testing, while understanding and explaining the decisions behind the code.",
   "Conheça Gabriel, estudante de Desenvolvimento de Sistemas, a autoria do Protocolo Kairo e os aprendizados com HTML, CSS, JavaScript e Git.": "Meet Gabriel, a Systems Development student, and learn about the authorship of Protocolo Kairo and the skills practiced with HTML, CSS, JavaScript and Git.",
   "A ilustração da porta na página A História foi gerada por inteligência artificial e selecionada para combinar com a direção visual do jogo. O código, os textos e os recursos pedagógicos também passaram por revisões com apoio de IA.": "The door illustration on the Story page was generated using AI and selected to match the visual direction of the game. The code, text and educational tools also received AI-assisted revisions.",
   "As referências a OpenAI e Anthropic identificam as ferramentas utilizadas e não representam vínculo ou endosso dessas empresas ao projeto.": "References to OpenAI and Anthropic identify the tools used and do not imply any affiliation with or endorsement of the project by these companies.",
@@ -684,5 +681,8 @@ window.KAIRO_INGLES = {
   "DELETE": "DELETE",
   "REC": "REC",
   "&gt; _": "&gt; _",
-  "&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;": "&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+  "&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;": "&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;",
+  "O Protocolo Kairo é um jogo para navegador desenvolvido com HTML, CSS e JavaScript, com versionamento em Git.": "Protocolo Kairo is a browser game developed with HTML, CSS and JavaScript, with version control in Git.",
+  "Controles e inventário da partida": "Game controls and inventory",
+  "Selecione um item para usá-lo.": "Select an item to use it."
 };

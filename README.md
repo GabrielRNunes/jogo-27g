@@ -4,7 +4,7 @@
 
 A browser escape room built with HTML, CSS and vanilla JavaScript. Investigate a missing esports player, connect clues across five rooms and reprogram the exit before the five-minute countdown ends.
 
-This is a student portfolio project by **Gabriel Roberto Dos Santos N. Corrêa**, currently in the second year of a four-year Systems Development course. It documents ongoing learning, with AI assistance disclosed below.
+A student portfolio project by **Gabriel Roberto Dos Santos N. Corrêa**, with AI assistance disclosed below.
 
 ![Comic-style entrance to Kairo’s suite](assets/historia/porta-kairo.png)
 
@@ -20,7 +20,7 @@ The links reflect the repository’s intended deployment routes. New local chang
 
 - Five connected locations, ten main puzzle objects and an optional trash-bin investigation.
 - Four endings determined by remaining time, mistakes and an optional discovery.
-- Inventory, investigation log, keyboard controls and clickable arrow buttons.
+- Inventory, time and controls grouped beside the scene on wide screens and above it on smaller screens, plus an investigation log, keyboard controls and clickable arrow buttons.
 - Optional binary calculator with place-value explanations and progressive hints. It pauses the countdown while open and does not fill in puzzle answers.
 - Optional instrumental soundtrack, responsive layouts, visible focus and alternative text buttons for scene interactions.
 - Portuguese and English pages, translated scene signs and shared gameplay rules.
@@ -62,15 +62,13 @@ assets/en/              Illustrations containing English text
 tests/regressao.cjs     Dependency-free simulated regression suite
 ```
 
-Python and C are subjects of the author’s studies, but are not used in this project. PHP is planned for the next year of the course and is not part of this implementation. The contact form is a local demonstration and sends no messages.
+The contact form is a local demonstration and sends no messages.
 
 ## Learning and design decisions
 
 The project practices semantic HTML, responsive CSS, functions, objects, arrays, event delegation, state transitions, timers and Git. Source identifiers remain in Portuguese to support the author’s learning; both languages use the same game logic.
 
 The countdown reconciles actual elapsed time when a suspended tab resumes. The binary aid preserves partial seconds during its pause. Fullscreen is optional, and dialogs have an alternative when the native API is unavailable. These choices address concrete failure cases without adding a framework or backend.
-
-Next learning priorities are explaining and modifying the JavaScript independently, checking accessibility with real users and assistive tools, and completing the documented browser/device test matrix.
 
 ## Authorship and AI assistance
 
