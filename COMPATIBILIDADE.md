@@ -110,3 +110,12 @@ Não existe garantia de ausência absoluta de bugs em qualquer navegador, extens
 - Removida dos READMEs a seção opcional de distribuição futura; apresentação identifica o projeto como portfólio principal atual.
 - 42 testes simulados aprovados nesta revisão. Validação visual em navegador real continua pendente.
 - Sem commit ou push executados nesta etapa.
+
+## Conferência com o enunciado do professor
+
+- Criado AUDITORIA-REQUISITOS.md, com matriz dos requisitos do professor e dos objetivos do projeto, evidências e validações pendentes.
+- Confirmadas 12 páginas em português, 24 páginas alcançáveis por links, 11 objetos com estado e método interagir, cinco cenários e quatro finais.
+- Corrigido contraste dos textos dos fios vermelho e azul; indicação luminosa preserva as cores de fundo. Recuo de texto explícito aplicado na abertura da história.
+- Acrescentado roteiro proposto de demonstração ao guia, ainda dependente de ensaio cronometrado. A contagem ativa de cinco minutos não equivale a um limite de cinco minutos de sessão com pausas.
+- Permanecem pendentes validação formal HTML5, leitor de tela, inspeção visual real e confirmação remota da publicação. A sessão não conseguiu acessar os hosts da Vercel e do validador.
+- Sem commit ou push nesta etapa.

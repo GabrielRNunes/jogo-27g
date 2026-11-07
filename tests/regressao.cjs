@@ -14,6 +14,10 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   let proximoId = 1;
   const tarefas = new Map();
   const eventos = {};
+  const eventosMedia = [];
+  const consultaMedia = { matches: Boolean(opcoes.menuPequeno) };
+  if (opcoes.menuLegado) consultaMedia.addListener = fn => eventosMedia.push(fn);
+  else consultaMedia.addEventListener = (tipo, fn) => eventosMedia.push(fn);
   let documento;
 
   function combina(elemento, seletor) {
@@ -66,6 +70,7 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
       querySelector(seletor) { return procurar(this, seletor)[0] || null; },
       querySelectorAll(seletor) { return procurar(this, seletor); },
       closest(seletor) { return combina(this, seletor) ? this : this.parent?.closest(seletor) || null; },
+      contains(filho) { return filho === this || descendentes(this).includes(filho); },
       focus() { documento.activeElement = this; },
       select() { this.selecionado = true; },
       getClientRects() {
@@ -94,7 +99,10 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
     Object.defineProperties(el, {
       id: { get() { return el.atributos.id; } },
       className: { get() { return el.atributos.class || ''; }, set(valor) { el.atributos.class = valor; } },
-      open: { get() { return el.hasAttribute('open'); } },
+      open: {
+        get() { return el.hasAttribute('open'); },
+        set(valor) { if (valor) el.setAttribute('open', ''); else el.removeAttribute('open'); }
+      },
       hidden: {
         get() { return el.hasAttribute('hidden'); },
         set(valor) { if (valor) el.setAttribute('hidden', ''); else el.removeAttribute('hidden'); }
@@ -158,7 +166,10 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   let numeroSorteio = 0;
   matematica.random = () => opcoes.sorteios ? opcoes.sorteios[numeroSorteio++ % opcoes.sorteios.length] : 0;
   const contexto = vm.createContext({
-    document: documento, window: { addEventListener: documento.addEventListener },
+    document: documento, window: {
+      addEventListener: documento.addEventListener,
+      matchMedia: opcoes.semMatchMedia ? undefined : () => consultaMedia
+    },
     Date: RelogioFalso, Math: matematica, console,
     setTimeout: (fn, ms) => agendar(fn, ms), clearTimeout: id => tarefas.delete(id),
     setInterval: (fn, ms) => agendar(fn, ms, ms), clearInterval: id => tarefas.delete(id),
@@ -172,6 +183,8 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   }
   const fonte = fs.readFileSync(path.join(raiz, 'scripts', arquivo + '.js'), 'utf8');
   new vm.Script(fonte, { filename: arquivo + '.js' }).runInContext(contexto);
+  new vm.Script(fs.readFileSync(path.join(raiz, 'scripts/menu.js'), 'utf8'),
+    { filename: 'menu.js' }).runInContext(contexto);
   const executar = texto => vm.runInContext(texto, contexto);
   const buscar = seletor => documento.querySelector(seletor);
   function avancar(ms) {
@@ -202,7 +215,11 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   return {
     executar, buscar, avancar, enviar, clicarObjeto, clicarItem, documento, tarefas,
     atrasar(ms) { agora += ms; },
-    evento(tipo, dados = {}) { for (const fn of eventos[tipo] || []) fn(dados); }
+    evento(tipo, dados = {}) { for (const fn of eventos[tipo] || []) fn(dados); },
+    redimensionarMenu(pequeno) {
+      consultaMedia.matches = pequeno;
+      for (const fn of eventosMedia) fn();
+    }
   };
 }
 
@@ -524,11 +541,119 @@ function executarTestes() {
         assert.ok(seletor.includes('href="' + (ingles ? '../' : 'en/') + arquivo + '"'));
         if (['jogo.html', 'contato.html'].includes(arquivo)) {
           const scripts = [...html.matchAll(/<script src="([^"?]+)/g)].map(parte => path.basename(parte[1]));
-          assert.deepEqual(scripts, ingles ? ['ingles.js', 'idioma.js', arquivo.replace('.html', '.js')] :
-            ['idioma.js', arquivo.replace('.html', '.js')]);
+          assert.deepEqual(scripts, ingles ? ['ingles.js', 'idioma.js', arquivo.replace('.html', '.js'), 'menu.js'] :
+            ['idioma.js', arquivo.replace('.html', '.js'), 'menu.js']);
         }
       }
     }
+  });
+
+
+  teste('Menu inicia recolhido no celular e aberto no desktop', () => {
+    for (const idioma of ['pt', 'en']) {
+      const celular = criarAmbiente('contato', { idioma, menuPequeno: true });
+      assert.equal(celular.buscar('.menu-navegacao').open, false);
+      const desktop = criarAmbiente('contato', { idioma });
+      assert.equal(desktop.buscar('.menu-navegacao').open, true);
+    }
+  });
+  teste('Menu fecha com Escape e preserva foco ao mudar de largura', () => {
+    const a = criarAmbiente('contato', { menuPequeno: true });
+    const menu = a.buscar('.menu-navegacao');
+    menu.open = true; menu.querySelector('a').focus();
+    a.evento('keydown', { key: 'Escape' });
+    assert.equal(menu.open, false);
+    assert.equal(a.documento.activeElement, menu.querySelector('summary'));
+    a.redimensionarMenu(false); assert.equal(menu.open, true);
+    menu.querySelector('a').focus(); a.redimensionarMenu(true);
+    assert.equal(menu.open, false);
+    assert.equal(a.documento.activeElement, menu.querySelector('summary'));
+  });
+  teste('Menu mantém links disponíveis sem matchMedia e suporta listener antigo', () => {
+    const semAPI = criarAmbiente('contato', { semMatchMedia: true });
+    assert.equal(semAPI.buscar('.menu-navegacao').open, true);
+    const legado = criarAmbiente('contato', { menuPequeno: true, menuLegado: true });
+    assert.equal(legado.buscar('.menu-navegacao').open, false);
+    legado.redimensionarMenu(false); assert.equal(legado.buscar('.menu-navegacao').open, true);
+  });
+  teste('Briefing e história não exibem painel; início revela controles e inventário', () => {
+    const a = criarAmbiente();
+    assert.equal(a.buscar('.status').hidden, true);
+    a.buscar('#btn-iniciar').onclick();
+    assert.equal(a.buscar('.status').hidden, true);
+    assert.equal(a.tarefas.size, 0);
+    a.buscar('#btn-pular').onclick();
+    assert.equal(a.buscar('.status').hidden, false);
+    assert.ok(a.buscar('.interface-jogo').classList.contains('em-partida'));
+    assert.ok(a.buscar('#inventario').closest('.status'));
+    assert.equal(a.tarefas.size, 1);
+  });
+  for (const idioma of ['pt', 'en']) teste('Fios por etapas preservam memória, tempo e idioma: ' + idioma, () => {
+    const a = partida({ idioma, sorteios: [0.25, 0.5, 0.5, 0] });
+    a.clicarObjeto('fusiveis');
+    a.buscar('#btn-passo-fios').onclick();
+    const status = a.buscar('#painel-corpo [role="status"]');
+    assert.match(status.textContent, idioma === 'en' ? /^Wire 1: green$/ : /^Fio 1: verde$/);
+    a.avancar(10000);
+    assert.equal(a.executar('estado.tempo'), 290);
+    assert.match(status.textContent, idioma === 'en' ? /^Wire 1: green$/ : /^Fio 1: verde$/);
+    assert.equal(a.buscar('[data-fio="1"]').disabled, true);
+    a.executar('painelAtual.aoClicar(1)');
+    assert.equal(a.executar('estado.energia'), false);
+    for (let i = 0; i < 3; i++) a.buscar('#btn-passo-fios').onclick();
+    assert.equal(a.buscar('#btn-passo-fios').textContent, idioma === 'en' ? 'Start attempt' : 'Iniciar tentativa');
+    assert.equal(a.executar('estado.energia'), false);
+    a.buscar('#btn-passo-fios').onclick();
+    assert.equal(a.buscar('#btn-passo-fios').disabled, true);
+    assert.equal(a.buscar('#painel-corpo .aceso'), null);
+    assert.doesNotMatch(status.textContent, /Fio 4|Wire 4/);
+    assert.equal(a.documento.activeElement, a.buscar('[data-fio="0"]'));
+    for (const indice of [1, 2, 2, 0]) a.executar('painelAtual.aoClicar(' + indice + ')');
+    assert.equal(a.executar('estado.energia'), true);
+  });
+  teste('Repetir fios cancela animação anterior e reinicia a tentativa', () => {
+    const a = partida(); a.clicarObjeto('fusiveis'); a.avancar(900);
+    a.buscar('#btn-repetir-fios').onclick(); a.avancar(500);
+    assert.equal(a.buscar('#painel-corpo .aceso'), null);
+    assert.match(a.buscar('#painel-corpo [role="status"]').textContent, /Memorize/);
+    a.avancar(3700);
+    assert.equal(a.buscar('[data-fio="0"]').disabled, false);
+    a.executar('painelAtual.aoClicar(0)');
+    a.buscar('#btn-repetir-fios').onclick();
+    assert.equal(a.buscar('[data-fio="0"]').disabled, true);
+    assert.equal(a.executar('estado.energia'), false);
+  });
+  teste('Erro no modo por etapas mantém o modo e aplica a penalidade', () => {
+    const a = partida(); a.clicarObjeto('fusiveis');
+    for (let i = 0; i < 5; i++) a.buscar('#btn-passo-fios').onclick();
+    a.executar('painelAtual.aoClicar(1)');
+    assert.equal(a.executar('estado.erros'), 1);
+    assert.equal(a.executar('estado.tempo'), 290);
+    assert.equal(a.buscar('#btn-passo-fios').textContent, 'Próximo sinal');
+    a.avancar(5000);
+    assert.match(a.buscar('#painel-corpo [role="status"]').textContent, /Avance um sinal/);
+    assert.equal(a.buscar('[data-fio="0"]').disabled, true);
+  });
+  teste('Fechamento e prazo encerram a consulta dos fios com segurança', () => {
+    const a = partida(); a.clicarObjeto('fusiveis'); a.buscar('#btn-passo-fios').onclick();
+    a.executar('fecharPainel()'); a.avancar(0);
+    assert.equal(a.tarefas.size, 1);
+    a.clicarObjeto('fusiveis'); a.buscar('#btn-passo-fios').onclick();
+    a.atrasar(300001); a.buscar('#btn-repetir-fios').onclick(); a.avancar(0);
+    assert.equal(a.buscar('#final').dataset.tipo, 'capturado');
+    assert.equal(a.executar('estado.energia'), false);
+    assert.equal(a.tarefas.size, 0);
+  });
+
+
+  teste('Escape do diálogo não transfere o foco para o menu ao fundo', () => {
+    const a = partida({ menuPequeno: true });
+    const menu = a.buscar('.menu-navegacao'); menu.open = true;
+    a.clicarObjeto('gaveta');
+    a.buscar('#painel-corpo input').focus();
+    a.evento('keydown', { key: 'Escape', defaultPrevented: false });
+    assert.equal(menu.open, true);
+    assert.equal(a.documento.activeElement, a.buscar('#painel-corpo input'));
   });
 
   return { total: aprovados.length, aprovados };

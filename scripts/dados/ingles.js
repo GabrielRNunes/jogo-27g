@@ -687,5 +687,15 @@ window.KAIRO_INGLES = {
   "Selecione um item para usá-lo.": "Select an item to use it.",
   "Descobertas recentes primeiro.": "Newest discoveries first.",
   "O cronômetro continua.": "The timer keeps running.",
-  "Voltar ao jogo": "Back to game"
+  "Voltar ao jogo": "Back to game",
+  "Próximo sinal": "Next signal",
+  "Iniciar tentativa": "Start attempt",
+  "Ver um sinal por vez": "View one signal at a time",
+  "Repetir sequência": "Repeat sequence",
+  "Fios do quadro": "Fuse box wires",
+  "Avance um sinal por vez. Depois, repita a ordem de memória.": "Advance one signal at a time. Then repeat the order from memory.",
+  "Memorize os quatro sinais e depois repita a ordem. A contagem continua durante a consulta.": "Memorize the four signals, then repeat the order. The countdown continues while you review.",
+  "A final mundial começa às 18h, mas Kairo desapareceu. Você é o técnico de TI enviado para verificar a ala privativa dele. Sua credencial libera a entrada, porém a falta de permissão do morador ativa a contenção. A saída de serviço está bloqueada.": "The world final starts at 6 p.m., but Kairo is missing. You are the IT technician sent to inspect his private suite. Your badge permits entry, but the missing occupant permission triggers containment. The service exit is locked.",
+  "Explore cinco ambientes, reúna pistas e reprograme a fechadura antes que a segurança assuma o local. Você tem cinco minutos; códigos inválidos e fios errados custam dez segundos. Suas descobertas, o tempo e as falhas determinam o final.": "Explore five rooms, collect clues and reprogram the lock before security takes over. You have five minutes; invalid codes and wrong wires cost ten seconds. Your discoveries, time and mistakes determine the ending.",
+  "Instruções da partida": "How to play"
 };

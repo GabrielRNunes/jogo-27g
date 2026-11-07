@@ -12,7 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
   <link rel="stylesheet" href="../css/style.css?v=20261107-interface">
-  <link rel="stylesheet" href="../css/paginas.css?v=20261107-interface">
+  <link rel="stylesheet" href="../css/paginas.css?v=20261107-acessibilidade">
+  <script src="../scripts/menu.js?v=20261107-acessibilidade" defer></script>
 </head>
 <body id="topo">
   <a href="#conteudo" class="pular">Skip to content</a>
@@ -24,7 +25,9 @@
       <a href="../cenarios.html" lang="pt-BR" hreflang="pt-BR" aria-label="Português">PT</a>
       <a href="cenarios.html" lang="en" hreflang="en" aria-current="true" aria-label="English">EN</a>
     </nav>
-    <nav aria-label="Main navigation">
+    <details class="menu-navegacao" open>
+      <summary>Menu</summary>
+      <nav aria-label="Main navigation">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="jogo.html">Play Now</a></li>
@@ -39,6 +42,7 @@
         <li><a href="contato.html">Contact</a></li>
       </ul>
     </nav>
+    </details>
   </header>
 
   <main id="conteudo">

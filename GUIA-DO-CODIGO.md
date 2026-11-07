@@ -34,6 +34,25 @@ O Protocolo Kairo é um jogo e site estáticos, criados com HTML, CSS e JavaScri
 
 Não é necessário percorrer todos os enigmas para explicar um conceito. A gaveta exemplifica validação e inventário; o quadro de fusíveis exemplifica sequência, tempo e callbacks.
 
+### Roteiro proposto para ensaiar o tempo de jogo
+
+A previsão abaixo é um plano de demonstração, não uma medição já realizada. Cronometre no navegador usado na avaliação e ajuste o ritmo. A conversa sobre o código pode ocorrer depois da partida.
+
+| Tempo total proposto | Demonstração |
+| --- | --- |
+| 0:00–0:20 | Apresentar a premissa e começar; usar Pular história se necessário |
+| 0:20–1:00 | Calendário, gaveta, pen drive e terminal |
+| 1:00–1:50 | Setas, pen drive no PC, breve exemplo binário e cofre |
+| 1:50–2:15 | Geladeira, cartão e, se desejado, coleta do bilhete |
+| 2:15–3:00 | Fusíveis, uso do cartão e fragmento do rack |
+| 3:00–3:20 | PIN da saída, leitura do resultado e explicação da condição do final |
+
+Demonstre a relação entre os objetos ao usar o pen drive depois de liberar o PC e o cartão depois de restaurar a energia. Isso evidencia interdependência sem precisar aguardar um bloqueio provocado por erro.
+
+A introdução não consome a contagem, e o apoio binário a pausa. Mantenha a consulta breve para que o tempo total da demonstração também fique entre 2 e 5 minutos. Ao ensaiar, observe o tempo e os erros finais, pois eles podem mudar o desfecho.
+
+A [conferência dos requisitos](AUDITORIA-REQUISITOS.md) separa o que está implementado do que ainda precisa de validação.
+
 ## 3. Dados e estado: onde ficam as informações
 
 No início de `scripts/jogo.js`:

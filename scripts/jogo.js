@@ -675,6 +675,8 @@ const objetos = {
       }
       let passoAtual = 0;
       let podeClicar = false;
+      let modoPasso = false;
+      let proximoSinal = 0;
       // Estas variáveis pertencem a esta abertura do minigame. Os callbacks continuam com acesso a elas.
       // Guardar os IDs permite cancelar as animações se o jogador fechar o painel.
       const temporizadores = [];
@@ -687,9 +689,39 @@ const objetos = {
         return buscarElemento(`#painel-corpo [data-fio="${indiceFio}"]`);
       }
 
+      function limparLuzes() {
+        for (const fio of buscarElemento('#painel-corpo').querySelectorAll('.fio')) {
+          fio.classList.remove('aceso');
+        }
+      }
+
+      function permitirTentativa(permitir) {
+        podeClicar = permitir;
+        for (const fio of buscarElemento('#painel-corpo').querySelectorAll('.fio')) {
+          fio.disabled = !permitir;
+        }
+      }
+
+      function liberarTentativa() {
+        limparLuzes();
+        permitirTentativa(true);
+        mostrarStatus('Sua vez: clique na mesma ordem.');
+      }
+
       function mostrarSequencia() {
-        podeClicar = false;
+        cancelarTemporizadores();
+        limparLuzes();
+        permitirTentativa(false);
         passoAtual = 0;
+        proximoSinal = 0;
+        const botaoPasso = buscarElemento('#btn-passo-fios');
+        botaoPasso.disabled = false;
+        if (modoPasso) {
+          botaoPasso.textContent = traduzir('Próximo sinal');
+          mostrarStatus('Avance um sinal por vez. Depois, repita a ordem de memória.');
+          return;
+        }
+        botaoPasso.textContent = traduzir('Ver um sinal por vez');
         mostrarStatus('Memorize a ordem dos fios...');
         for (let passo = 0; passo < sequencia.length; passo++) {
           const indiceFio = sequencia[passo];
@@ -703,11 +735,34 @@ const objetos = {
           }, momentoDeAcender + 450);
           temporizadores.push(acender, apagar);
         }
-        const liberarCliques = setTimeout(function () {
-          podeClicar = true;
-          mostrarStatus('Sua vez: clique na mesma ordem.');
-        }, 800 * sequencia.length + 900);
+        const liberarCliques = setTimeout(liberarTentativa, 800 * sequencia.length + 900);
         temporizadores.push(liberarCliques);
+      }
+
+      // Cada clique revela somente um sinal. Ao iniciar a tentativa, o último sinal é escondido.
+      function avancarSinal() {
+        if (!partidaAtiva()) return;
+        if (!modoPasso) {
+          modoPasso = true;
+          mostrarSequencia();
+        }
+        const botaoPasso = buscarElemento('#btn-passo-fios');
+        if (proximoSinal === sequencia.length) {
+          liberarTentativa();
+          botaoPasso.disabled = true;
+          buscarFio(0).focus();
+          return;
+        }
+        limparLuzes();
+        const indiceFio = sequencia[proximoSinal];
+        buscarFio(indiceFio).classList.add('aceso');
+        mostrarStatus(`Fio ${proximoSinal + 1}: ${cores[indiceFio]}`);
+        proximoSinal++;
+        botaoPasso.textContent = traduzir(proximoSinal === sequencia.length ? 'Iniciar tentativa' : 'Próximo sinal');
+      }
+
+      function repetirSequencia() {
+        if (partidaAtiva()) mostrarSequencia();
       }
 
       function verificarFio(indiceFio) {
@@ -721,7 +776,7 @@ const objetos = {
             registrar('Energia restabelecida na sala de servidores.');
           }
         } else {
-          podeClicar = false;
+          permitirTentativa(false);
           erro('fio errado no quadro de fusíveis');
           if (!estado.fim) mostrarSequencia();
         }
@@ -732,6 +787,7 @@ const objetos = {
         for (const temporizador of temporizadores) {
           clearTimeout(temporizador);
         }
+        temporizadores.length = 0;
       }
 
       let botoes = '';
@@ -739,10 +795,19 @@ const objetos = {
         const cor = cores[indiceFio];
         botoes += `<button type="button" class="fio fio-${cor}" data-fio="${indiceFio}">${cor}</button>`;
       }
-      abrirPainel('Quadro de fusíveis', `<p role="status"></p><div class="fios">${botoes}</div>`, {
+      abrirPainel('Quadro de fusíveis', `
+        <p role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="controles-sequencia">
+          <button type="button" id="btn-repetir-fios">Repetir sequência</button>
+          <button type="button" id="btn-passo-fios">Ver um sinal por vez</button>
+        </div>
+        <p class="orientacao-sequencia">Memorize os quatro sinais e depois repita a ordem. A contagem continua durante a consulta.</p>
+        <div class="fios" role="group" aria-label="Fios do quadro">${botoes}</div>`, {
         aoClicar: verificarFio,
         aoFechar: cancelarTemporizadores
       });
+      buscarElemento('#btn-repetir-fios').onclick = repetirSequencia;
+      buscarElemento('#btn-passo-fios').onclick = avancarSinal;
       mostrarSequencia();
     }
   },
@@ -930,6 +995,8 @@ function atualizarRelogio() {
 function iniciar() {
   if (estado.rodando || estado.fim) return;
   estado.rodando = true;
+  buscarElemento('.status').hidden = false;
+  buscarElemento('.interface-jogo').classList.add('em-partida');
   buscarElemento('#intro').hidden = true;
   buscarElemento('#jogo').hidden = false;
   atualizarCenario();

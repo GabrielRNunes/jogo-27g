@@ -25,10 +25,19 @@ header > p {
   color: var(--porta);
 }
 
-header > nav:not(.seletor-idioma) {
+header > nav:not(.seletor-idioma),
+header > .menu-navegacao {
   grid-column: 1 / -1;
   grid-row: 3;
 }
+.menu-navegacao {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  min-width: 0;
+}
+.menu-navegacao > summary { display: none; }
 
 /* Links nativos: acessíveis por teclado e disponíveis sem JavaScript. */
 .seletor-idioma {
@@ -111,6 +120,10 @@ main > h2 {
   font-family: var(--fonte-titulo);
   border-left: 6px solid var(--neon);
   padding-left: 0.75rem;
+}
+/* Recuo da primeira linha na abertura da narrativa. */
+#prologo > p:first-of-type {
+  text-indent: 1.25em;
 }
 h3 {
   font-family: var(--fonte-titulo);
@@ -425,6 +438,17 @@ footer p {
   }
 }
 @media (max-width: 700px) {
+  .menu-navegacao > summary {
+    display: list-item;
+    min-height: 44px;
+    padding: .5rem 1rem;
+    border: 1px solid var(--neon);
+    border-radius: var(--raio);
+    background: var(--painel);
+    text-align: left;
+  }
+  .menu-navegacao[open] > nav { padding-top: .5rem; }
+  .menu-navegacao nav ul { flex-direction: column; }
   header {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: .5rem;

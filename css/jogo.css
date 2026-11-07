@@ -48,6 +48,8 @@ body {
 .interface-jogo, .area-investigacao { min-width: 0; }
 .interface-jogo { display: grid; gap: 1.25rem; align-items: start; }
 .area-investigacao > section { margin: 0; border-top: 0; padding-top: 0; }
+.area-investigacao > #intro,
+.area-investigacao > #dialogo { max-width: 62rem; margin-inline: auto; }
 .interface-jogo > .status { margin: 0; padding: 1rem; }
 .area-investigacao > #jogo > h3 { margin: 0 0 .75rem; }
 .metricas-partida {
@@ -79,14 +81,23 @@ body {
 }
 .status #inventario button { width: 100%; text-align: left; }
 @media (max-width: 999px) {
+  .interface-jogo > .status { gap: .6rem; padding: .75rem; }
+  .metricas-partida { gap: .15rem .5rem; }
+  .metricas-partida p { display: flex; align-items: baseline; gap: .5rem; }
+  .status #relogio { font-size: 1.75rem; }
+  .status #erros { font-size: 1.25rem; padding: 0; }
+  .status > #painel-inventario { padding-top: .5rem; }
+  .status .orientacao-inventario { display: none; }
+  .status #inventario { margin-top: .5rem; }
+  .controles-partida button { flex-basis: 7rem; font-size: .9375rem; }
   .status #inventario { display: flex; }
   .status #inventario li { flex: 1 1 8rem; min-width: 0; }
 }
 /* Em telas largas, a ordem visual coloca a cena à esquerda e os controles à direita. */
 @media (min-width: 1000px) {
-  .interface-jogo { grid-template-columns: minmax(0, 1fr) 19rem; }
-  .interface-jogo > .status { grid-column: 2; grid-row: 1; }
-  .area-investigacao { grid-column: 1; grid-row: 1; }
+  .interface-jogo.em-partida { grid-template-columns: minmax(0, 1fr) 19rem; }
+  .em-partida > .status { grid-column: 2; grid-row: 1; }
+  .em-partida > .area-investigacao { grid-column: 1; grid-row: 1; }
 }
 /* Acompanha a rolagem somente com altura suficiente; o painel continua limitado à janela. */
 @media (min-width: 1000px) and (min-height: 700px) {
@@ -387,11 +398,18 @@ pre, .sequencia {
   gap: 0.75rem;
 }
 .fio { color: #000; font-weight: 700; padding: 1rem; }
-.fio-vermelho { background: #b02a3e; }
+.fio-vermelho { background: #b02a3e; color: #fff; }
 .fio-verde    { background: #1f9d5a; }
-.fio-azul     { background: #2a64b0; }
+.fio-azul     { background: #2a64b0; color: #fff; }
 .fio-amarelo  { background: #b8a21f; }
-.fio.aceso { outline: 4px solid #fff; filter: brightness(1.8); }
+/* O brilho destaca a sequência sem clarear o fundo e reduzir o contraste do rótulo. */
+.fio.aceso {
+  outline: 4px solid #fff;
+  box-shadow: 0 0 0 7px #17121f, 0 0 22px rgba(255, 255, 255, .65);
+}
+.controles-sequencia { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.controles-sequencia button { flex: 1 1 12rem; }
+.orientacao-sequencia { font-size: .9375rem; }
 
 /* O display dos botões e do diálogo vence o atributo hidden; esta regra garante que hidden esconda */
 [hidden] {

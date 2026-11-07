@@ -165,3 +165,12 @@
 - Criado GUIA-DO-CODIGO.md com mapa dos arquivos, sequência de demonstração, conceitos e consulta técnica dos enigmas; vinculado nos dois READMEs.
 - Verificada a preservação exata das sete fontes anteriores ao reverter somente as inserções explicativas. Os 42 testes simulados passaram e os links do guia foram conferidos.
 - Nenhuma publicação futura foi anunciada na interface ou no README. Sem commit ou push nesta etapa.
+
+## Conferência com o enunciado do professor
+
+- Criado AUDITORIA-REQUISITOS.md, com matriz dos requisitos do professor e dos objetivos do projeto, evidências e validações pendentes.
+- Confirmadas 12 páginas em português, 24 páginas alcançáveis por links, 11 objetos com estado e método interagir, cinco cenários e quatro finais.
+- Corrigido contraste dos textos dos fios vermelho e azul; indicação luminosa preserva as cores de fundo. Recuo de texto explícito aplicado na abertura da história.
+- Acrescentado roteiro proposto de demonstração ao guia, ainda dependente de ensaio cronometrado. A contagem ativa de cinco minutos não equivale a um limite de cinco minutos de sessão com pausas.
+- Permanecem pendentes validação formal HTML5, leitor de tela, inspeção visual real e confirmação remota da publicação. A sessão não conseguiu acessar os hosts da Vercel e do validador.
+- Sem commit ou push nesta etapa.

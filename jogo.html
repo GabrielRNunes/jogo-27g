@@ -12,11 +12,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
   <link rel="stylesheet" href="css/style.css?v=20261107-interface">
-  <link rel="stylesheet" href="css/paginas.css?v=20261107-interface">
-  <link rel="stylesheet" href="css/jogo.css?v=20261107-interface">
+  <link rel="stylesheet" href="css/paginas.css?v=20261107-acessibilidade">
+  <link rel="stylesheet" href="css/jogo.css?v=20261107-acessibilidade">
   <link rel="stylesheet" href="css/dialogo.css?v=20261107-diario">
   <script src="scripts/idioma.js?v=20261107-interface" defer></script>
-  <script src="scripts/jogo.js?v=20261107-diario" defer></script>
+  <script src="scripts/jogo.js?v=20261107-acessibilidade" defer></script>
+  <script src="scripts/menu.js?v=20261107-acessibilidade" defer></script>
 </head>
 <body id="topo" class="pagina-jogo">
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -28,7 +29,9 @@
       <a href="jogo.html" lang="pt-BR" hreflang="pt-BR" aria-current="true" aria-label="Português">PT</a>
       <a href="en/jogo.html" lang="en" hreflang="en" aria-label="English">EN</a>
     </nav>
-    <nav aria-label="Menu principal">
+    <details class="menu-navegacao" open>
+      <summary>Menu</summary>
+      <nav aria-label="Menu principal">
       <ul>
         <li><a href="index.html">Início</a></li>
         <li><a href="jogo.html" aria-current="page">Jogar Agora</a></li>
@@ -43,6 +46,7 @@
         <li><a href="contato.html">Contato</a></li>
       </ul>
     </nav>
+    </details>
   </header>
 
   <noscript><p class="aviso-compatibilidade">Ative o JavaScript para jogar. As páginas de história, instruções e cenários continuam disponíveis pelo menu.</p></noscript>
@@ -52,7 +56,7 @@
 
     <!-- Estrutura estável: o JavaScript usa os IDs para atualizar textos, itens e a cena. -->
     <div class="interface-jogo">
-      <section class="status" aria-label="Controles e inventário da partida">
+      <section class="status" aria-label="Controles e inventário da partida" hidden>
         <div class="metricas-partida">
           <p>Tempo: <strong id="relogio">5:00</strong></p>
           <p>Erros: <strong id="erros">0</strong></p>
@@ -82,11 +86,14 @@
         <section id="intro" aria-labelledby="intro-titulo">
           <h3 id="intro-titulo">Briefing da missão</h3>
           <p id="estado-carregamento" role="status">Carregando os controles. Se esta mensagem permanecer, recarregue a página e confira se o JavaScript está habilitado em um navegador atualizado.</p>
-          <p>A final mundial começa às 18h, mas Kairo está desaparecido desde a noite anterior. Como técnico de TI da organização, você entra na ala privativa dele para verificar os registros. Sua credencial libera a entrada, mas a falta de permissão do morador ativa a contenção: você fica isolado com cinco minutos para investigar e reprogramar a fechadura do corredor de saída.</p>
-          <p>Explore os cinco ambientes, reúna as pistas e descubra o que Kairo deixou para trás. Quando a contagem termina, a segurança assume o local e encerra sua investigação. Códigos inválidos e fios errados custam 10 segundos; o desfecho considera o tempo, as falhas e suas descobertas.</p>
+          <p>A final mundial começa às 18h, mas Kairo desapareceu. Você é o técnico de TI enviado para verificar a ala privativa dele. Sua credencial libera a entrada, porém a falta de permissão do morador ativa a contenção. A saída de serviço está bloqueada.</p>
+          <p>Explore cinco ambientes, reúna pistas e reprograme a fechadura antes que a segurança assuma o local. Você tem cinco minutos; códigos inválidos e fios errados custam dez segundos. Suas descobertas, o tempo e as falhas determinam o final.</p>
+          <button type="button" id="btn-iniciar" disabled>Começar</button>
+          <details class="instrucoes-partida">
+            <summary>Instruções da partida</summary>
           <p>Use o mouse ou <kbd>Tab</kbd> e <kbd>Enter</kbd> para interagir. Selecione os itens no inventário antes de usá-los. O relógio só começa ao terminar ou pular a introdução. Durante a partida, abrir a calculadora binária pausa a contagem; recolher o apoio ou fechar o painel retoma o tempo. Os demais painéis não pausam.</p>
           <p class="aviso-idioma">Trocar de idioma reinicia a partida.</p>
-          <button type="button" id="btn-iniciar" disabled>Começar</button>
+          </details>
         </section>
 
         <section id="dialogo" class="dialogo" aria-labelledby="dialogo-titulo" hidden>
