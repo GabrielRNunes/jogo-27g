@@ -1,12 +1,12 @@
 # Conferência dos requisitos — Protocolo Kairo
 
-Revisão de 7 de novembro de 2026, baseada no enunciado fornecido e no código do repositório. Base: commit `4afa1c7`, mais os ajustes locais desta revisão. Este documento distingue implementação de validação; não atribui uma nota nem substitui a avaliação do professor.
+Revisão de 7 de novembro de 2026, baseada no enunciado fornecido e no código do repositório. Base funcional atual: commit `d56e102`, com atualização local da documentação nesta revisão. Este documento distingue implementação de validação; não atribui uma nota nem substitui a avaliação do professor.
 
 ## Resultado geral
 
 Os requisitos funcionais centrais estão implementados. Há 12 páginas em português, 11 objetos interativos modelados, cinco ambientes e quatro finais. As 12 versões inglesas são adicionais e não foram usadas para inflar a contagem mínima de páginas.
 
-Persistem verificações importantes: validação formal de HTML, teste com leitor de tela, conferência visual em navegadores reais, confirmação da publicação atual e ensaio cronometrado da experiência. A lista exata de tags vistas em aula também não foi fornecida.
+Persistem verificações importantes: validação formal de HTML, teste com leitor de tela, conferência visual em navegadores reais, conferência completa da publicação e ensaio cronometrado da experiência. A lista exata de tags vistas em aula também não foi fornecida.
 
 ## Site — HTML e CSS
 
@@ -50,7 +50,7 @@ Persistem verificações importantes: validação formal de HTML, teste com leit
 | Minigame de teclado e minigame de clique | Sequência de setas por teclado, também com botões; memória dos fios por clique/toque | Implementado e testado em simulação |
 | Pelo menos três finais condicionais | Perfeito, sequelas, capturado e secreto | Quatro implementados e testados |
 | Git com commits descritivos | Histórico local inclui revisões de narrativa, interface, idiomas e documentação | Evidência local presente; o site identifica desenvolvimento solo |
-| Deploy funcional na Vercel | URL configurada e usada no projeto: `https://jogo-27g.vercel.app/` | Publicação atual não confirmada nesta auditoria |
+| Deploy funcional na Vercel | URL configurada e usada no projeto: `https://jogo-27g.vercel.app/` | Jogo PT/EN acessado e fluxos novos conferidos no navegador integrado; conferência completa ainda pendente |
 
 O enunciado aceita objetos ou puzzles. Não se trata de onze cadeados: há leitura de pista, validação de códigos, sequência de teclado, memória, uso de itens, condições de energia e coleta opcional. A avaliação da variedade e da dificuldade é qualitativa.
 
@@ -92,9 +92,13 @@ O intervalo de 2 a 5 minutos é uma meta de ritmo a ensaiar, não uma duração 
 1. **Validação HTML5:** executar as páginas portuguesas e inglesas no [Nu HTML Checker](https://validator.w3.org/nu/) e revisar os resultados. Conferência de fechamento de tags não equivale a validação formal.
 2. **Acessibilidade prática:** completar uma partida por teclado e com leitor de tela, principalmente sequência de fios, painel de setas, diálogos e inventário. Conferir se a ordem dos fios é anunciada com tempo suficiente.
 3. **Interface real:** verificar tela pequena, zoom de 200%, tela cheia, diálogos longos e seleção de itens nos navegadores usados na avaliação. A matriz mais ampla está em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
-4. **Publicação:** abrir as duas versões na Vercel após o deploy e verificar navegação, imagens, áudio e uma partida completa. As ferramentas desta sessão não conseguiram acessar os hosts da Vercel e do validador, inclusive por falha de resolução de nomes; não foi possível confirmar disponibilidade remota.
+4. **Publicação:** abrir as duas versões na Vercel após o deploy e verificar navegação, imagens, áudio e uma partida completa. A verificação pelo navegador integrado confirmou o acesso às duas versões do jogo e os novos fluxos de menu, painel e fusíveis. Continuam pendentes a conferência completa das demais páginas e os testes indicados em COMPATIBILIDADE.md.
 5. **Ritmo e apresentação:** cronometrar uma demonstração entre 2 e 5 minutos e explicar os trechos centrais pelo editor. Comparar a variedade de tags com a lista efetivamente vista em aula.
 
 ## Evidência automatizada
 
-A suíte `node tests/regressao.cjs` reúne 42 testes de lógica e estrutura com DOM, relógio e APIs simulados. A auditoria também percorreu a navegação local e conferiu contagens e métodos dos objetos. Esses resultados não comprovam renderização real, HTML formalmente válido, reprodução de áudio, acessibilidade completa ou nota final.
+A suíte `node tests/regressao.cjs` reúne 52 testes de lógica e estrutura com DOM, relógio e APIs simulados. A auditoria também percorreu a navegação local e conferiu contagens e métodos dos objetos. Esses resultados não comprovam renderização real, HTML formalmente válido, reprodução de áudio, acessibilidade completa ou nota final.
+
+## Ajustes de acessibilidade e fluidez aprovados
+
+Os três ajustes foram conferidos: menu recolhível móvel com links completos no desktop, briefing sem painel antes do jogo e fusíveis com repetição e avanço individual dos sinais. A revisão incluiu 52 testes simulados e testes publicados em português e inglês, nas dimensões documentadas em COMPATIBILIDADE.md. A introdução, as instruções detalhadas e os controles do jogo foram reorganizados sem alterar o total de cenários, objetos ou finais.

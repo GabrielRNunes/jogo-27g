@@ -24,7 +24,7 @@ Com Node.js instalado, os testes são executados na pasta do projeto:
 node tests/regressao.cjs
 ```
 
-São 42 verificações de lógica e estrutura, com DOM e APIs simulados, sem bibliotecas externas. Elas cobrem percursos, finais, relógio, pausa pedagógica, comandos por teclado e botões de toque, APIs opcionais, formulário, idiomas e referências locais. Não substituem testes visuais em navegadores e sistemas reais. A cobertura e as verificações pendentes estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
+São 52 verificações de lógica e estrutura, com DOM e APIs simulados, sem bibliotecas externas. Elas cobrem percursos, finais, relógio, pausa pedagógica, comandos por teclado e botões de toque, APIs opcionais, formulário, idiomas e referências locais. Não substituem testes visuais em navegadores e sistemas reais. A cobertura e as verificações pendentes estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
 
 ## O que o projeto oferece
 
@@ -33,6 +33,7 @@ São 42 verificações de lógica e estrutura, com DOM e APIs simulados, sem bib
 - Apoio binário opcional com explicação dos pesos, exemplo e dicas progressivas. Pausa o relógio enquanto aberto e não preenche respostas dos enigmas.
 - Trilha instrumental opcional, painéis legíveis, foco visível e botões textuais alternativos às áreas da imagem.
 - Português e inglês, incluindo os textos nas ilustrações, com a mesma lógica de jogo.
+- Menu recolhível no celular, início focado no briefing e revisão opcional dos fusíveis um sinal por vez, mantendo o desafio de memória e a contagem ativa.
 
 ## Tecnologias utilizadas
 
@@ -52,7 +53,7 @@ O formulário de contato é demonstrativo: não envia mensagens.
 
 As páginas em português ficam na raiz e as equivalentes em inglês em `en/`. Os estilos ficam em `css/`, as imagens e o áudio em `assets/` e os testes em `tests/`.
 
-`scripts/jogo.js` concentra regras e interações; `scripts/contato.js` contém a simulação do formulário; `scripts/idioma.js` traduz a interface e resolve caminhos de recursos; `scripts/dados/ingles.js` reúne as traduções. Os nomes no código permanecem em português para apoiar o aprendizado, e as duas versões compartilham as regras.
+`scripts/jogo.js` concentra regras e interações; `scripts/contato.js` contém a simulação do formulário; `scripts/idioma.js` traduz a interface e resolve caminhos de recursos; `scripts/dados/ingles.js` reúne as traduções. `scripts/menu.js` organiza o menu responsivo com controles nativos. Os nomes no código permanecem em português para apoiar o aprendizado, e as duas versões compartilham as regras.
 
 O trabalho exercita HTML semântico, CSS responsivo, funções, objetos, arrays, manipulação do DOM, delegação de eventos, controle de estado e Git. O relógio considera o tempo decorrido, inclusive após a suspensão de uma aba, e preserva frações de segundo durante a pausa da calculadora. Tela cheia é opcional e os diálogos têm alternativa quando a API nativa não existe.
 

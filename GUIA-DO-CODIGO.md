@@ -19,13 +19,14 @@ O Protocolo Kairo é um jogo e site estáticos, criados com HTML, CSS e JavaScri
 | [scripts/idioma.js](scripts/idioma.js) | Tradução da interface e caminhos das imagens |
 | [scripts/dados/ingles.js](scripts/dados/ingles.js) | Dicionário de textos em inglês |
 | [scripts/contato.js](scripts/contato.js) | Formulário demonstrativo, sem envio real |
+| [scripts/menu.js](scripts/menu.js) | Menu nativo recolhível, largura da tela, Escape e retorno de foco |
 | [tests/regressao.cjs](tests/regressao.cjs) | Verificações automatizadas com DOM e relógio simulados |
 
 ## 2. Sequência de demonstração
 
 1. **Apresentar a proposta:** investigar o desaparecimento de Kairo em cinco ambientes, com cinco minutos e quatro finais possíveis.
 2. **Mostrar o HTML:** localizar `interface-jogo`, `inventario`, `cenario` e os elementos `dialog`. O cenário recebe botões pelo JavaScript.
-3. **Mostrar o início:** clicar em Começar e relacionar `comecarHistoria()`, `proximaFala()`, `terminarHistoria()` e `iniciar()`. O relógio só começa em `iniciar()`.
+3. **Mostrar o início:** clicar em Começar e relacionar `comecarHistoria()`, `proximaFala()`, `terminarHistoria()` e `iniciar()`. O relógio e o painel de controles só aparecem como partida ativa em `iniciar()`; o briefing e a história continuam sem gastar tempo.
 4. **Inspecionar o calendário e abrir a gaveta:** acompanhar a mudança de `objetos.gaveta.resolvido`, a inclusão do pen drive em `estado.inventario` e a atualização dos botões.
 5. **Selecionar o pen drive e trocar de sala:** explicar a diferença entre possuir um item e selecioná-lo para uso.
 6. **Demonstrar o apoio binário:** no PC, abrir a calculadora e converter `0101`. Explicar os pesos 8, 4, 2 e 1, a pausa e a retomada. O apoio não preenche a resposta do cofre.
@@ -115,6 +116,10 @@ O painel de setas compara cada entrada com uma posição da sequência. Uma seta
 
 O quadro de fusíveis usa `setTimeout()` para agendar luzes e liberar os cliques depois da demonstração. As funções internas conservam acesso a `sequencia`, `passoAtual` e `podeClicar`: esse acesso ao contexto é chamado **closure**. Os identificadores dos temporizadores são guardados para que o fechamento do painel cancele as animações.
 
+O botão Repetir sequência cancela a demonstração anterior e mantém os mesmos quatro sinais. A opção Ver um sinal por vez ativa `modoPasso`: cada clique em `avancarSinal()` revela apenas a posição seguinte. Após o quarto sinal, Iniciar tentativa apaga as luzes e libera os fios; a resolução ainda depende da memória. A contagem continua, e uma escolha errada mantém a penalidade normal.
+
+Para apresentar esse trecho, mostre `mostrarSequencia()`, `avancarSinal()`, `permitirTentativa()` e `cancelarTemporizadores()`. O teste deve confirmar que um fio não pode ser acionado durante a leitura e que repetir não troca a sequência.
+
 ## 8. Percurso e finais — consulta técnica
 
 O percurso principal inclui:
@@ -145,6 +150,10 @@ As páginas portuguesas ficam na raiz; as inglesas ficam em `en/`. O seletor usa
 
 No CSS, variáveis definem cores e famílias de fontes. Grid organiza cena e painel; media queries reorganizam a interface quando a largura diminui. As posições dos objetos são percentuais sobre uma ilustração de proporção fixa.
 
+O menu usa `details` e `summary` nativos. O HTML começa aberto como alternativa sem JavaScript. `scripts/menu.js` usa `matchMedia()` para recolher em larguras de até 700px e manter aberto no desktop. Escape recolhe o menu móvel e devolve o foco ao controle; diálogos abertos têm prioridade no tratamento dessa tecla.
+
+O painel da partida começa com `hidden`. `iniciar()` o revela e adiciona `em-partida` ao contêiner, permitindo a disposição lateral no desktop. Nas telas menores, tempo, botões e inventário usam espaçamentos compactos. As instruções completas continuam disponíveis em um bloco recolhível no briefing.
+
 Exemplos concretos de apoio à acessibilidade: botões nativos para objetos, lista textual alternativa, setas clicáveis, `aria-pressed` na seleção de itens, rótulos dos controles, foco visível e diálogos com alternativa à API nativa. Esses recursos não equivalem a uma auditoria completa com leitores de tela.
 
 ## 10. Contato, testes e autoria
@@ -157,6 +166,6 @@ Para os testes, com Node.js disponível:
 node tests/regressao.cjs
 ```
 
-A suíte atual reúne 42 verificações de lógica e estrutura. O DOM, o relógio e as APIs são simulados. Ela verifica, por exemplo, percursos, finais, pausa, itens, idiomas e referências locais; não confirma renderização, áudio ou comportamento de todos os navegadores e sistemas. Os limites estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
+A suíte atual reúne 52 verificações de lógica e estrutura. O DOM, o relógio e as APIs são simulados. Ela verifica, por exemplo, percursos, finais, pausa, itens, idiomas e referências locais; não confirma renderização, áudio ou comportamento de todos os navegadores e sistemas. Os limites estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
 
 O projeto é de Gabriel e recebeu assistência de IA, registrada em [CREDITOS.md](CREDITOS.md). A apresentação técnica deve refletir esse processo e explicar os comportamentos que podem ser demonstrados no código.

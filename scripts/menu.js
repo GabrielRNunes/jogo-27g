@@ -1,6 +1,8 @@
 'use strict';
 
 // O HTML começa com os links abertos: a navegação também funciona sem JavaScript.
+// A função é executada uma vez ao carregar a página; seus eventos seguem ativos.
+// matchMedia acompanha o mesmo limite de largura usado no CSS.
 (function prepararMenu() {
   const menu = document.querySelector('.menu-navegacao');
   if (!menu || typeof window.matchMedia !== 'function') return;

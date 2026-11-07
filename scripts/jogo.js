@@ -995,6 +995,7 @@ function atualizarRelogio() {
 function iniciar() {
   if (estado.rodando || estado.fim) return;
   estado.rodando = true;
+  // Antes deste ponto, o briefing e a história usam o espaço sem o painel de controles.
   buscarElemento('.status').hidden = false;
   buscarElemento('.interface-jogo').classList.add('em-partida');
   buscarElemento('#intro').hidden = true;

@@ -4,11 +4,11 @@ Revisão local atualizada em 7 de novembro de 2026. Esta revisão não inclui co
 
 ## O que pode ser afirmado
 
-- A suíte de regressão passou em 42 testes automatizados de lógica e estrutura.
+- A suíte de regressão passou em 52 testes automatizados de lógica e estrutura.
 - Foram simuladas presença e ausência de dialog nativo, indisponibilidade e falha de tela cheia, temporizadores atrasados, uso por teclado e botões de toque.
 - Os 28 SVGs do projeto foram analisados como XML sem erro.
 - As referências e âncoras locais das 24 páginas (12 em português e 12 em inglês) foram conferidas, sem IDs duplicados ou meta descriptions repetidas.
-- Nenhum desses resultados equivale a uma homologação visual em navegadores reais ou em todos os sistemas operacionais.
+- Os testes simulados não equivalem a uma homologação visual. A seção de verificação publicada registra os fluxos adicionais conferidos no navegador integrado; não há homologação de todos os sistemas operacionais.
 
 ## Correções aplicadas
 
@@ -119,3 +119,24 @@ Não existe garantia de ausência absoluta de bugs em qualquer navegador, extens
 - Acrescentado roteiro proposto de demonstração ao guia, ainda dependente de ensaio cronometrado. A contagem ativa de cinco minutos não equivale a um limite de cinco minutos de sessão com pausas.
 - Permanecem pendentes validação formal HTML5, leitor de tela, inspeção visual real e confirmação remota da publicação. A sessão não conseguiu acessar os hosts da Vercel e do validador.
 - Sem commit ou push nesta etapa.
+
+## Verificação dos três ajustes aprovados
+
+Base funcional: commit d56e102, já presente no início desta revisão. Nesta etapa foram atualizados comentários e documentação, sem duplicar a implementação.
+
+- **Menu:** 24 páginas com details/summary e scripts/menu.js. Links abertos no HTML como alternativa sem JavaScript; em telas de até 700px, o script recolhe o menu. Escape devolve o foco ao controle e não interfere nos diálogos.
+- **Briefing e painel:** controles e inventário ficam ocultos durante briefing e introdução; iniciar() revela o painel. Instruções detalhadas ficam recolhidas. Em telas pequenas, o painel usa espaçamentos menores.
+- **Fusíveis:** repetição preserva a mesma sequência e cancela a animação anterior. O avanço manual revela um sinal por clique; os fios permanecem desabilitados até Iniciar tentativa, quando as luzes são apagadas. O cronômetro continua e erros mantêm a penalidade.
+- **Regressão:** 52 testes simulados aprovados, incluindo menu, mudanças de largura, foco, início da partida, repetição, leitura por etapas, idioma, erro, fechamento e prazo.
+
+### Verificação publicada no navegador integrado
+
+- Abertas as rotas jogo.html e en/jogo.html da Vercel; recursos de jogo/menu identificados pela versão 20261107-acessibilidade.
+- Em viewport de 375 × 812: menu inicialmente recolhido, painel oculto no briefing e ausência de largura excedente da página. Cabeçalho medido em aproximadamente 181px; o briefing começa em aproximadamente 302px, comparado a 1226px na verificação anterior.
+- Em viewport de 1280 × 900: menu completo e controle móvel oculto.
+- Menu aberto e fechado com Escape, com retorno de foco ao summary.
+- Entrada na partida revela tempo, inventário e controles. No teste móvel em inglês, painel vazio medido em aproximadamente 283px de altura.
+- Fusíveis concluídos em português e inglês pelo modo manual. Confirmados repetição da sequência, bloqueio dos fios durante leitura, limpeza das luzes na tentativa e continuidade da contagem.
+- Nenhum erro apareceu no console durante esses fluxos. Viewports restaurados ao concluir a verificação.
+
+Esses testes usam o navegador integrado e viewports controlados. Não equivalem a teste em aparelhos físicos, em todos os mecanismos de navegador ou com leitor de tela. A matriz de sistemas operacionais e a validação formal HTML5 continuam pendentes. A tentativa anterior no validador externo encontrou uma verificação de segurança, que não foi contornada.

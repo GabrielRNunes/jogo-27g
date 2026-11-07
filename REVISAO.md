@@ -174,3 +174,11 @@
 - Acrescentado roteiro proposto de demonstração ao guia, ainda dependente de ensaio cronometrado. A contagem ativa de cinco minutos não equivale a um limite de cinco minutos de sessão com pausas.
 - Permanecem pendentes validação formal HTML5, leitor de tela, inspeção visual real e confirmação remota da publicação. A sessão não conseguiu acessar os hosts da Vercel e do validador.
 - Sem commit ou push nesta etapa.
+
+## Conferência dos três ajustes aprovados — 7 de novembro de 2026
+
+- Confirmada a implementação no commit d56e102: menu nativo recolhível, briefing com painel oculto e fusíveis com repetição e leitura por etapas.
+- Executados 52 testes simulados com aprovação. Testados os novos fluxos na Vercel em português e inglês, com viewports de 375 × 812 e 1280 × 900; nenhum erro de console nos percursos verificados.
+- Atualizados comentários, guia técnico, READMEs, matriz de requisitos e cobertura de testes.
+- A verificação publicada não substitui teste com leitor de tela, validação formal HTML5 ou homologação em aparelhos/sistemas reais.
+- Nenhum commit ou push executado nesta revisão.

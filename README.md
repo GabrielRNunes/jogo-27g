@@ -24,6 +24,7 @@ The links reflect the repository’s intended deployment routes. New local chang
 - Optional binary calculator with place-value explanations and progressive hints. It pauses the countdown while open and does not fill in puzzle answers.
 - Optional instrumental soundtrack, responsive layouts, visible focus and alternative text buttons for scene interactions.
 - Portuguese and English pages, translated scene signs and shared gameplay rules.
+- Collapsible mobile navigation, a briefing-focused start screen and optional one-signal-at-a-time review in the fuse memory puzzle. The countdown continues during this review.
 
 ## Run locally
 
@@ -35,7 +36,7 @@ To run the automated checks, install Node.js and execute from the project direct
 node tests/regressao.cjs
 ```
 
-The suite uses only built-in Node.js modules. Its 42 checks cover game routes, endings, countdown behavior, calculator pause, keyboard/touch-button handlers, optional APIs, contact simulation, both languages and local page references. The DOM and browser APIs are simulated: these checks do not establish visual compatibility across browsers or operating systems. See [COMPATIBILIDADE.md](COMPATIBILIDADE.md) for coverage and pending manual checks.
+The suite uses only built-in Node.js modules. Its 52 checks cover game routes, endings, countdown behavior, calculator pause, keyboard/touch-button handlers, optional APIs, contact simulation, both languages and local page references. The DOM and browser APIs are simulated: these checks do not establish visual compatibility across browsers or operating systems. See [COMPATIBILIDADE.md](COMPATIBILIDADE.md) for coverage and pending manual checks.
 
 ## Technology and structure
 
@@ -55,6 +56,7 @@ en/                     English pages with matching filenames
 css/                    Shared styles
 scripts/jogo.js         Shared rules, state and interactions
 scripts/contato.js      Demonstration contact form
+scripts/menu.js         Responsive native navigation
 scripts/idioma.js       Translation and localized asset helpers
 scripts/dados/ingles.js English interface dictionary
 assets/                 Scenes, portraits, endings and audio
