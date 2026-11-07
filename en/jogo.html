@@ -14,10 +14,10 @@
   <link rel="stylesheet" href="../css/style.css?v=20261107-interface">
   <link rel="stylesheet" href="../css/paginas.css?v=20261107-interface">
   <link rel="stylesheet" href="../css/jogo.css?v=20261107-interface">
-  <link rel="stylesheet" href="../css/dialogo.css?v=20261107-interface">
-  <script src="../scripts/dados/ingles.js?v=20261107-interface" defer></script>
+  <link rel="stylesheet" href="../css/dialogo.css?v=20261107-diario">
+  <script src="../scripts/dados/ingles.js?v=20261107-diario" defer></script>
   <script src="../scripts/idioma.js?v=20261107-interface" defer></script>
-  <script src="../scripts/jogo.js?v=20261107-interface" defer></script>
+  <script src="../scripts/jogo.js?v=20261107-diario" defer></script>
 </head>
 <body id="topo" class="pagina-jogo">
   <a href="#conteudo" class="pular">Skip to content</a>
@@ -51,6 +51,7 @@
   <main id="conteudo">
     <h2>Play</h2>
 
+    <!-- Estrutura estável: o JavaScript usa os IDs para atualizar textos, itens e a cena. -->
     <div class="interface-jogo">
       <section class="status" aria-label="Game controls and inventory">
         <div class="metricas-partida">
@@ -77,6 +78,7 @@
         </details>
       </section>
 
+      <!-- Apenas uma etapa aparece por vez; o atributo hidden controla essa alternância. -->
       <div class="area-investigacao">
         <section id="intro" aria-labelledby="intro-titulo">
           <h3 id="intro-titulo">Mission briefing</h3>
@@ -122,6 +124,7 @@
 
   <div id="fundo-dialogo" class="fundo-dialogo" hidden aria-hidden="true"></div>
 
+  <!-- Painel reutilizado pelos enigmas. Seu conteúdo e callbacks mudam no JavaScript. -->
   <dialog id="painel" aria-labelledby="painel-titulo">
     <h3 id="painel-titulo">Panel</h3>
     <div id="painel-corpo"></div>
@@ -130,17 +133,16 @@
 
   <dialog id="diario" aria-labelledby="diario-titulo" aria-describedby="diario-descricao">
     <div class="diario-cabecalho">
-      <p class="diario-sobretitulo">Protocolo Kairo · Investigation record</p>
       <h3 id="diario-titulo">Investigation log</h3>
-      <p id="diario-descricao">Review discoveries and incidents, newest first. Each timestamp shows how much countdown time remained when the entry was recorded.</p>
+      <p id="diario-descricao" class="visually-hidden">Newest discoveries first.</p>
       <p id="diario-resumo" class="diario-resumo">No entries in this run.</p>
     </div>
     <div id="diario-registros" class="diario-registros" tabindex="0" role="region" aria-label="Investigation entries">
       <ol id="lista-log" reversed></ol>
     </div>
     <div class="diario-rodape">
-      <p>During a run, reading the log does not pause the countdown.</p>
-      <button type="button" id="btn-fechar-diario">Return to the investigation</button>
+      <p>The timer keeps running.</p>
+      <button type="button" id="btn-fechar-diario">Back to game</button>
     </div>
   </dialog>
 

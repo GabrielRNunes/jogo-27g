@@ -1,4 +1,5 @@
 /* style.css - base do site: variáveis, reset, corpo e acessibilidade */
+/* Estas variáveis são compartilhadas pelas páginas: mudar uma cor aqui atualiza seus usos. */
 :root {
   --bg: #0d0a14;
   --painel: #17121f;
@@ -12,6 +13,7 @@
   --espaco: 1rem;
 }
 
+/* Inclui borda e preenchimento na largura definida, facilitando layouts responsivos. */
 *,
 *::before,
 *::after {

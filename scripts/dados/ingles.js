@@ -684,5 +684,8 @@ window.KAIRO_INGLES = {
   "&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;": "&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;",
   "O Protocolo Kairo é um jogo para navegador desenvolvido com HTML, CSS e JavaScript, com versionamento em Git.": "Protocolo Kairo is a browser game developed with HTML, CSS and JavaScript, with version control in Git.",
   "Controles e inventário da partida": "Game controls and inventory",
-  "Selecione um item para usá-lo.": "Select an item to use it."
+  "Selecione um item para usá-lo.": "Select an item to use it.",
+  "Descobertas recentes primeiro.": "Newest discoveries first.",
+  "O cronômetro continua.": "The timer keeps running.",
+  "Voltar ao jogo": "Back to game"
 };

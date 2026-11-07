@@ -9,6 +9,7 @@ const campoMensagem = document.querySelector('#mensagem');
 const contador = document.querySelector('#contador');
 const botaoEnviar = document.querySelector('#enviar-contato');
 const gruposDeCampos = formulario.querySelectorAll('fieldset');
+// Guarda o ID da resposta agendada. null indica que nenhum envio está em andamento.
 let envioPendente = null;
 
 function bloquearCampos(bloquear) {
@@ -36,8 +37,11 @@ function limparContador() {
   retorno.textContent = '';
 }
 
+// preventDefault evita o envio tradicional e o recarregamento da página.
+// A validação usa o HTML; não há fetch, servidor de e-mail ou armazenamento dos campos.
 function enviarMensagem(evento) {
   evento.preventDefault();
+  // Ignora um segundo clique enquanto a primeira simulação ainda aguarda resposta.
   if (envioPendente !== null) return;
   if (!formulario.checkValidity()) {
     formulario.reportValidity();
@@ -58,9 +62,11 @@ function enviarMensagem(evento) {
     bloquearCampos(false);
     const numeroProtocolo = Math.floor(1000 + Math.random() * 9000);
     const protocolo = 'KRO-' + numeroProtocolo;
+    // random produz um valor entre 0 (inclusivo) e 1 (exclusivo); floor gera um índice do array.
     const indiceResposta = Math.floor(Math.random() * RESPOSTAS.length);
     const resposta = RESPOSTAS[indiceResposta];
     const hora = new Date().toLocaleTimeString(idiomaIngles ? 'en-US' : 'pt-BR');
+    // O reset limpa os campos e o retorno; por isso a confirmação é escrita depois dele.
     formulario.reset();
     retorno.textContent = traduzir('Obrigado, ') + nome + '! ' + traduzir('Protocolo ') + protocolo + ' ' + traduzir('às ') + hora + '. ' + traduzir(resposta);
   }, 1200);

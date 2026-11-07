@@ -9,10 +9,14 @@
    onclose) e delegação de eventos nos containers.
    ========================================================= */
 
+// Fluxo principal: clique em Começar -> história -> iniciar() -> interações -> finalizar().
+// As funções de tradução vêm de idioma.js, carregado antes deste arquivo.
 const TEMPO_TOTAL = 300; // 5 minutos
 const PENALIDADE_ERRO = 10; // segundos perdidos por erro
 
 // Respostas (ficam aqui para facilitar o balanceamento)
+// Os códigos são textos: converter para número apagaria o zero inicial de '042'.
+// Como o jogo é inteiramente local, essas respostas podem ser vistas no código-fonte.
 const CODIGOS = {
   gaveta: '1511',
   terminal: 'ORBITA',
@@ -21,9 +25,11 @@ const CODIGOS = {
   fechadura: '264781' // Pares concatenados: terminal (26), rack (47), cofre (81).
 };
 
+// Memória da partida: os eventos alteram estes valores e as funções de interface os exibem.
+// const impede trocar o objeto inteiro; suas propriedades continuam podendo mudar.
 const estado = {
   tempo: TEMPO_TOTAL,
-  tempoRestanteMs: TEMPO_TOTAL * 1000,
+  tempoRestanteMs: TEMPO_TOTAL * 1000, // precisão do cálculo; tempo é o valor arredondado para exibição
   ultimaAtualizacao: null,
   erros: 0,
   cenario: 'quarto',
@@ -35,13 +41,16 @@ const estado = {
   rodando: false,
   pausaCalculo: false,
   fim: false,
-  cronometro: null
+  cronometro: null // identificador de setInterval, necessário para cancelar a contagem
 };
 
+// Recebe um seletor CSS (por exemplo, '#relogio') e devolve o elemento do HTML.
 function buscarElemento(seletor) {
   return document.querySelector(seletor);
 }
 
+// A divisão encontra os minutos; o resto (%) encontra os segundos que sobram.
+// padStart mantém dois dígitos nos segundos, como 5:03.
 function formatarTempo(segundosTotais) {
   const minutos = Math.floor(segundosTotais / 60);
   const segundos = segundosTotais % 60;
@@ -50,6 +59,7 @@ function formatarTempo(segundosTotais) {
 }
 
 /* ---------- Itens (objeto de textos) ---------- */
+// Catálogo de descrições. O inventário guarda apenas as chaves, como 'pendrive'.
 const ITENS = {
   pendrive: { nome: 'Pen drive', descricao: 'Pen drive preto com a etiqueta "treino". Deve abrir em algum PC.' },
   cartao: { nome: 'Cartão de acesso', descricao: 'Cartão magnético com a sigla SRV. Parece servir para o leitor do rack de servidores.' },
@@ -93,6 +103,8 @@ function mensagem(texto) {
   buscarElemento('#mensagem').textContent = traduzir(texto);
 }
 
+// Acrescenta uma descoberta ao histórico; o diário mostra esse histórico da mais nova para a mais antiga.
+// O tempo registrado é o restante na partida, e não a hora do computador.
 function registrar(texto, tipo = 'nota') {
   estado.diario.push({
     quando: formatarTempo(estado.tempo),
@@ -105,6 +117,7 @@ function registrar(texto, tipo = 'nota') {
   atualizarMarcas();
 }
 
+// A penalidade e a captura ficam centralizadas para todos os enigmas seguirem a mesma regra.
 function erro(motivo) {
   if (!partidaAtiva()) return;
   estado.erros++;
@@ -122,17 +135,14 @@ function atualizarDiario() {
   for (let indice = estado.diario.length - 1; indice >= 0; indice--) {
     const registro = estado.diario[indice];
     const ehFalha = registro.tipo === 'erro';
-    let categoria = 'Anotação';
-    if (ehFalha) {
-      categoria = 'Falha';
-      falhas++;
-    }
+    if (ehFalha) falhas++;
+    const categoria = ehFalha ? '<span class="registro-categoria">Falha</span>' : '';
     conteudo += `<li class="registro-diario ${registro.tipo}">
       <div class="registro-cabecalho">
-        <span class="registro-categoria">${categoria}</span>
-        <span class="hora">Tempo restante: ${registro.quando}</span>
+        <p class="registro-local">${registro.cenario}</p>
+        ${categoria}
+        <span class="hora" aria-label="Tempo restante: ${registro.quando}">${registro.quando}</span>
       </div>
-      <p class="registro-local">${registro.cenario}</p>
       <p class="registro-texto">${registro.texto}</p>
     </li>`;
   }
@@ -158,6 +168,8 @@ function adicionarItem(id) {
   atualizarInventario();
 }
 
+// Reconstrói os botões a partir dos IDs guardados no estado, sem criar cópias do inventário.
+// aria-pressed informa a seleção também para leitores de tela.
 function atualizarInventario() {
   let conteudo = '<li>Vazio.</li>';
   if (estado.inventario.length > 0) {
@@ -264,6 +276,8 @@ function navegarNoDialogoAlternativo(evento) {
 
 document.addEventListener('keydown', navegarNoDialogoAlternativo);
 
+// Um callback é uma função passada para ser chamada depois. Cada enigma fornece os seus.
+// O mesmo painel HTML atende a códigos, fios e setas, conforme essas funções.
 let painelAtual = {}; // funções do painel aberto: aoEnviar, aoClicar, aoTecla, aoFechar
 
 function abrirPainel(titulo, corpo, funcoes = {}) {
@@ -314,6 +328,7 @@ function enviarCodigo(evento) {
   const formulario = evento.target;
   const campo = formulario.querySelector('input');
   const aviso = formulario.querySelector('[role="alert"]');
+  // Remove espaços nas pontas e aceita letras minúsculas, mantendo códigos como strings.
   const codigoDigitado = campo.value.trim().toUpperCase();
   const resposta = painelAtual.aoEnviar(codigoDigitado);
 
@@ -362,6 +377,8 @@ function alternarCalculadoraBinaria() {
   }
 }
 
+// Primeiro contabiliza o tempo já passado; só então pausa ou retoma o intervalo.
+// Isso preserva frações de segundo e impede intervalos duplicados.
 function definirPausaCalculo(pausar) {
   const devePausar = pausar && estado.rodando && !estado.fim;
   if (estado.pausaCalculo === devePausar) return;
@@ -371,7 +388,7 @@ function definirPausaCalculo(pausar) {
   clearInterval(estado.cronometro);
   estado.cronometro = null;
 
-  // Ao sair do apoio, retoma uma única contagem, a partir do segundo seguinte.
+  // Ao sair do apoio, retoma a partir do tempo restante, incluindo a fração preservada.
   if (estado.rodando && !estado.fim && !devePausar) {
     estado.ultimaAtualizacao = Date.now();
     estado.cronometro = setInterval(contarSegundo, 250);
@@ -389,6 +406,8 @@ function calcularBinario(evento) {
     return;
   }
 
+  // Cada posição vale uma potência de 2. Multiplicar o peso pelo bit inclui ou zera essa parcela.
+  // Exemplo de aprendizado: 0101 = 0×8 + 1×4 + 0×2 + 1×1 = 5.
   const pesos = [8, 4, 2, 1];
   const etapas = [];
   const parcelas = [];
@@ -420,6 +439,9 @@ function limparCalculoBinario() {
    OBJETOS INTERATIVOS (10 enigmas + lixeira com o bilhete secreto)
    pos = [left%, top%, largura%, altura%]
    ========================================================= */
+// Cada propriedade reúne dados e comportamento de um elemento da cena.
+// interagir() executa sua regra; resolvido evita entregar a mesma recompensa novamente.
+// this representa o objeto ao chamar, por exemplo, objetos.gaveta.interagir().
 const objetos = {
   // 1 - Calendário: pista da data e da senha do terminal
   calendario: {
@@ -446,6 +468,7 @@ const objetos = {
       registrar('A gaveta eletrônica travou por 45 segundos (erros no terminal).');
     },
     interagir() {
+      // Guarda a referência para usá-la dentro do callback aoEnviar, chamado pelo painel.
       const gaveta = this;
       if (this.resolvido) return mensagem('A gaveta está vazia.');
       if (this.bloqueada()) return mensagem('Gaveta travada pelo sistema. Aguarde alguns segundos.');
@@ -652,6 +675,8 @@ const objetos = {
       }
       let passoAtual = 0;
       let podeClicar = false;
+      // Estas variáveis pertencem a esta abertura do minigame. Os callbacks continuam com acesso a elas.
+      // Guardar os IDs permite cancelar as animações se o jogador fechar o painel.
       const temporizadores = [];
 
       function mostrarStatus(texto) {
@@ -810,6 +835,8 @@ for (const idObjeto of Object.keys(objetos)) {
 /* =========================================================
    CENÁRIO (hotspots são <button>: funcionam com teclado)
    ========================================================= */
+// As posições em porcentagem acompanham o tamanho da ilustração sem alterar suas proporções.
+// data-obj e data-destino ligam o botão visual à regra correspondente.
 function criarBotaoCenario(rotulo, posicao, classe, dados) {
   const [esquerda, topo, largura, altura] = posicao;
   return `<button type="button" class="hotspot ${classe}" ${dados}
@@ -817,6 +844,8 @@ function criarBotaoCenario(rotulo, posicao, classe, dados) {
     aria-label="${rotulo}"><span>${rotulo}</span></button>`;
 }
 
+// Gera a imagem interativa e a lista textual a partir dos mesmos dados e destinos.
+// As duas formas de explorar usam o mesmo evento; não há uma segunda lógica para toque.
 function atualizarCenario() {
   const cenarioAtual = CENARIOS[estado.cenario];
   let conteudo = '';
@@ -897,6 +926,7 @@ function atualizarRelogio() {
   if (status.textContent !== aviso) status.textContent = aviso;
 }
 
+// A leitura da introdução não gasta tempo. A contagem é criada somente ao chegar aqui.
 function iniciar() {
   if (estado.rodando || estado.fim) return;
   estado.rodando = true;
@@ -911,6 +941,8 @@ function iniciar() {
 }
 
 // Usa o tempo decorrido, pois temporizadores podem atrasar em abas em segundo plano.
+// setInterval apenas pede atualizações. A diferença entre instantes é que desconta o tempo real.
+// Math.max evita valores negativos e Math.ceil define o segundo mostrado ao jogador.
 function sincronizarTempo() {
   if (!estado.rodando || estado.fim || estado.pausaCalculo) return;
   const agora = Date.now();
@@ -927,6 +959,7 @@ function contarSegundo() {
   if (estado.tempo === 0) finalizar('capturado');
 }
 
+// Atualiza o relógio antes de aceitar uma ação: uma aba suspensa pode ter ultrapassado o prazo.
 function partidaAtiva() {
   contarSegundo();
   return estado.rodando && !estado.fim;
@@ -1089,12 +1122,16 @@ const FINAIS = {
   }
 };
 
+// Esta função é chamada após aceitar o PIN, com a partida ainda ativa.
+// O bilhete tem prioridade; sem ele, tempo e erros distinguem os dois tipos de fuga.
+// Captura é tratada separadamente quando a contagem chega a zero.
 function decidirFinal() {
   if (estado.inventario.includes('bilhete')) return finalizar('secreto');
   if (estado.tempo >= 120 && estado.erros <= 1) return finalizar('perfeito');
   return finalizar('sequelas');
 }
 
+// Encerra uma única vez, cancela a contagem e fecha interações antes de exibir o desfecho.
 function finalizar(tipo) {
   if (estado.fim) return;
   estado.fim = true;
@@ -1136,6 +1173,7 @@ function fecharDiario() {
   fecharDialogo(buscarElemento('#diario'));
 }
 
+// Recarregar recria estado e objetos com os valores iniciais; não há salvamento de progresso.
 function reiniciarJogo() {
   location.reload();
 }
@@ -1154,6 +1192,7 @@ atualizarRelogio();
 // Reconcilia a contagem ao voltar de uma aba oculta ou do histórico do navegador.
 document.addEventListener('visibilitychange', contarSegundo);
 window.addEventListener('pageshow', contarSegundo);
+// Estes controles só são liberados após a preparação dos eventos e da interface.
 buscarElemento('#btn-iniciar').disabled = false;
 buscarElemento('#btn-diario').disabled = false;
 buscarElemento('#estado-carregamento').hidden = true;

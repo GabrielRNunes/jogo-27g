@@ -148,3 +148,20 @@
 - Mantidos os mesmos IDs e eventos, as regras, os códigos dos enigmas e a pausa pedagógica.
 - Percursos em português e inglês, uso dos itens e demais verificações continuam aprovados nos 42 testes simulados. Validação visual em navegadores reais permanece pendente.
 - Alterações locais, sem commit ou push nesta etapa.
+
+## Diário compacto e apresentação atual do projeto
+
+- Cabeçalho do diário reduzido a título e resumo; orientação de ordem mantida em uma frase para leitores de tela.
+- Ambiente e tempo reunidos na mesma linha de cada registro, sem repetir o rótulo Anotação nem a expressão Tempo restante no conteúdo visual. Falhas continuam identificadas por texto; horários preservam rótulos acessíveis.
+- Reduzidos espaçamentos dos cartões e do rodapé sem diminuir a fonte principal das pistas. Mantidos o foco, a navegação por teclado, a ordem dos registros e o comportamento do relógio.
+- Removida dos READMEs a seção opcional de distribuição futura; apresentação identifica o projeto como portfólio principal atual.
+- 42 testes simulados aprovados nesta revisão. Validação visual em navegador real continua pendente.
+- Sem commit ou push executados nesta etapa.
+
+## Explicações do código e guia técnico
+
+- Acrescentados comentários em português aos três scripts principais, às duas versões do HTML do jogo e a dois arquivos CSS.
+- Comentários destacam estado, eventos, callbacks, inventário, relógio, pausa, cálculo binário, finais, idiomas e responsividade.
+- Criado GUIA-DO-CODIGO.md com mapa dos arquivos, sequência de demonstração, conceitos e consulta técnica dos enigmas; vinculado nos dois READMEs.
+- Verificada a preservação exata das sete fontes anteriores ao reverter somente as inserções explicativas. Os 42 testes simulados passaram e os links do guia foram conferidos.
+- Nenhuma publicação futura foi anunciada na interface ou no README. Sem commit ou push nesta etapa.

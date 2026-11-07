@@ -4,7 +4,7 @@ Português · [English](README.md)
 
 Escape room para navegador feito com HTML, CSS e JavaScript puro. Investigue o desaparecimento de um jogador de esports, conecte pistas em cinco ambientes e reprograme a saída antes de terminar a contagem de cinco minutos.
 
-Projeto acadêmico e de portfólio de **Gabriel Roberto Dos Santos N. Corrêa**, com o apoio de IA declarado abaixo.
+Projeto principal de portfólio de **Gabriel Roberto Dos Santos N. Corrêa**, desenvolvido como trabalho acadêmico, com o apoio de IA declarado abaixo.
 
 ![Entrada da suíte do Kairo em estilo de quadrinhos](assets/historia/porta-kairo.png)
 
@@ -56,15 +56,15 @@ As páginas em português ficam na raiz e as equivalentes em inglês em `en/`. O
 
 O trabalho exercita HTML semântico, CSS responsivo, funções, objetos, arrays, manipulação do DOM, delegação de eventos, controle de estado e Git. O relógio considera o tempo decorrido, inclusive após a suspensão de uma aba, e preserva frações de segundo durante a pausa da calculadora. Tela cheia é opcional e os diálogos têm alternativa quando a API nativa não existe.
 
+## Guia do código
+
+O [guia técnico](GUIA-DO-CODIGO.md) explica o fluxo da partida, as funções principais e uma sequência de demonstração, com exemplos reais do código. Contém soluções dos enigmas.
+
 ## Autoria e apoio de IA
 
 Gabriel define a direção do projeto e é responsável por sua apresentação e revisão. O Codex, da OpenAI, apoiou implementação, depuração, textos, tradução, recursos pedagógicos, documentação e verificações. O Claude, da Anthropic, também foi utilizado durante o desenvolvimento. A ilustração da porta foi gerada por IA; o prompt está em `assets/historia/porta-kairo.prompt.txt`.
 
 Esse registro torna explícita a assistência recebida. Não representa implementação sem apoio nem endosso das empresas ao projeto. Consulte [Apoio ao Projeto](apoio.html) e [CREDITOS.md](CREDITOS.md).
-
-## Possível distribuição futura
-
-O itch.io é uma possibilidade futura para distribuir o jogo HTML5, com opções descritas no [guia oficial](https://itch.io/docs/creators/html5). Não há publicação ou recebimento de valores configurado neste projeto. Antes dessa etapa, é necessário concluir testes reais, revisar os direitos dos recursos e preparar o pacote de distribuição.
 
 ## Contato
 

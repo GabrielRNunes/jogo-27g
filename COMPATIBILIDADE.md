@@ -101,3 +101,12 @@ Não existe garantia de ausência absoluta de bugs em qualquer navegador, extens
 - Mantidos os mesmos IDs e eventos, as regras, os códigos dos enigmas e a pausa pedagógica.
 - Percursos em português e inglês, uso dos itens e demais verificações continuam aprovados nos 42 testes simulados. Validação visual em navegadores reais permanece pendente.
 - Alterações locais, sem commit ou push nesta etapa.
+
+## Diário compacto e apresentação atual do projeto
+
+- Cabeçalho do diário reduzido a título e resumo; orientação de ordem mantida em uma frase para leitores de tela.
+- Ambiente e tempo reunidos na mesma linha de cada registro, sem repetir o rótulo Anotação nem a expressão Tempo restante no conteúdo visual. Falhas continuam identificadas por texto; horários preservam rótulos acessíveis.
+- Reduzidos espaçamentos dos cartões e do rodapé sem diminuir a fonte principal das pistas. Mantidos o foco, a navegação por teclado, a ordem dos registros e o comportamento do relógio.
+- Removida dos READMEs a seção opcional de distribuição futura; apresentação identifica o projeto como portfólio principal atual.
+- 42 testes simulados aprovados nesta revisão. Validação visual em navegador real continua pendente.
+- Sem commit ou push executados nesta etapa.

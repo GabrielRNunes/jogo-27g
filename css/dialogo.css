@@ -114,35 +114,26 @@
 }
 #diario::backdrop { background: rgba(7, 5, 12, 0.85); }
 .diario-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
   flex: none;
-  padding: 1.5rem 2rem 1.25rem;
+  padding: .85rem 1.25rem;
   border-top: 4px solid var(--neon);
   border-bottom: 1px solid #44374f;
   background: linear-gradient(120deg, #241a32, #17121f);
 }
-#diario .diario-sobretitulo {
-  margin: 0 0 0.5rem;
-  color: #c5aedf;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
 #diario h3 {
-  margin: 0 0 0.75rem;
+  margin: 0;
   color: #faf6ff;
   font-family: var(--fonte-titulo);
   font-size: clamp(1.25rem, 3vw, 1.65rem);
   line-height: 1.4;
 }
-#diario-descricao {
-  max-width: 65ch;
-  margin: 0;
-  color: #d1c8de;
-  font-size: 1rem;
-  line-height: 1.65;
-}
 #diario .diario-resumo {
-  margin: 0.8rem 0 0;
+  margin: 0;
   color: #e5d2ac;
   font-size: 0.9375rem;
   font-weight: 600;
@@ -153,7 +144,7 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
-  padding: 1.5rem 2rem;
+  padding: 1rem 1.25rem;
 }
 .diario-registros:focus-visible {
   outline: 3px solid var(--porta);
@@ -161,14 +152,14 @@
 }
 #lista-log {
   display: grid;
-  gap: 1rem;
+  gap: .65rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 #diario #lista-log .registro-diario {
   margin: 0;
-  padding: 1.1rem 1.25rem;
+  padding: .75rem 1rem;
   border: 1px solid #45384f;
   border-left: 3px solid #a88ac9;
   border-radius: 8px;
@@ -179,8 +170,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
+  gap: .25rem .75rem;
+  margin-bottom: .35rem;
 }
 .registro-categoria {
   color: #dfc7fc;
@@ -188,13 +179,14 @@
   font-weight: 700;
 }
 #lista-log .hora {
+  margin-left: auto;
   color: #dfd2bc;
   font-family: ui-monospace, Consolas, monospace;
   font-size: 0.875rem;
   font-variant-numeric: tabular-nums;
 }
 #lista-log .registro-local {
-  margin: 0.35rem 0 0.65rem;
+  margin: 0;
   color: #c3b9d1;
   font-size: 0.9375rem;
 }
@@ -202,7 +194,7 @@
   margin: 0;
   color: #f1edf7;
   font-size: 1.0625rem;
-  line-height: 1.8;
+  line-height: 1.65;
   overflow-wrap: anywhere;
 }
 #diario #lista-log .erro { border-left-color: #f493a4; }
@@ -221,12 +213,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem 1.25rem;
-  padding: 1rem 2rem;
+  padding: .65rem 1.25rem;
   border-top: 1px solid #44374f;
   background: #1a1423;
 }
 #diario .diario-rodape p {
-  flex: 1 1 20rem;
+  flex: 1 1 10rem;
   margin: 0;
   color: #c3b9d1;
   font-size: 0.9375rem;
@@ -248,7 +240,7 @@
   }
   .diario-cabecalho { padding: 1rem 1.1rem; }
   .diario-registros { padding: 1rem; }
-  #diario #lista-log .registro-diario { padding: 0.9rem 1rem; }
+  #diario #lista-log .registro-diario { padding: .75rem; }
   .diario-rodape { padding: 0.85rem 1rem; }
   #btn-fechar-diario { width: 100%; }
 }

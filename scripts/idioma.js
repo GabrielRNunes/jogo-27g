@@ -3,10 +3,13 @@
 // O idioma vem da página. As regras do jogo são compartilhadas entre PT e EN.
 const idiomaIngles = (document.documentElement.getAttribute('lang') || '').indexOf('en') === 0;
 const dicionarioIngles = window.KAIRO_INGLES || {};
+// Frases maiores vêm primeiro para evitar substituir apenas uma parte de uma expressão conhecida.
 const trechosTraduziveis = Object.keys(dicionarioIngles)
   .filter(function (chave) { return chave.length >= 4 && chave !== dicionarioIngles[chave]; })
   .sort(function (a, b) { return b.length - a.length; });
 
+// Em português, devolve o texto original. Em inglês, procura uma tradução exata primeiro.
+// Os casos abaixo tratam mensagens com números e trechos compostos durante a partida.
 function traduzir(texto) {
   if (!idiomaIngles) return texto;
   texto = String(texto);
@@ -34,6 +37,7 @@ function traduzir(texto) {
   return texto;
 }
 
+// Recebe marcação criada pelo próprio jogo; não é um sanitizador para HTML de usuários.
 function traduzirHTML(html) {
   if (!idiomaIngles) return html;
   // Somente textos e rótulos: IDs, classes, códigos e eventos não são traduzidos.
@@ -46,6 +50,8 @@ function traduzirHTML(html) {
   });
 }
 
+// A página inglesa fica uma pasta abaixo da raiz, por isso usa '../'.
+// Apenas ilustrações com texto recebem uma variante em assets/en; retratos e áudio são compartilhados.
 function recursoLocal(caminho) {
   if (!idiomaIngles) return caminho;
   const partes = caminho.split('?');

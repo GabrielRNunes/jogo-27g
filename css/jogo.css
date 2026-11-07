@@ -44,6 +44,7 @@ body {
 /* Cena e painel compartilham a mesma área; o inventário não fica após as dicas. */
 .pagina-jogo > header { position: static; }
 .pagina-jogo main { max-width: 1320px; width: calc(100% - 2rem); }
+/* min-width: 0 permite encolher as colunas sem que textos longos forcem a largura da página. */
 .interface-jogo, .area-investigacao { min-width: 0; }
 .interface-jogo { display: grid; gap: 1.25rem; align-items: start; }
 .area-investigacao > section { margin: 0; border-top: 0; padding-top: 0; }
@@ -81,11 +82,13 @@ body {
   .status #inventario { display: flex; }
   .status #inventario li { flex: 1 1 8rem; min-width: 0; }
 }
+/* Em telas largas, a ordem visual coloca a cena à esquerda e os controles à direita. */
 @media (min-width: 1000px) {
   .interface-jogo { grid-template-columns: minmax(0, 1fr) 19rem; }
   .interface-jogo > .status { grid-column: 2; grid-row: 1; }
   .area-investigacao { grid-column: 1; grid-row: 1; }
 }
+/* Acompanha a rolagem somente com altura suficiente; o painel continua limitado à janela. */
 @media (min-width: 1000px) and (min-height: 700px) {
   .interface-jogo > .status {
     position: sticky;

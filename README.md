@@ -4,7 +4,7 @@
 
 A browser escape room built with HTML, CSS and vanilla JavaScript. Investigate a missing esports player, connect clues across five rooms and reprogram the exit before the five-minute countdown ends.
 
-A student portfolio project by **Gabriel Roberto Dos Santos N. Corrêa**, with AI assistance disclosed below.
+The primary portfolio project by **Gabriel Roberto Dos Santos N. Corrêa**, developed as an academic project, with AI assistance disclosed below.
 
 ![Comic-style entrance to Kairo’s suite](assets/historia/porta-kairo.png)
 
@@ -70,15 +70,15 @@ The project practices semantic HTML, responsive CSS, functions, objects, arrays,
 
 The countdown reconciles actual elapsed time when a suspended tab resumes. The binary aid preserves partial seconds during its pause. Fullscreen is optional, and dialogs have an alternative when the native API is unavailable. These choices address concrete failure cases without adding a framework or backend.
 
+## Code walkthrough
+
+The [technical walkthrough in Portuguese](GUIA-DO-CODIGO.md) explains the game flow, key functions and a demonstration sequence using the actual source code. It includes puzzle solutions.
+
 ## Authorship and AI assistance
 
 Gabriel defines the project’s direction and is responsible for its presentation and review. Codex (OpenAI) assisted with implementation, debugging, text revision, translation, educational interactions, documentation and checks. Claude (Anthropic) was also used during development. The door illustration was generated with AI; its generation prompt is recorded in `assets/historia/porta-kairo.prompt.txt`.
 
 AI assistance is part of the development history and is not a claim of unaided implementation or of endorsement by OpenAI or Anthropic. See [the project’s support page](apoio.html) and [credits](CREDITOS.md).
-
-## Possible future distribution
-
-An HTML5 distribution on itch.io is a future option, not a configured release or payment system. Its [official HTML5 guide](https://itch.io/docs/creators/html5) explains ZIP packaging and donation settings. Before publishing there, complete real-browser checks, review asset rights and prepare the release package.
 
 ## Contact
 

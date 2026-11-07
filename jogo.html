@@ -14,9 +14,9 @@
   <link rel="stylesheet" href="css/style.css?v=20261107-interface">
   <link rel="stylesheet" href="css/paginas.css?v=20261107-interface">
   <link rel="stylesheet" href="css/jogo.css?v=20261107-interface">
-  <link rel="stylesheet" href="css/dialogo.css?v=20261107-interface">
+  <link rel="stylesheet" href="css/dialogo.css?v=20261107-diario">
   <script src="scripts/idioma.js?v=20261107-interface" defer></script>
-  <script src="scripts/jogo.js?v=20261107-interface" defer></script>
+  <script src="scripts/jogo.js?v=20261107-diario" defer></script>
 </head>
 <body id="topo" class="pagina-jogo">
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -50,6 +50,7 @@
   <main id="conteudo">
     <h2>Jogar</h2>
 
+    <!-- Estrutura estável: o JavaScript usa os IDs para atualizar textos, itens e a cena. -->
     <div class="interface-jogo">
       <section class="status" aria-label="Controles e inventário da partida">
         <div class="metricas-partida">
@@ -76,6 +77,7 @@
         </details>
       </section>
 
+      <!-- Apenas uma etapa aparece por vez; o atributo hidden controla essa alternância. -->
       <div class="area-investigacao">
         <section id="intro" aria-labelledby="intro-titulo">
           <h3 id="intro-titulo">Briefing da missão</h3>
@@ -121,6 +123,7 @@
 
   <div id="fundo-dialogo" class="fundo-dialogo" hidden aria-hidden="true"></div>
 
+  <!-- Painel reutilizado pelos enigmas. Seu conteúdo e callbacks mudam no JavaScript. -->
   <dialog id="painel" aria-labelledby="painel-titulo">
     <h3 id="painel-titulo">Painel</h3>
     <div id="painel-corpo"></div>
@@ -129,17 +132,16 @@
 
   <dialog id="diario" aria-labelledby="diario-titulo" aria-describedby="diario-descricao">
     <div class="diario-cabecalho">
-      <p class="diario-sobretitulo">Protocolo Kairo · Registro de investigação</p>
       <h3 id="diario-titulo">Diário de bordo</h3>
-      <p id="diario-descricao">Consulte suas descobertas e ocorrências, da mais recente para a mais antiga. Os horários indicam o tempo restante na partida quando cada registro foi feito.</p>
+      <p id="diario-descricao" class="visually-hidden">Descobertas recentes primeiro.</p>
       <p id="diario-resumo" class="diario-resumo">Nenhum registro nesta partida.</p>
     </div>
     <div id="diario-registros" class="diario-registros" tabindex="0" role="region" aria-label="Registros da investigação">
       <ol id="lista-log" reversed></ol>
     </div>
     <div class="diario-rodape">
-      <p>Durante a partida, consultar o diário não pausa a contagem.</p>
-      <button type="button" id="btn-fechar-diario">Voltar à investigação</button>
+      <p>O cronômetro continua.</p>
+      <button type="button" id="btn-fechar-diario">Voltar ao jogo</button>
     </div>
   </dialog>
 
