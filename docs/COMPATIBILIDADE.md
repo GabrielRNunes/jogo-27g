@@ -154,3 +154,11 @@ Esses testes usam o navegador integrado e viewports controlados. Não equivalem 
 - Validação formal completa, leitor de tela e matriz de sistemas reais continuam pendentes. Não foi declarada ausência universal de bugs.
 - Alterações locais, sem commit ou push nesta revisão.
 - Conferência final local: 52 testes de regressão aprovados, 24 HTMLs com estrutura e conteúdo preservados, 37 referências locais da documentação válidas, seis arquivos JavaScript com sintaxe válida e 28 SVGs com XML válido. A comparação com o commit anterior confirmou que o HTML mudou somente em indentação, comentários, versão do CSS e atributo redundante do fundo.
+
+## Correção do alinhamento do título Jogar
+
+- Identificada diferença entre a largura do main do jogo (1320px) e a das outras páginas (1000px). O problema relatado era o título, não o menu.
+- Criada largura de conteúdo compartilhada, aplicada ao main informativo e aos h2. Títulos usam 1,5rem e margem horizontal automática.
+- Reservado espaço da barra de rolagem vertical, com alternativa para navegadores sem scrollbar-gutter.
+- Atualizadas as URLs das folhas de estilo alteradas nas páginas correspondentes. Briefing e introdução também seguem a coluna compartilhada. Mantidos os HTMLs na raiz e em en/ e a documentação em docs/.
+- Os 52 testes simulados passaram; a reconferência visual da correção depende da publicação. Sem commit ou push nesta etapa.

@@ -150,7 +150,7 @@ As páginas portuguesas ficam na raiz; as inglesas ficam em `en/`. O seletor usa
 
 A ordem de carregamento começa em `style.css`, segue para `paginas.css` e, no jogo, termina em `jogo.css` e `dialogo.css`. Os estilos mais específicos complementam os anteriores. Por isso, alterações de componentes comuns precisam ser conferidas em todas as páginas.
 
-No CSS, variáveis definem cores e famílias de fontes. Grid organiza cena e painel; media queries reorganizam a interface quando a largura diminui. As posições dos objetos são percentuais sobre uma ilustração de proporção fixa.
+No CSS, variáveis definem cores e famílias de fontes. A variável `--largura-conteudo` define a coluna de 1000px das páginas informativas e dos títulos. O main do jogo é maior para acomodar a cena e o painel, mas seu h2 mantém a coluna comum; assim, espaço de jogo e alinhamento editorial são independentes. `scrollbar-gutter` reserva espaço para a barra vertical e evita deslocamentos entre páginas curtas e longas. Grid organiza cena e painel; media queries reorganizam a interface quando a largura diminui. As posições dos objetos são percentuais sobre uma ilustração de proporção fixa.
 
 Na tabela, `.tabela-rolagem` usa `overflow-x: auto` para conter a rolagem e `position: relative` para conter as descrições absolutas de acessibilidade nas células. Sem esse vínculo, um texto visualmente oculto pode ampliar a largura da página. A correção mantém o conteúdo acessível e evita esconder a falha com `overflow-x: hidden` no corpo.
 

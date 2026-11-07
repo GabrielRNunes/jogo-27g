@@ -106,3 +106,26 @@ Os três ajustes foram conferidos: menu recolhível móvel com links completos n
 ## Resultado da revisão geral
 
 As 24 páginas foram inspecionadas no navegador integrado em três larguras. O menu não apresentou corte nas condições verificadas. Foi corrigida localmente uma causa de largura excedente na tabela de tecnologias; a reconferência visual dessa correção depende da publicação. Os documentos técnicos foram reunidos nesta pasta, com referências atualizadas e HTMLs públicos mantidos nos mesmos endereços. O registro detalhado está em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
+
+## Alinhamento do título e prioridades de conclusão
+
+O deslocamento relatado era do título Jogar. O main do jogo utiliza até 1320px para comportar cena e painel, enquanto as páginas informativas utilizam até 1000px. O título agora usa a mesma largura de conteúdo e o mesmo tamanho de fonte das outras páginas, sem reduzir a área jogável. O espaço da barra vertical é estabilizado para evitar mudanças de posição entre páginas curtas e longas. A correção é local e deve ser reconferida no navegador após a publicação.
+
+### Para concluir a avaliação
+
+Os requisitos funcionais centrais estão implementados; não é necessário acrescentar enigmas para atingir as quantidades pedidas. Faltam comprovar os critérios abaixo:
+
+- Concluir a validação formal HTML5 das 24 páginas e da versão revisada. A rodada anterior validou cinco páginas publicadas sem erros, não todas.
+- Completar uma partida com leitor de tela e teclado, incluindo fios, setas, inventário e diálogos. Os controles acessíveis e testes simulados não substituem essa experiência.
+- Cronometrar a demonstração em 2–5 minutos de tempo total. A contagem ativa tem cinco minutos; introdução e pausa binária podem alongar a sessão.
+- Conferir a publicação final, recursos de mídia e telas no navegador usado pelo professor. A comparação com as tags vistas em aula depende da lista dessa aula.
+
+### Para comprovar o nível desejado para o portfólio principal
+
+- Uniformidade visual: conferir títulos, margens, fontes, menus, painéis e rodapés nas duas versões depois de publicar as correções.
+- Cobertura prática: completar os percursos e conferir zoom, orientação e telas estreitas nos navegadores e dispositivos declarados como suportados. Não prometer funcionamento sem falhas em qualquer sistema.
+- Fluidez: observar pessoas jogando sem explicar as soluções e registrar dificuldades de leitura, navegação, inventário e pistas; ajustar somente com aprovação do autor.
+- Desempenho: medir o carregamento no celular antes de decidir otimizações. A imagem da porta tem aproximadamente 3MB; o WAV opcional, aproximadamente 2,7MB, usa preload=none. Esses tamanhos não significam que todo esse conteúdo seja baixado na abertura de todas as páginas.
+- Apresentação: manter demonstração e README fáceis de entender, guia técnico coerente com o código e registros claros de autoria, decisões e validações.
+
+A documentação está em docs/, os estilos em css/, a lógica em scripts/, os recursos em assets/ e os testes em tests/. Os HTMLs públicos continuam na raiz e em en/ para preservar endereços. Otimizações de mídia, mudanças de regras e novos recursos não foram aplicados nesta correção; precisam de aprovação específica.

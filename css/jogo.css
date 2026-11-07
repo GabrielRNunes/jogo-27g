@@ -49,7 +49,10 @@ body {
 .interface-jogo { display: grid; gap: 1.25rem; align-items: start; }
 .area-investigacao > section { margin: 0; border-top: 0; padding-top: 0; }
 .area-investigacao > #intro,
-.area-investigacao > #dialogo { max-width: 62rem; margin-inline: auto; }
+.area-investigacao > #dialogo {
+  max-width: var(--largura-conteudo, 1000px);
+  margin-inline: auto;
+}
 .interface-jogo > .status { margin: 0; padding: 1rem; }
 .area-investigacao > #jogo > h3 { margin: 0 0 .75rem; }
 .metricas-partida {

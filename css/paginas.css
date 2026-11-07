@@ -120,12 +120,18 @@ nav a[aria-current="page"] {
 main {
   flex: 1;
   width: calc(100% - 2rem);
-  max-width: 1000px;
-  width: min(100% - 2rem, 1000px);
+  max-width: var(--largura-conteudo, 1000px);
+  width: min(100% - 2rem, var(--largura-conteudo, 1000px));
   margin-inline: auto;
   padding-block: 2rem;
 }
 main > h2 {
+  /* O jogo tem uma área maior para cena e inventário, mas o título segue
+     a mesma coluna e o mesmo tamanho de todas as páginas do site. */
+  width: 100%;
+  max-width: var(--largura-conteudo, 1000px);
+  margin-inline: auto;
+  font-size: 1.5rem;
   font-family: var(--fonte-titulo);
   border-left: 6px solid var(--neon);
   padding-left: 0.75rem;
