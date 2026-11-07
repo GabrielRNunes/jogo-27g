@@ -29,6 +29,11 @@ body {
   font-family: var(--fonte-corpo);
   line-height: 1.7;
 }
+img, svg, audio { max-width: 100%; }
+img { height: auto; }
+main, .card, fieldset { min-width: 0; }
+p, li, dd, a { overflow-wrap: anywhere; }
+[hidden] { display: none !important; }
 
 ::selection {
   background: var(--neon);
@@ -65,3 +70,9 @@ body {
   outline-offset: 2px;
 }
 
+
+/* O seletor usa links: permanece disponível mesmo sem JavaScript. */
+.seletor-idioma { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-top: .8rem; }
+.seletor-idioma a { padding: .4rem .8rem; border: 1px solid var(--borda, #b892ff); border-radius: .35rem; }
+.seletor-idioma a[aria-current="true"] { color: #ffd24a; text-decoration: underline; text-underline-offset: .25rem; }
+.aviso-idioma { font: .875rem/1.5 system-ui, sans-serif; margin: .5rem auto 0; }

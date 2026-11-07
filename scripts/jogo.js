@@ -18,11 +18,13 @@ const CODIGOS = {
   terminal: 'ORBITA',
   geladeira: '042',
   cofre: '739',
-  fechadura: '264781' // 26 (terminal) + 47 (rack) + 81 (cofre)
+  fechadura: '264781' // Pares concatenados: terminal (26), rack (47), cofre (81).
 };
 
 const estado = {
   tempo: TEMPO_TOTAL,
+  tempoRestanteMs: TEMPO_TOTAL * 1000,
+  ultimaAtualizacao: null,
   erros: 0,
   cenario: 'quarto',
   inventario: [],
@@ -31,6 +33,7 @@ const estado = {
   fala: 0, // posição atual no diálogo da história
   energia: false,
   rodando: false,
+  pausaCalculo: false,
   fim: false,
   cronometro: null
 };
@@ -87,20 +90,26 @@ const CENARIOS = {
 
 /* ---------- Mensagens, log, erros ---------- */
 function mensagem(texto) {
-  buscarElemento('#mensagem').textContent = texto;
+  buscarElemento('#mensagem').textContent = traduzir(texto);
 }
 
 function registrar(texto, tipo = 'nota') {
-  estado.diario.push({ quando: formatarTempo(estado.tempo), texto, tipo });
+  estado.diario.push({
+    quando: formatarTempo(estado.tempo),
+    texto,
+    tipo,
+    cenario: CENARIOS[estado.cenario].nome
+  });
   mensagem(texto);
-  atualizarDiario();
+  if (dialogoAberto(buscarElemento('#diario'))) atualizarDiario();
   atualizarMarcas();
 }
 
 function erro(motivo) {
-  if (estado.fim) return;
+  if (!partidaAtiva()) return;
   estado.erros++;
-  estado.tempo = Math.max(0, estado.tempo - PENALIDADE_ERRO);
+  estado.tempoRestanteMs = Math.max(0, estado.tempoRestanteMs - PENALIDADE_ERRO * 1000);
+  estado.tempo = Math.ceil(estado.tempoRestanteMs / 1000);
   buscarElemento('#erros').textContent = String(estado.erros);
   atualizarRelogio();
   registrar(`Erro: ${motivo} (-${PENALIDADE_ERRO} s)`, 'erro');
@@ -109,10 +118,38 @@ function erro(motivo) {
 
 function atualizarDiario() {
   let conteudo = '';
-  for (const registro of estado.diario) {
-    conteudo += `<li class="${registro.tipo}"><span class="hora">${registro.quando}</span> ${registro.texto}</li>`;
+  let falhas = 0;
+  for (let indice = estado.diario.length - 1; indice >= 0; indice--) {
+    const registro = estado.diario[indice];
+    const ehFalha = registro.tipo === 'erro';
+    let categoria = 'Anotação';
+    if (ehFalha) {
+      categoria = 'Falha';
+      falhas++;
+    }
+    conteudo += `<li class="registro-diario ${registro.tipo}">
+      <div class="registro-cabecalho">
+        <span class="registro-categoria">${categoria}</span>
+        <span class="hora">Tempo restante: ${registro.quando}</span>
+      </div>
+      <p class="registro-local">${registro.cenario}</p>
+      <p class="registro-texto">${registro.texto}</p>
+    </li>`;
   }
-  buscarElemento('#lista-log').innerHTML = conteudo;
+
+  if (estado.diario.length === 0) {
+    conteudo = '<li class="diario-vazio">Sua investigação ainda não começou. Ao explorar os ambientes, as descobertas e falhas serão registradas aqui.</li>';
+  }
+
+  const quantidade = estado.diario.length;
+  let resumo = 'Nenhum registro nesta partida.';
+  if (quantidade > 0) {
+    const unidadeRegistro = quantidade === 1 ? 'registro' : 'registros';
+    const unidadeFalha = falhas === 1 ? 'falha' : 'falhas';
+    resumo = `${quantidade} ${unidadeRegistro} nesta partida · ${falhas} ${unidadeFalha}`;
+  }
+  buscarElemento('#diario-resumo').textContent = traduzir(resumo);
+  buscarElemento('#lista-log').innerHTML = traduzirHTML(conteudo);
 }
 
 /* ---------- Inventário ---------- */
@@ -131,11 +168,12 @@ function atualizarInventario() {
       conteudo += `<li><button type="button" data-item="${idItem}" aria-pressed="${selecionado}">${item.nome}</button></li>`;
     }
   }
-  buscarElemento('#inventario').innerHTML = conteudo;
+  buscarElemento('#inventario').innerHTML = traduzirHTML(conteudo);
 }
 
 // Um único evento atende todos os botões, inclusive após atualizar o inventário.
 function selecionarItem(evento) {
+  if (!partidaAtiva()) return;
   const botao = evento.target.closest('[data-item]');
   if (!botao) return;
 
@@ -158,31 +196,102 @@ function selecionarItem(evento) {
 buscarElemento('#inventario').onclick = selecionarItem;
 
 /* ---------- Painel (dialog nativo = acessível, Esc fecha) ---------- */
+// Navegadores com dialog nativo usam seus recursos de foco e modalidade.
+// A alternativa abaixo mantém os painéis utilizáveis quando showModal não existe.
+let dialogoAlternativo = null;
+let focoAntesDoDialogo = null;
+
+function dialogoAberto(dialogo) {
+  return dialogo.hasAttribute('open');
+}
+
+function abrirDialogo(dialogo) {
+  if (dialogoAberto(dialogo)) return;
+  if (typeof dialogo.showModal === 'function') {
+    dialogo.showModal();
+    return;
+  }
+  focoAntesDoDialogo = document.activeElement;
+  dialogoAlternativo = dialogo;
+  dialogo.setAttribute('open', '');
+  dialogo.setAttribute('role', 'dialog');
+  dialogo.setAttribute('aria-modal', 'true');
+  dialogo.classList.add('dialogo-alternativo');
+  document.body.classList.add('painel-alternativo-aberto');
+  buscarElemento('#fundo-dialogo').hidden = false;
+  const primeiroControle = dialogo.querySelector('input, button, summary, [tabindex="0"], a[href]');
+  if (primeiroControle) primeiroControle.focus();
+}
+
+function fecharDialogo(dialogo) {
+  if (!dialogoAberto(dialogo)) return;
+  if (typeof dialogo.close === 'function') {
+    dialogo.close();
+    return;
+  }
+  dialogo.removeAttribute('open');
+  dialogo.removeAttribute('aria-modal');
+  dialogo.classList.remove('dialogo-alternativo');
+  buscarElemento('#fundo-dialogo').hidden = true;
+  document.body.classList.remove('painel-alternativo-aberto');
+  dialogoAlternativo = null;
+  if (focoAntesDoDialogo && focoAntesDoDialogo.isConnected) focoAntesDoDialogo.focus();
+  focoAntesDoDialogo = null;
+}
+
+function navegarNoDialogoAlternativo(evento) {
+  if (!dialogoAlternativo) return;
+  if (evento.key === 'Escape') {
+    evento.preventDefault();
+    if (dialogoAlternativo.id === 'painel') fecharPainel();
+    else if (dialogoAlternativo.id === 'diario') fecharDiario();
+    return;
+  }
+  if (evento.key !== 'Tab') return;
+  const controles = Array.from(dialogoAlternativo.querySelectorAll('button, input, summary, a[href], [tabindex="0"]'))
+    .filter(function (controle) { return !controle.disabled && controle.getClientRects().length > 0; });
+  if (controles.length === 0) return;
+  const primeiro = controles[0];
+  const ultimo = controles[controles.length - 1];
+  if (evento.shiftKey && document.activeElement === primeiro) {
+    evento.preventDefault();
+    ultimo.focus();
+  } else if (!evento.shiftKey && document.activeElement === ultimo) {
+    evento.preventDefault();
+    primeiro.focus();
+  }
+}
+
+document.addEventListener('keydown', navegarNoDialogoAlternativo);
+
 let painelAtual = {}; // funções do painel aberto: aoEnviar, aoClicar, aoTecla, aoFechar
 
 function abrirPainel(titulo, corpo, funcoes = {}) {
+  if (estado.fim) return;
+  fecharPainel();
   painelAtual = funcoes;
-  buscarElemento('#painel-titulo').textContent = titulo;
-  buscarElemento('#painel-corpo').innerHTML = corpo;
+  buscarElemento('#painel-titulo').textContent = traduzir(titulo);
+  buscarElemento('#painel-corpo').innerHTML = traduzirHTML(corpo);
   document.onkeydown = funcoes.aoTecla || null;
-  buscarElemento('#painel').showModal();
+  abrirDialogo(buscarElemento('#painel'));
 }
 
 function limparPainel() {
   if (painelAtual.aoFechar) painelAtual.aoFechar();
+  definirPausaCalculo(false);
   document.onkeydown = null;
   painelAtual = {};
 }
 
 function fecharPainel() {
   const painel = buscarElemento('#painel');
-  if (painel.open) painel.close();
+  fecharDialogo(painel);
   limparPainel();
 }
 
 // Esc fecha o dialog sem passar por fecharPainel(): limpa aqui também
 function aoFecharPainel() {
-  if (!buscarElemento('#painel').open) limparPainel();
+  if (!dialogoAberto(buscarElemento('#painel'))) limparPainel();
 }
 
 buscarElemento('#painel').onclose = aoFecharPainel;
@@ -200,7 +309,7 @@ function criarFormularioCodigo(rotulo, tamanho) {
 // submit sobe (bubbles) até o container do painel
 function enviarCodigo(evento) {
   evento.preventDefault();
-  if (!painelAtual.aoEnviar) return;
+  if (!partidaAtiva() || !painelAtual.aoEnviar) return;
 
   const formulario = evento.target;
   const campo = formulario.querySelector('input');
@@ -211,7 +320,7 @@ function enviarCodigo(evento) {
   // Uma resposta vazia significa que o código foi aceito.
   // Se o erro zerou o tempo, finalizar() já fechou o painel.
   if (estado.fim) return;
-  aviso.textContent = resposta || '';
+  aviso.textContent = traduzir(resposta || '');
   if (!resposta) {
     fecharPainel();
   } else {
@@ -219,7 +328,13 @@ function enviarCodigo(evento) {
   }
 }
 
-function clicarNoFio(evento) {
+function clicarNoPainel(evento) {
+  if (!partidaAtiva()) return;
+  const botaoSeta = evento.target.closest('[data-tecla]');
+  if (botaoSeta && painelAtual.aoSeta) {
+    painelAtual.aoSeta(botaoSeta.dataset.tecla);
+    return;
+  }
   const botaoFio = evento.target.closest('[data-fio]');
   if (botaoFio && painelAtual.aoClicar) {
     const indiceFio = Number(botaoFio.dataset.fio);
@@ -228,21 +343,40 @@ function clicarNoFio(evento) {
 }
 
 buscarElemento('#painel-corpo').onsubmit = enviarCodigo;
-buscarElemento('#painel-corpo').onclick = clicarNoFio;
+buscarElemento('#painel-corpo').onclick = clicarNoPainel;
 
 /* ---------- Calculadora opcional: mostra a conta digitada pelo jogador ---------- */
 function alternarCalculadoraBinaria() {
+  if (!partidaAtiva()) return;
   const calculadora = buscarElemento('#calculadora-binaria');
   const botao = buscarElemento('#btn-calculadora-pc');
   calculadora.hidden = !calculadora.hidden;
+  definirPausaCalculo(!calculadora.hidden);
   botao.setAttribute('aria-expanded', String(!calculadora.hidden));
   if (calculadora.hidden) {
-    botao.textContent = 'Abrir calculadora binária';
+    botao.textContent = traduzir('Abrir calculadora binária');
     botao.focus();
   } else {
-    botao.textContent = 'Recolher calculadora binária';
+    botao.textContent = traduzir('Recolher calculadora binária');
     buscarElemento('#numero-binario').focus();
   }
+}
+
+function definirPausaCalculo(pausar) {
+  const devePausar = pausar && estado.rodando && !estado.fim;
+  if (estado.pausaCalculo === devePausar) return;
+
+  sincronizarTempo();
+  estado.pausaCalculo = devePausar;
+  clearInterval(estado.cronometro);
+  estado.cronometro = null;
+
+  // Ao sair do apoio, retoma uma única contagem, a partir do segundo seguinte.
+  if (estado.rodando && !estado.fim && !devePausar) {
+    estado.ultimaAtualizacao = Date.now();
+    estado.cronometro = setInterval(contarSegundo, 250);
+  }
+  atualizarRelogio();
 }
 
 function calcularBinario(evento) {
@@ -251,7 +385,7 @@ function calcularBinario(evento) {
   const numeroBinario = buscarElemento('#numero-binario').value.trim();
   const resultado = buscarElemento('#resultado-binario');
   if (!/^[01]{4}$/.test(numeroBinario)) {
-    resultado.textContent = 'Digite exatamente quatro bits, usando apenas 0 e 1.';
+    resultado.textContent = traduzir('Digite exatamente quatro bits, usando apenas 0 e 1.');
     return;
   }
 
@@ -275,6 +409,7 @@ function calcularBinario(evento) {
   if (total > 9) {
     resultado.innerHTML += '<p>Este resultado tem dois dígitos. No arquivo do PC, cada grupo representa um único dígito de 0 a 9; confira os bits que você digitou.</p>';
   }
+  resultado.innerHTML = traduzirHTML(resultado.innerHTML);
 }
 
 function limparCalculoBinario() {
@@ -291,6 +426,7 @@ const objetos = {
     cenario: 'quarto', nome: 'Calendário da final', pos: [6.2, 13.3, 15.0, 25.6],
     inspecionado: false, resolvido: false,
     interagir() {
+      if (this.inspecionado) return mensagem('Calendário já consultado. A data e a senha estão no diário de bordo.');
       this.inspecionado = true;
       this.resolvido = true;
       registrar('Calendário: a final é dia 15/11. Um post-it colado diz: "senha do terminal = ORBITA".');
@@ -340,7 +476,7 @@ const objetos = {
           if (codigoDigitado !== CODIGOS.terminal) {
             terminal.falhas++;
             erro('senha do terminal incorreta');
-            if (terminal.falhas % 2 === 0) objetos.gaveta.bloquear();
+            if (!estado.fim && terminal.falhas % 2 === 0) objetos.gaveta.bloquear();
             return 'Senha incorreta.';
           }
           terminal.resolvido = true;
@@ -382,7 +518,12 @@ const objetos = {
       function verificarTecla(evento) {
         if (!teclas.includes(evento.key)) return;
         evento.preventDefault();
-        if (evento.key === sequencia[passoAtual]) {
+        verificarSeta(evento.key);
+      }
+
+      function verificarSeta(tecla) {
+        if (!partidaAtiva()) return;
+        if (tecla === sequencia[passoAtual]) {
           passoAtual++;
           mostrarSetas();
           if (passoAtual === sequencia.length) {
@@ -397,8 +538,14 @@ const objetos = {
       }
 
       abrirPainel('Painel de comandos', `
-        <p>Digite a sequência usando as setas do teclado. Errou uma tecla, recomeça.</p>
-        <p class="sequencia" role="status"></p>`, { aoTecla: verificarTecla });
+        <p>Repita a sequência com as setas do teclado ou os botões abaixo. Uma seta incorreta reinicia a sequência.</p>
+        <p class="sequencia" role="status"></p>
+        <div class="setas-toque" role="group" aria-label="Setas do painel de comandos">
+          <button type="button" data-tecla="ArrowUp">↑ Cima</button>
+          <button type="button" data-tecla="ArrowLeft">← Esquerda</button>
+          <button type="button" data-tecla="ArrowDown">↓ Baixo</button>
+          <button type="button" data-tecla="ArrowRight">→ Direita</button>
+        </div>`, { aoTecla: verificarTecla, aoSeta: verificarSeta });
       mostrarSetas();
     }
   },
@@ -422,7 +569,7 @@ const objetos = {
             <button type="reset">Limpar conta</button>
           </form>
           <div id="resultado-binario" role="status" aria-live="polite" aria-atomic="true"></div>
-          <p>Converta cada grupo separadamente e mantenha a ordem dos dígitos. O relógio do jogo continua enquanto você usa a calculadora.</p>
+          <p>Converta cada grupo separadamente e mantenha a ordem dos dígitos. A contagem fica pausada enquanto este apoio estiver aberto e volta ao recolher a calculadora ou fechar o painel.</p>
 
         <details class="ajuda-binaria">
           <summary>Precisa de ajuda para ler o binário?</summary>
@@ -508,7 +655,7 @@ const objetos = {
       const temporizadores = [];
 
       function mostrarStatus(texto) {
-        buscarElemento('#painel-corpo [role="status"]').textContent = texto;
+        buscarElemento('#painel-corpo [role="status"]').textContent = traduzir(texto);
       }
 
       function buscarFio(indiceFio) {
@@ -539,7 +686,7 @@ const objetos = {
       }
 
       function verificarFio(indiceFio) {
-        if (!podeClicar) return;
+        if (!partidaAtiva() || !podeClicar) return;
         if (indiceFio === sequencia[passoAtual]) {
           passoAtual++;
           if (passoAtual === sequencia.length) {
@@ -609,13 +756,15 @@ const objetos = {
     }
   },
 
-  // 10 - Fechadura final: PIN = 26 + 47 + 81
+  // 10 - Fechadura final: junte os pares do terminal, rack e cofre, nessa ordem.
   fechadura: {
     cenario: 'corredor', nome: 'Fechadura programável', pos: [37.5, 15.6, 25.0, 52.2],
     resolvido: false,
     interagir() {
       const fechadura = this;
-      abrirPainel('Fechadura programável', criarFormularioCodigo('PIN de 6 dígitos:', 6), {
+      abrirPainel('Fechadura programável', `
+        <p>Junte os pares encontrados no terminal do quarto, no rack de servidores e no cofre do troféu, nessa ordem. O PIN tem seis dígitos; não some os valores.</p>
+        ${criarFormularioCodigo('PIN de 6 dígitos:', 6)}`, {
         aoEnviar: function (codigoDigitado) {
           if (codigoDigitado !== CODIGOS.fechadura) {
             erro('PIN incorreto na fechadura');
@@ -642,7 +791,7 @@ const objetos = {
         <button type="button" id="btn-recolher-bilhete">Recolher e ler o bilhete</button>`);
 
       function recolherBilhete() {
-        if (estado.fim || lixeira.resolvido) return;
+        if (!partidaAtiva() || lixeira.resolvido) return;
         lixeira.resolvido = true;
         adicionarItem('bilhete');
         registrar('Bilhete encontrado na lixeira: "Fui por vontade própria. Se achar isto, não chame a segurança."');
@@ -683,10 +832,20 @@ function atualizarCenario() {
     conteudo += criarBotaoCenario(objeto.nome, objeto.pos, classe, `data-obj="${objeto.id}"`);
   }
 
+  let acoes = '';
+  for (const porta of cenarioAtual.portas) {
+    acoes += `<button type="button" data-destino="${porta.destino}">Ir para: ${CENARIOS[porta.destino].nome}</button>`;
+  }
+  for (const objeto of Object.values(objetos)) {
+    if (objeto.cenario === estado.cenario) {
+      acoes += `<button type="button" data-obj="${objeto.id}">${objeto.nome}</button>`;
+    }
+  }
+  buscarElemento('#lista-acoes-cenario').innerHTML = traduzirHTML(acoes);
   const areaCenario = buscarElemento('#cenario');
   areaCenario.className = `cenario cena-${estado.cenario}`;
-  areaCenario.innerHTML = conteudo;
-  buscarElemento('#nome-cenario').textContent = cenarioAtual.nome;
+  areaCenario.innerHTML = traduzirHTML(conteudo);
+  buscarElemento('#nome-cenario').textContent = traduzir(cenarioAtual.nome);
   atualizarMarcas();
 }
 
@@ -705,12 +864,13 @@ function irPara(destino) {
 // Delegação: um único onclick para portas e objetos de qualquer cenário
 function interagirComCenario(evento) {
   const botao = evento.target.closest('button');
-  if (!botao || estado.fim) return;
+  if (!botao || !partidaAtiva()) return;
   if (botao.dataset.destino) irPara(botao.dataset.destino);
   else if (botao.dataset.obj) objetos[botao.dataset.obj].interagir();
 }
 
 buscarElemento('#cenario').onclick = interagirComCenario;
+buscarElemento('#lista-acoes-cenario').onclick = interagirComCenario;
 
 function atualizarMarcas() {
   const botoes = document.querySelectorAll('#cenario [data-obj]');
@@ -723,8 +883,18 @@ function atualizarMarcas() {
 /* ---------- Relógio ---------- */
 function atualizarRelogio() {
   const relogio = buscarElemento('#relogio');
-  relogio.textContent = formatarTempo(estado.tempo);
+  const tempoFormatado = formatarTempo(estado.tempo);
+  if (relogio.textContent !== tempoFormatado) relogio.textContent = tempoFormatado;
   relogio.classList.toggle('urgente', estado.tempo <= 60);
+  relogio.classList.toggle('pausado', estado.pausaCalculo);
+
+  let aviso = 'Aguardando início';
+  if (estado.fim) aviso = 'Partida encerrada';
+  else if (estado.pausaCalculo) aviso = 'Pausado para o cálculo';
+  else if (estado.rodando) aviso = 'Em andamento';
+  const status = buscarElemento('#status-cronometro');
+  aviso = traduzir(aviso);
+  if (status.textContent !== aviso) status.textContent = aviso;
 }
 
 function iniciar() {
@@ -735,13 +905,31 @@ function iniciar() {
   atualizarCenario();
   atualizarInventario();
   registrar('Contenção ativa. Você tem 5 minutos para reunir as pistas e reprogramar a fechadura do corredor de saída.');
-  estado.cronometro = setInterval(contarSegundo, 1000);
+  estado.ultimaAtualizacao = Date.now();
+  estado.cronometro = setInterval(contarSegundo, 250);
+  atualizarRelogio();
+}
+
+// Usa o tempo decorrido, pois temporizadores podem atrasar em abas em segundo plano.
+function sincronizarTempo() {
+  if (!estado.rodando || estado.fim || estado.pausaCalculo) return;
+  const agora = Date.now();
+  const decorrido = Math.max(0, agora - estado.ultimaAtualizacao);
+  estado.ultimaAtualizacao = agora;
+  estado.tempoRestanteMs = Math.max(0, estado.tempoRestanteMs - decorrido);
+  estado.tempo = Math.ceil(estado.tempoRestanteMs / 1000);
 }
 
 function contarSegundo() {
-  estado.tempo = Math.max(0, estado.tempo - 1);
+  if (!estado.rodando || estado.fim || estado.pausaCalculo) return;
+  sincronizarTempo();
   atualizarRelogio();
   if (estado.tempo === 0) finalizar('capturado');
+}
+
+function partidaAtiva() {
+  contarSegundo();
+  return estado.rodando && !estado.fim;
 }
 
 /* =========================================================
@@ -783,7 +971,7 @@ const HISTORIA = [
   {
     "quem": "voce",
     "nome": "Técnico de TI",
-    "texto": "A entrada foi aceita, mas a permissão interna não foi liberada. A ala está isolada. O painel do corredor de saída ainda permite reprogramar a fechadura com o PIN de recuperação."
+    "texto": "A entrada foi aceita, mas a permissão interna não foi liberada. A porta principal está bloqueada. Ainda há uma saída de serviço no corredor acessível pela sala de servidores. Posso reprogramar sua fechadura com o PIN de recuperação."
   },
   {
     "quem": "seguranca",
@@ -810,15 +998,16 @@ const HISTORIA = [
 function mostrarFala() {
   const fala = HISTORIA[estado.fala];
   const ultima = estado.fala === HISTORIA.length - 1;
-  buscarElemento('#dialogo-nome').textContent = fala.nome;
+  buscarElemento('#dialogo-nome').textContent = traduzir(fala.nome);
   buscarElemento('#dialogo-nome').className = `falante falante-${fala.quem}`;
-  buscarElemento('#dialogo-texto').textContent = fala.texto;
-  buscarElemento('#dialogo-retrato').src = `assets/historia/${fala.quem}.svg`;
+  buscarElemento('#dialogo-texto').textContent = traduzir(fala.texto);
+  buscarElemento('#dialogo-retrato').src = recursoLocal(`assets/historia/${fala.quem}.svg`);
   buscarElemento('#dialogo-cena').hidden = !fala.cena; // quadro de impacto só na fala do lockdown
-  buscarElemento('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
+  buscarElemento('#btn-proxima').textContent = traduzir(ultima ? 'Começar o lockdown' : 'Próxima');
 }
 
 function comecarHistoria() {
+  if (estado.rodando || estado.fim) return;
   buscarElemento('#intro').hidden = true;
   buscarElemento('#dialogo').hidden = false;
   estado.fala = 0;
@@ -827,6 +1016,7 @@ function comecarHistoria() {
 }
 
 function proximaFala() {
+  if (estado.rodando || estado.fim) return;
   if (estado.fala < HISTORIA.length - 1) {
     estado.fala++;
     mostrarFala();
@@ -845,16 +1035,28 @@ function terminarHistoria() {
    TELA CHEIA (a página inteira, para os painéis continuarem visíveis)
    ========================================================= */
 function alternarTelaCheia() {
-  const pedido = document.fullscreenElement
-    ? document.exitFullscreen()
-    : document.documentElement.requestFullscreen();
-  pedido.catch(function () {
-    mensagem('O navegador bloqueou a tela cheia.');
-  });
+  try {
+    let pedido;
+    if (document.fullscreenElement && typeof document.exitFullscreen === 'function') {
+      pedido = document.exitFullscreen();
+    } else if (typeof document.documentElement.requestFullscreen === 'function') {
+      pedido = document.documentElement.requestFullscreen();
+    } else {
+      mensagem('A tela cheia não está disponível neste navegador. Você pode continuar jogando nesta janela.');
+      return;
+    }
+    if (pedido && typeof pedido.catch === 'function') {
+      pedido.catch(function () {
+        mensagem('A tela cheia não foi autorizada. Você pode continuar jogando nesta janela.');
+      });
+    }
+  } catch (falhaTelaCheia) {
+    mensagem('Não foi possível abrir a tela cheia. Você pode continuar jogando nesta janela.');
+  }
 }
 
 function atualizarBotaoTelaCheia() {
-  buscarElemento('#btn-tela-cheia').textContent = document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia';
+  buscarElemento('#btn-tela-cheia').textContent = traduzir(document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia');
 }
 
 /* =========================================================
@@ -864,7 +1066,7 @@ const FINAIS = {
   perfeito: {
     titulo: 'Final: Fuga Perfeita',
     texto: 'Você reprogramou a fechadura com pelo menos dois minutos restantes e no máximo uma falha. Saiu antes do alarme geral; quando a segurança assumiu a ala, o corredor estava vazio.',
-    imagem: 'assets/finais/perfeito.svg',
+    imagem: 'assets/finais/perfeito.svg?v=20261106-pin-concatenado',
     alt: 'Tira de quadrinhos em três quadros: sua mão digita o PIN no teclado, e o aviso BIP confirma; a porta destrava com um CLAC; você, aliviado e de fone no pescoço, vê o corredor vazio sob a luz da manhã.'
   },
   sequelas: {
@@ -881,7 +1083,7 @@ const FINAIS = {
   },
   secreto: {
     titulo: 'Final Secreto: Ele Quis Sumir',
-    texto: 'O bilhete revela que Kairo saiu por vontade própria. Com a fechadura reprogramada antes do fim da contagem, você apaga os registros locais da sua passagem e deixa a ala. O motivo da ausência está esclarecido; o paradeiro dele continua desconhecido.',
+    texto: 'O bilhete revela que Kairo saiu por vontade própria. Com a fechadura reprogramada antes do fim da contagem, você apaga os registros locais da sua passagem e deixa a ala. Você descobriu que a ausência foi uma escolha; a motivação e o paradeiro dele continuam desconhecidos.',
     imagem: 'assets/finais/secreto.svg',
     alt: 'Tira de quadrinhos em três quadros: você lê o bilhete do Kairo, que diz que ele foi por vontade própria; o painel da fechadura apaga os registros até 100 por cento; ao longe, a silhueta de Kairo caminha por uma estrada sob a lua.'
   }
@@ -898,14 +1100,17 @@ function finalizar(tipo) {
   estado.fim = true;
   estado.rodando = false;
   clearInterval(estado.cronometro);
+  estado.cronometro = null;
+  fecharDiario();
   fecharPainel();
-  buscarElemento('#final-titulo').textContent = FINAIS[tipo].titulo;
+  atualizarRelogio();
+  buscarElemento('#final-titulo').textContent = traduzir(FINAIS[tipo].titulo);
   buscarElemento('#final').dataset.tipo = tipo; // o CSS muda a cor da borda por final
-  buscarElemento('#final-imagem').src = FINAIS[tipo].imagem;
-  buscarElemento('#final-imagem').alt = FINAIS[tipo].alt;
-  buscarElemento('#final-texto').textContent = FINAIS[tipo].texto;
-  buscarElemento('#final-resumo').textContent = `Tempo restante: ${formatarTempo(estado.tempo)} | Erros: ${estado.erros}`;
-  buscarElemento('#final').showModal();
+  buscarElemento('#final-imagem').src = recursoLocal(FINAIS[tipo].imagem);
+  buscarElemento('#final-imagem').alt = traduzir(FINAIS[tipo].alt);
+  buscarElemento('#final-texto').textContent = traduzir(FINAIS[tipo].texto);
+  buscarElemento('#final-resumo').textContent = traduzir(`Tempo restante: ${formatarTempo(estado.tempo)} | Erros: ${estado.erros}`);
+  abrirDialogo(buscarElemento('#final'));
 }
 
 /* =========================================================
@@ -915,16 +1120,20 @@ buscarElemento('#btn-iniciar').onclick = comecarHistoria;
 buscarElemento('#btn-proxima').onclick = proximaFala;
 buscarElemento('#btn-pular').onclick = terminarHistoria;
 buscarElemento('#btn-tela-cheia').onclick = alternarTelaCheia;
-buscarElemento('#btn-tela-cheia').hidden = !document.fullscreenEnabled; // some onde o navegador não suporta
+buscarElemento('#btn-tela-cheia').hidden = !document.fullscreenEnabled || typeof document.documentElement.requestFullscreen !== 'function'; // some onde o navegador não suporta
 document.onfullscreenchange = atualizarBotaoTelaCheia;     // também reage ao Esc
 function abrirDiario() {
+  if (estado.fim) return;
+  contarSegundo();
+  if (estado.fim) return;
+  atualizarDiario();
   const diario = buscarElemento('#diario');
-  diario.showModal();
-  diario.scrollTop = diario.scrollHeight; // abre na anotação mais recente
+  abrirDialogo(diario);
+  buscarElemento('#diario-registros').scrollTop = 0; // a descoberta mais recente aparece primeiro
 }
 
 function fecharDiario() {
-  buscarElemento('#diario').close();
+  fecharDialogo(buscarElemento('#diario'));
 }
 
 function reiniciarJogo() {
@@ -941,3 +1150,10 @@ buscarElemento('#btn-fechar-painel').onclick = fecharPainel;
 buscarElemento('#btn-reiniciar').onclick = reiniciarJogo;
 buscarElemento('#final').oncancel = manterFinalAberto;
 atualizarRelogio();
+
+// Reconcilia a contagem ao voltar de uma aba oculta ou do histórico do navegador.
+document.addEventListener('visibilitychange', contarSegundo);
+window.addEventListener('pageshow', contarSegundo);
+buscarElemento('#btn-iniciar').disabled = false;
+buscarElemento('#btn-diario').disabled = false;
+buscarElemento('#estado-carregamento').hidden = true;

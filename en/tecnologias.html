@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="../tecnologias.html">
+  <link rel="alternate" hreflang="en" href="tecnologias.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <title>Technology | Protocolo Kairo</title>
+  <meta name="description" content="Technologies used in Protocolo Kairo: HTML5, CSS3 and framework-free JavaScript, Git for version control and Vercel for deployment.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="../css/paginas.css?v=20261106-idiomas">
+</head>
+<body id="topo">
+  <a href="#conteudo" class="pular">Skip to content</a>
+
+  <header>
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jogo.html">Play Now</a></li>
+        <li><a href="historia.html">The Story</a></li>
+        <li><a href="cenarios.html">Locations</a></li>
+        <li><a href="itens.html">Items</a></li>
+        <li><a href="como-jogar.html">How to Play</a></li>
+        <li><a href="conquistas.html">Endings</a></li>
+        <li><a href="tecnologias.html" aria-current="page">Technology</a></li>
+        <li><a href="desenvolvedor.html">Developer</a></li>
+        <li><a href="apoio.html">Project Support</a></li>
+        <li><a href="contato.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="seletor-idioma" aria-label="Language">
+      <a href="../tecnologias.html" lang="pt-BR" hreflang="pt-BR">Português</a>
+      <a href="tecnologias.html" lang="en" hreflang="en" aria-current="true">English</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Technology</h2>
+    <p>The project uses standard web technologies without frameworks or external code libraries.</p>
+
+    <section aria-labelledby="stack-titulo">
+      <h3 id="stack-titulo">Stack</h3>
+      <div class="tabela-rolagem" role="region" aria-label="Scrollable table of technologies" tabindex="0">
+        <table>
+          <caption>Technologies used</caption>
+          <thead>
+            <tr><th scope="col">Technology</th><th scope="col">Role in the project</th><th scope="col">Reference</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><abbr title="HyperText Markup Language">HTML5</abbr></th>
+              <td>Semantic structure, forms and media.</td>
+              <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">MDN HTML<span class="visually-hidden"> (opens in a new tab)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><abbr title="Cascading Style Sheets">CSS3</abbr></th>
+              <td>Grid and flex layouts, custom properties, media queries and hover effects.</td>
+              <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" rel="noopener noreferrer">MDN CSS<span class="visually-hidden"> (opens in a new tab)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row">JavaScript</th>
+              <td>Game logic: objects, state, events, timing and randomness.</td>
+              <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer">MDN JavaScript<span class="visually-hidden"> (opens in a new tab)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row">Git</th>
+              <td>Code version control.</td>
+              <td><a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">git-scm.com<span class="visually-hidden"> (opens in a new tab)</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row">Vercel</th>
+              <td>Site deployment.</td>
+              <td><a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">vercel.com<span class="visually-hidden"> (opens in a new tab)</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="req-titulo">
+      <h3 id="req-titulo">Where each technique is used</h3>
+      <ul>
+        <li><strong>Objects:</strong> each puzzle is a JavaScript object with state and methods.</li>
+        <li><strong>Text arrays:</strong> the response messages in the <a href="contato.html">contact form</a>, the investigation log and the item list.</li>
+        <li><strong>State management:</strong> the <code>estado</code> object stores time, mistakes, inventory and power state.</li>
+        <li><strong>Randomness:</strong> the minigame sequences and the demonstration contact reference.</li>
+        <li><strong>Timing:</strong> the five-minute countdown (<code>setInterval</code>) and wire sequence (<code>setTimeout</code>).</li>
+        <li><strong>Events:</strong> <code>click</code>, <code>keydown</code>, <code>submit</code> and <code>input</code>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <aside aria-label="Play shortcut"><a class="cta-fixo" href="jogo.html">Play</a></aside>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Student project; characters and story are fictional.</p>
+    <p><a href="mapa-do-site.html">Site map</a> | <a href="#topo">Back to top</a></p>
+  </footer>
+</body>
+</html>

@@ -13,7 +13,9 @@
 body {
   background-color: var(--bg);
   color: var(--texto);
-  font-family: var(--fonte);
+  font-family: var(--fonte-corpo);
+  font-size: 1.0625rem;
+  line-height: 1.7;
 }
 
 .pular {
@@ -43,20 +45,28 @@ body {
   color: var(--neon);
   font-size: 1.4rem;
 }
-#relogio.urgente {
+#relogio.urgente:not(.pausado) {
   color: var(--alerta);
   animation: pulsar 1s infinite;
+}
+#status-cronometro {
+  display: block;
+  font-size: 0.875rem;
+  color: #d8d0e5;
 }
 @keyframes pulsar {
   50% { opacity: 0.4; }
 }
 
 button {
-  font-family: var(--fonte);
+  font-family: var(--fonte-corpo);
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 44px;
   background: var(--painel);
   color: var(--neon);
   border: 1px solid var(--neon);
-  padding: 0.5rem 1rem;
+  padding: 0.65rem 1.1rem;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -75,10 +85,15 @@ button[aria-pressed="true"] {
   position: relative;
   aspect-ratio: 16 / 9;
   width: 100%;
+  height: 0;
+  padding-top: 56.25%;
   border: 2px solid var(--neon);
   overflow: hidden;
   background-size: cover;
   transition: background 0.4s;
+}
+@supports (aspect-ratio: 16 / 9) {
+  .cenario { height: auto; padding-top: 0; }
 }
 /* Arte original em SVG (estilo quadrinho: contorno grosso, cores foscas) */
 .cena-quarto     { background-image: url("../assets/cenas/quarto.svg"); }
@@ -90,6 +105,7 @@ button[aria-pressed="true"] {
 
 .hotspot {
   position: absolute;
+  min-height: 0;
   padding: 0;
   background: transparent;
   border: 2px solid transparent;
@@ -100,7 +116,7 @@ button[aria-pressed="true"] {
   justify-content: center;
 }
 .hotspot span {
-  font-size: 0.7rem;
+  font-size: 0.875rem;
   background: rgba(0, 0, 0, 0.75);
   color: var(--texto);
   padding: 2px 4px;
@@ -146,18 +162,112 @@ dialog {
   background: var(--painel);
   color: var(--texto);
   border: 2px solid var(--neon);
-  max-width: min(90vw, 480px);
+  width: min(92vw, 48rem);
+  max-width: 48rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  border-radius: 10px;
+  font-family: var(--fonte-corpo);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  max-height: 85vh;
+  max-height: 85dvh;
+  overflow-y: auto;
 }
+dialog:not([open]) { display: none; }
+.fundo-dialogo {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(7, 5, 12, 0.85);
+}
+.dialogo-alternativo[open] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+body.painel-alternativo-aberto { overflow: hidden; }
+.aviso-compatibilidade {
+  padding: 1rem;
+  border: 1px solid var(--porta);
+}
+.acoes-cenario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.acoes-cenario button { flex: 1 1 14rem; }
+.setas-toque {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  max-width: 26rem;
+}
+.setas-toque button { padding: 0.65rem 0.3rem; }
+.setas-toque [data-tecla="ArrowUp"] { grid-column: 2; }
+.setas-toque [data-tecla="ArrowLeft"] { grid-column: 1; grid-row: 2; }
+.setas-toque [data-tecla="ArrowDown"] { grid-column: 2; grid-row: 2; }
+.setas-toque [data-tecla="ArrowRight"] { grid-column: 3; grid-row: 2; }
 dialog::backdrop { background: rgba(0, 0, 0, 0.75); }
 input {
   background: #000;
   color: var(--neon);
   border: 1px solid var(--neon);
-  padding: 0.4rem;
-  font-family: var(--fonte);
+  padding: 0.65rem 0.8rem;
+  font-family: var(--fonte-corpo);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+#painel-titulo {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  line-height: 1.4;
+}
+#painel-corpo {
+  overflow-wrap: anywhere;
+}
+#painel-corpo p {
+  margin-block: 1rem;
+}
+#painel-corpo > :first-child {
+  margin-top: 0;
+}
+#painel-corpo label {
+  display: block;
+  font-weight: 600;
+}
+#painel-corpo input {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  margin-top: 0.5rem;
+}
+#painel-corpo form button {
+  margin: 0.75rem 0.5rem 0 0;
+}
+#btn-fechar-painel {
+  position: sticky;
+  bottom: 0;
+  margin-top: 1.5rem;
+  box-shadow: 0 0 0 5px var(--painel);
+}
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--porta);
+  outline-offset: 3px;
 }
 [role="alert"] { color: var(--alerta); min-height: 1.5em; }
-pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
+pre, .sequencia {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  color: var(--neon);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 
 /* A ajuda do PC abre em etapas, sem revelar o código do cofre. */
 .ajuda-binaria {
@@ -189,7 +299,7 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
   font-family: var(--fonte-corpo);
   line-height: 1.6;
 }
-#numero-binario {
+#painel-corpo #numero-binario {
   display: block;
   width: 100%;
   max-width: 12rem;
@@ -225,8 +335,13 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
 
 /* ---------- Responsivo ---------- */
 @media (max-width: 600px) {
-  .hotspot span { font-size: 0.55rem; }
+  .hotspot span { font-size: 0.75rem; }
   .status { gap: 0.75rem; }
+  #painel {
+    width: calc(100% - 1rem);
+    max-height: 92dvh;
+    padding: 1.25rem;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -263,8 +378,8 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
   margin: 0;
   min-height: 4.8em;
   font-family: var(--fonte-corpo);
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1.125rem;
+  line-height: 1.8;
 }
 .dialogo-botoes {
   display: flex;
@@ -308,7 +423,8 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
   margin-block: 0.25rem;
 }
 :fullscreen .cenario {
-  width: min(100%, calc((100vh - 19.5rem) * 16 / 9));
+  width: 100%;
+  width: min(100%, max(20rem, calc((100vh - 19.5rem) * 16 / 9)));
   margin-inline: auto;
 }
 :fullscreen .dialogo {
@@ -331,3 +447,10 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
   font-size: 0.85rem;
   margin-bottom: 0;
 }
+
+/* As placas das cenas acompanham o idioma da página. */
+html[lang="en"] .cena-quarto { background-image: url("../assets/en/cenas/quarto.svg?v=20261106-idiomas"); }
+html[lang="en"] .cena-treino { background-image: url("../assets/en/cenas/treino.svg?v=20261106-idiomas"); }
+html[lang="en"] .cena-cozinha { background-image: url("../assets/en/cenas/cozinha.svg?v=20261106-idiomas"); }
+html[lang="en"] .cena-servidores { background-image: url("../assets/en/cenas/servidores.svg?v=20261106-idiomas"); }
+html[lang="en"] .cena-corredor { background-image: url("../assets/en/cenas/corredor.svg?v=20261106-idiomas"); }

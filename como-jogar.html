@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="como-jogar.html">
+  <link rel="alternate" hreflang="en" href="en/como-jogar.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <title>Como Jogar | Protocolo Kairo</title>
@@ -9,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/paginas.css">
+  <link rel="stylesheet" href="css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="css/paginas.css?v=20261106-idiomas">
 </head>
 <body id="topo">
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -33,6 +35,10 @@
         <li><a href="contato.html">Contato</a></li>
       </ul>
     </nav>
+    <nav class="seletor-idioma" aria-label="Idioma">
+      <a href="como-jogar.html" lang="pt-BR" hreflang="pt-BR" aria-current="true">Português</a>
+      <a href="en/como-jogar.html" lang="en" hreflang="en">English</a>
+    </nav>
   </header>
 
   <main id="conteudo">
@@ -44,8 +50,9 @@
         <li>Abra a página <a href="jogo.html">Jogar Agora</a> e leia o briefing.</li>
         <li>Clique em <strong>Começar</strong> e acompanhe a história (ou use <strong>Pular história</strong>). O relógio de 5 minutos só começa quando ela termina.</li>
         <li>Clique nos objetos destacados para inspecioná-los. Clique nas portas para passar de um ambiente a outro.</li>
+        <li>Se preferir botões maiores, abra <strong>Objetos e passagens deste ambiente</strong>, abaixo da imagem. O painel de comandos também aceita clique ou toque nas setas da tela.</li>
         <li>Colete itens, selecione-os no inventário e use-os nos objetos certos. Apenas um item fica selecionado por vez.</li>
-        <li>Consulte o <strong>Diário de bordo</strong> para reler pistas. No PC do setup, a calculadora binária opcional explica a conversão de cada grupo.</li>
+        <li>Consulte o <strong>Diário de bordo</strong> para reler pistas. Os registros mais recentes aparecem primeiro, com o ambiente e o tempo restante no momento da descoberta. No PC do setup, a calculadora binária opcional explica a conversão de cada grupo e pausa a contagem enquanto estiver aberta. Recolher a calculadora ou fechar o painel retoma o tempo.</li>
         <li>Se quiser ouvir a trilha, abra <strong>Som ambiente (opcional)</strong> acima do jogo e inicie a reprodução. O áudio e o diário não pausam a contagem.</li>
         <li>Reprograme a fechadura do Corredor de Saída antes que o tempo acabe.</li>
       </ol>
@@ -55,7 +62,7 @@
       <h3 id="regras-titulo">Regras</h3>
       <dl>
         <dt>Tempo</dt>
-        <dd>5 minutos. Quando o tempo zera, a segurança chega e a partida termina no final Capturado.</dd>
+        <dd>5 minutos de contagem ativa. A calculadora binária é a única pausa disponível, para apoiar o aprendizado; os demais painéis não interrompem o tempo. Quando a contagem zera, a segurança assume a ala e a partida termina no final Capturado.</dd>
         <dt>Erros</dt>
         <dd>Cada código errado, ou fio errado no quadro de fusíveis, custa <strong>10 segundos</strong> e conta para o final que você terá. Alguns erros têm consequências adicionais em outros objetos.</dd>
         <dt>Dependências</dt>
@@ -75,8 +82,8 @@
             <tr><th scope="row">Navegar entre objetos</th><td>Passar o mouse</td><td><kbd>Tab</kbd> e <kbd>Shift</kbd>+<kbd>Tab</kbd></td></tr>
             <tr><th scope="row">Interagir</th><td>Clique</td><td><kbd>Enter</kbd> ou <kbd>Espaço</kbd></td></tr>
             <tr><th scope="row">Fechar um painel</th><td>Botão Fechar</td><td><kbd>Esc</kbd></td></tr>
-            <tr><th scope="row">Tela cheia</th><td>Botão <strong>Tela cheia</strong></td><td><kbd>Esc</kbd> sai da tela cheia</td></tr>
-            <tr><th scope="row">Minigame de teclado</th><td>Não se aplica</td><td>Setas <kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd></td></tr>
+            <tr><th scope="row">Tela cheia, quando disponível</th><td>Botão <strong>Tela cheia</strong></td><td><kbd>Esc</kbd> sai da tela cheia</td></tr>
+            <tr><th scope="row">Painel de comandos</th><td>Clique ou toque nos botões de setas</td><td>Setas <kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd></td></tr>
           </tbody>
         </table>
       </div>

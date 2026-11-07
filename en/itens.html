@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="../itens.html">
+  <link rel="alternate" hreflang="en" href="itens.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <title>Items and Mechanisms | Protocolo Kairo</title>
+  <meta name="description" content="Explore Protocolo Kairo’s inventory items and ten mechanisms, their connections, and tips for using objects and the investigation log.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="../css/paginas.css?v=20261106-idiomas">
+</head>
+<body id="topo">
+  <a href="#conteudo" class="pular">Skip to content</a>
+
+  <header>
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jogo.html">Play Now</a></li>
+        <li><a href="historia.html">The Story</a></li>
+        <li><a href="cenarios.html">Locations</a></li>
+        <li><a href="itens.html" aria-current="page">Items</a></li>
+        <li><a href="como-jogar.html">How to Play</a></li>
+        <li><a href="conquistas.html">Endings</a></li>
+        <li><a href="tecnologias.html">Technology</a></li>
+        <li><a href="desenvolvedor.html">Developer</a></li>
+        <li><a href="apoio.html">Project Support</a></li>
+        <li><a href="contato.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="seletor-idioma" aria-label="Language">
+      <a href="../itens.html" lang="pt-BR" hreflang="pt-BR">Português</a>
+      <a href="itens.html" lang="en" hreflang="en" aria-current="true">English</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Items and Mechanisms</h2>
+
+    <section aria-labelledby="inv-titulo">
+      <h3 id="inv-titulo">Inventory items</h3>
+      <p>Select an inventory item, then select the object you want to use it on. Only one item is selected at a time. Using an item on the wrong object does not count as a mistake.</p>
+      <div class="grid-cards">
+        <article class="card">
+          <h4>USB drive</h4>
+          <p>A black USB drive labeled “training”. It holds a file from Kairo and requires a computer with media access enabled.</p>
+        </article>
+        <article class="card">
+          <h4>Access card</h4>
+          <p>A magnetic card marked SRV, used on the server rack reader.</p>
+        </article>
+        <article class="card">
+          <span class="selo">???</span>
+          <h4>Hidden item</h4>
+          <p>Not everything in the suite is in plain sight. A special discovery may change the ending if you escape before time runs out.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="mec-titulo">
+      <h3 id="mec-titulo">Mechanisms and puzzles</h3>
+      <p>The last column shows where to find a clue or which action unlocks the object. You can enter codes as soon as you know them; the PC and rack also require items and operating conditions.</p>
+      <div class="tabela-rolagem" role="region" aria-label="Scrollable table of mechanisms" tabindex="0">
+        <table>
+          <caption>The 10 main mechanisms</caption>
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Object</th>
+              <th scope="col">Location</th>
+              <th scope="col">Type</th>
+              <th scope="col">Clue or requirement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><th scope="row">Championship calendar</th><td>Bedroom</td><td>Inspection</td><td>None</td></tr>
+            <tr><td>2</td><th scope="row">Locked drawer</th><td>Bedroom</td><td>Numeric code</td><td>Calendar</td></tr>
+            <tr><td>3</td><th scope="row">Bedroom terminal</th><td>Bedroom</td><td>Password (every two mistakes lock the drawer for 45 countdown seconds)</td><td>Calendar</td></tr>
+            <tr><td>4</td><th scope="row">Command panel</th><td>Training Room</td><td>Arrow sequence (keyboard, click or touch)</td><td>None</td></tr>
+            <tr><td>5</td><th scope="row">Training PC</th><td>Training Room</td><td>Item use and decoding</td><td>Command panel, Drawer</td></tr>
+            <tr><td>6</td><th scope="row">Trophy safe</th><td>Training Room</td><td>Code</td><td>Training PC</td></tr>
+            <tr><td>7</td><th scope="row">Locked refrigerator</th><td>Kitchen</td><td>Code</td><td>Terminal</td></tr>
+            <tr><td>8</td><th scope="row">Fuse box</th><td>Servers</td><td>Memory minigame</td><td>None</td></tr>
+            <tr><td>9</td><th scope="row">Server rack</th><td>Servers</td><td>Item use</td><td>Fuse box, Refrigerator</td></tr>
+            <tr><td>10</td><th scope="row">Programmable lock</th><td>Corridor</td><td>6-digit PIN</td><td>Terminal, Rack, Safe</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="dicas-titulo">
+      <h3 id="dicas-titulo">Hints</h3>
+      <details>
+        <summary>I’m stuck. What should I do?</summary>
+        <p>Read the <strong>Investigation log</strong>. Every discovered clue is recorded there with the countdown time.</p>
+      </details>
+      <details>
+        <summary>My item does not work on this object</summary>
+        <p>Check that the item is selected (highlighted button) and the object is available. Solved objects have a green outline.</p>
+      </details>
+    </section>
+  </main>
+
+  <aside aria-label="Play shortcut"><a class="cta-fixo" href="jogo.html">Play</a></aside>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Student project; characters and story are fictional.</p>
+    <p><a href="mapa-do-site.html">Site map</a> | <a href="#topo">Back to top</a></p>
+  </footer>
+</body>
+</html>

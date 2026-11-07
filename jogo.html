@@ -2,18 +2,21 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="jogo.html">
+  <link rel="alternate" hreflang="en" href="en/jogo.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <title>Jogar | Protocolo Kairo</title>
   <meta name="description" content="Jogue o Protocolo Kairo: resolva enigmas, use o inventário e reprograme a fechadura antes que o alarme dispare em 5 minutos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;family=Caveat:wght@500;700&amp;display=swap">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/paginas.css">
-  <link rel="stylesheet" href="css/jogo.css?v=20261106-revisao-narrativa">
-  <link rel="stylesheet" href="css/dialogo.css?v=20261106-revisao-narrativa">
-  <script src="scripts/jogo.js?v=20261106-revisao-narrativa" defer></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="css/paginas.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="css/jogo.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="css/dialogo.css?v=20261106-idiomas">
+  <script src="scripts/idioma.js?v=20261106-idiomas" defer></script>
+  <script src="scripts/jogo.js?v=20261106-idiomas" defer></script>
 </head>
 <body id="topo">
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -36,16 +39,23 @@
         <li><a href="contato.html">Contato</a></li>
       </ul>
     </nav>
+    <nav class="seletor-idioma" aria-label="Idioma">
+      <a href="jogo.html" lang="pt-BR" hreflang="pt-BR" aria-current="true">Português</a>
+      <a href="en/jogo.html" lang="en" hreflang="en">English</a>
+    </nav>
+    <p class="aviso-idioma">Trocar de idioma reinicia a partida.</p>
   </header>
+
+  <noscript><p class="aviso-compatibilidade">Ative o JavaScript para jogar. As páginas de história, instruções e cenários continuam disponíveis pelo menu.</p></noscript>
 
   <main id="conteudo">
     <h2>Jogar</h2>
 
     <section class="status" aria-label="Status da partida">
-      <p>Tempo: <strong id="relogio">5:00</strong></p>
+      <p>Tempo: <strong id="relogio">5:00</strong><span id="status-cronometro" role="status" aria-live="polite">Aguardando início</span></p>
       <p>Erros: <strong id="erros">0</strong></p>
-      <button type="button" id="btn-diario">Diário de bordo</button>
-      <button type="button" id="btn-tela-cheia">Tela cheia</button>
+      <button type="button" id="btn-diario" disabled>Diário de bordo</button>
+      <button type="button" id="btn-tela-cheia" hidden>Tela cheia</button>
       <details class="controle-audio">
         <summary>Som ambiente (opcional)</summary>
         <audio id="audio-ambiente" controls loop preload="none" aria-label="Trilha instrumental do Protocolo Kairo">
@@ -58,10 +68,11 @@
 
     <section id="intro" aria-labelledby="intro-titulo">
       <h3 id="intro-titulo">Briefing da missão</h3>
+      <p id="estado-carregamento" role="status">Carregando os controles. Se esta mensagem permanecer, recarregue a página e confira se o JavaScript está habilitado em um navegador atualizado.</p>
       <p>A final mundial começa às 18h, mas Kairo está desaparecido desde a noite anterior. Como técnico de TI da organização, você entra na ala privativa dele para verificar os registros. Sua credencial libera a entrada, mas a falta de permissão do morador ativa a contenção: você fica isolado com cinco minutos para investigar e reprogramar a fechadura do corredor de saída.</p>
       <p>Explore os cinco ambientes, reúna as pistas e descubra o que Kairo deixou para trás. Quando a contagem termina, a segurança assume o local e encerra sua investigação. Códigos inválidos e fios errados custam 10 segundos; o desfecho considera o tempo, as falhas e suas descobertas.</p>
-      <p>Use o mouse ou <kbd>Tab</kbd> e <kbd>Enter</kbd> para interagir. Selecione os itens no inventário antes de usá-los. O relógio só começa ao terminar ou pular a introdução.</p>
-      <button type="button" id="btn-iniciar">Começar</button>
+      <p>Use o mouse ou <kbd>Tab</kbd> e <kbd>Enter</kbd> para interagir. Selecione os itens no inventário antes de usá-los. O relógio só começa ao terminar ou pular a introdução. Durante a partida, abrir a calculadora binária pausa a contagem; recolher o apoio ou fechar o painel retoma o tempo. Os demais painéis não pausam.</p>
+      <button type="button" id="btn-iniciar" disabled>Começar</button>
     </section>
 
     <section id="dialogo" class="dialogo" aria-labelledby="dialogo-titulo" hidden>
@@ -86,6 +97,11 @@
       <h3 id="nome-cenario" tabindex="-1">Cenário</h3>
       <div id="cenario" class="cenario"></div>
       <p id="mensagem" role="status" aria-live="polite"></p>
+      <details id="atalhos-cenario">
+        <summary>Objetos e passagens deste ambiente</summary>
+        <p>Você também pode explorar pelos botões abaixo, sem precisar tocar em pontos pequenos da imagem.</p>
+        <div id="lista-acoes-cenario" class="acoes-cenario"></div>
+      </details>
       <section aria-labelledby="inv-titulo">
         <h3 id="inv-titulo">Inventário</h3>
         <ul id="inventario"></ul>
@@ -93,16 +109,28 @@
     </section>
   </main>
 
+  <div id="fundo-dialogo" class="fundo-dialogo" hidden aria-hidden="true"></div>
+
   <dialog id="painel" aria-labelledby="painel-titulo">
     <h3 id="painel-titulo">Painel</h3>
     <div id="painel-corpo"></div>
     <button type="button" id="btn-fechar-painel">Fechar</button>
   </dialog>
 
-  <dialog id="diario" aria-labelledby="diario-titulo">
-    <h3 id="diario-titulo">Diário de bordo</h3>
-    <ol id="lista-log"></ol>
-    <button type="button" id="btn-fechar-diario">Fechar</button>
+  <dialog id="diario" aria-labelledby="diario-titulo" aria-describedby="diario-descricao">
+    <div class="diario-cabecalho">
+      <p class="diario-sobretitulo">Protocolo Kairo · Registro de investigação</p>
+      <h3 id="diario-titulo">Diário de bordo</h3>
+      <p id="diario-descricao">Consulte suas descobertas e ocorrências, da mais recente para a mais antiga. Os horários indicam o tempo restante na partida quando cada registro foi feito.</p>
+      <p id="diario-resumo" class="diario-resumo">Nenhum registro nesta partida.</p>
+    </div>
+    <div id="diario-registros" class="diario-registros" tabindex="0" role="region" aria-label="Registros da investigação">
+      <ol id="lista-log" reversed></ol>
+    </div>
+    <div class="diario-rodape">
+      <p>Durante a partida, consultar o diário não pausa a contagem.</p>
+      <button type="button" id="btn-fechar-diario">Voltar à investigação</button>
+    </div>
   </dialog>
 
   <dialog id="final" aria-labelledby="final-titulo">

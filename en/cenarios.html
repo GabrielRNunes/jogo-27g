@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="../cenarios.html">
+  <link rel="alternate" hreflang="en" href="cenarios.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <title>Locations | Protocolo Kairo</title>
+  <meta name="description" content="Explore the five Protocolo Kairo locations: bedroom, training room, kitchen, server room and exit corridor.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="../css/paginas.css?v=20261106-idiomas">
+</head>
+<body id="topo">
+  <a href="#conteudo" class="pular">Skip to content</a>
+
+  <header>
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jogo.html">Play Now</a></li>
+        <li><a href="historia.html">The Story</a></li>
+        <li><a href="cenarios.html" aria-current="page">Locations</a></li>
+        <li><a href="itens.html">Items</a></li>
+        <li><a href="como-jogar.html">How to Play</a></li>
+        <li><a href="conquistas.html">Endings</a></li>
+        <li><a href="tecnologias.html">Technology</a></li>
+        <li><a href="desenvolvedor.html">Developer</a></li>
+        <li><a href="apoio.html">Project Support</a></li>
+        <li><a href="contato.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="seletor-idioma" aria-label="Language">
+      <a href="../cenarios.html" lang="pt-BR" hreflang="pt-BR">Português</a>
+      <a href="cenarios.html" lang="en" hreflang="en" aria-current="true">English</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Locations</h2>
+    <p>The <i lang="en">gaming house</i> has five explorable rooms in Kairo’s private suite. Doors and a trapdoor connect them, and some clues and mechanisms work across different rooms.</p>
+
+    <section aria-labelledby="mapa-titulo">
+      <h3 id="mapa-titulo">House map</h3>
+      <figure>
+        <svg class="mapa" role="img" aria-labelledby="svg-mapa" viewBox="0 0 400 220">
+          <title id="svg-mapa">Five-room map: Bedroom, Training Room and Kitchen across the top; Server Room and Exit Corridor below</title>
+          <line x1="120" y1="45" x2="150" y2="45"/>
+          <line x1="260" y1="45" x2="290" y2="45"/>
+          <line x1="205" y1="70" x2="205" y2="130"/>
+          <line x1="260" y1="155" x2="290" y2="155"/>
+          <rect x="10" y="20" width="110" height="50"/>
+          <rect x="150" y="20" width="110" height="50"/>
+          <rect x="290" y="20" width="100" height="50"/>
+          <rect x="150" y="130" width="110" height="50"/>
+          <rect x="290" y="130" width="100" height="50"/>
+          <text x="65" y="49">Bedroom</text>
+          <text x="205" y="49">Training Room</text>
+          <text x="340" y="49">Kitchen</text>
+          <text x="205" y="159">Servers</text>
+          <text x="340" y="159">Exit</text>
+        </svg>
+        <figcaption>The orange lines show the connections between rooms.</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="resumo-titulo">
+      <h3 id="resumo-titulo">Overview</h3>
+      <div class="tabela-rolagem" role="region" aria-label="Scrollable table of locations" tabindex="0">
+        <table>
+          <caption>Locations, objects and connections</caption>
+          <thead>
+            <tr>
+              <th scope="col">Location</th>
+              <th scope="col">Objects</th>
+              <th scope="col">Connections</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><a href="#quarto">Kairo’s Bedroom</a></th><td>3</td><td>Training Room</td></tr>
+            <tr><th scope="row"><a href="#treino">Training Room</a></th><td>3</td><td>Bedroom, Kitchen, Servers</td></tr>
+            <tr><th scope="row"><a href="#cozinha">Kitchen</a></th><td>2</td><td>Training Room</td></tr>
+            <tr><th scope="row"><a href="#servidores">Server Room</a></th><td>2</td><td>Training Room, Corridor</td></tr>
+            <tr><th scope="row"><a href="#corredor">Exit Corridor</a></th><td>1</td><td>Servers</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="quarto">
+      <h3>Kairo’s Bedroom</h3>
+      <img class="cena-img" src="../assets/en/cenas/quarto.svg" alt="Kairo’s Bedroom: a bed, championship calendar and poster, a desk terminal, a locked drawer and the door to the Training Room." width="1600" height="900" loading="lazy">
+      <p>The private suite’s entry point, through the main door shown in The Story. The service exit is elsewhere, reached through the Server Room. The calendar places the final on November 15 and helps explain the first clues. The drawer and terminal reveal information used in other rooms.</p>
+      <ul>
+        <li>Championship calendar</li>
+        <li>Locked drawer</li>
+        <li>Bedroom terminal</li>
+      </ul>
+    </section>
+
+    <section id="treino">
+      <h3>Training Room</h3>
+      <img class="cena-img" src="../assets/en/cenas/treino.svg" alt="Training Room: an arrow command panel, a night-city picture, a gaming PC and chair, a trophy safe, side doors and a floor trapdoor leading to the servers." width="1600" height="900" loading="lazy">
+      <p>The command panel enables media access on the PC. Its file requires binary conversion; an optional calculator explains the process and pauses the countdown while open. This room also leads to the Kitchen and the Server Room trapdoor.</p>
+      <ul>
+        <li>Command panel</li>
+        <li>Training PC</li>
+        <li>Trophy safe</li>
+      </ul>
+    </section>
+
+    <section id="cozinha">
+      <h3>Kitchen</h3>
+      <img class="cena-img" src="../assets/en/cenas/cozinha.svg?v=20261106-sem-bilhete" alt="Kitchen: a locked refrigerator, blue cupboards, a sink and microwave, a door to the Training Room and a trash bin in the corner." width="1600" height="900" loading="lazy">
+      <p>A support space for the training routine. The refrigerator holds an item needed at the servers. Ordinary objects can also be inspected; look beyond the electronic equipment.</p>
+      <ul>
+        <li>Locked refrigerator</li>
+        <li>Trash bin</li>
+      </ul>
+    </section>
+
+    <section id="servidores">
+      <h3>Server Room</h3>
+      <img class="cena-img" src="../assets/en/cenas/servidores.svg" alt="Server Room: a fuse box with four colored wires, three racks and a card reader, a ladder back to the Training Room and a steel door to the corridor." width="1600" height="900" loading="lazy">
+      <p>Server racks, cabling and a main power panel. This technical hub powers the systems and connects to the Training Room by a trapdoor and to the Exit Corridor by a door.</p>
+      <ul>
+        <li>Fuse box</li>
+        <li>Server rack</li>
+      </ul>
+    </section>
+
+    <section id="corredor">
+      <h3>Exit Corridor</h3>
+      <img class="cena-img" src="../assets/en/cenas/corredor.svg" alt="Exit Corridor: a brick wall, a service door on the left and the large exit door with a programmable keypad lock and a red light." width="1600" height="900" loading="lazy">
+      <p>This corridor leads to the service exit, a different door from the main entrance through the bedroom. Its programmable lock requires a six-digit PIN. The ending depends on the time remaining, mistakes and items collected.</p>
+      <ul>
+        <li>Programmable lock</li>
+      </ul>
+    </section>
+  </main>
+
+  <aside aria-label="Play shortcut"><a class="cta-fixo" href="jogo.html">Play</a></aside>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Student project; characters and story are fictional.</p>
+    <p><a href="mapa-do-site.html">Site map</a> | <a href="#topo">Back to top</a></p>
+  </footer>
+</body>
+</html>

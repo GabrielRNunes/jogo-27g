@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="../contato.html">
+  <link rel="alternate" hreflang="en" href="contato.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <title>Contact | Protocolo Kairo</title>
+  <meta name="description" content="Find the Protocolo Kairo email and repository, and try the demonstration contact form, which does not send real messages.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="../css/paginas.css?v=20261106-idiomas">
+  <script src="../scripts/dados/ingles.js?v=20261106-idiomas" defer></script>
+  <script src="../scripts/idioma.js?v=20261106-idiomas" defer></script>
+  <script src="../scripts/contato.js?v=20261106-idiomas" defer></script>
+</head>
+<body id="topo">
+  <a href="#conteudo" class="pular">Skip to content</a>
+
+  <header>
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jogo.html">Play Now</a></li>
+        <li><a href="historia.html">The Story</a></li>
+        <li><a href="cenarios.html">Locations</a></li>
+        <li><a href="itens.html">Items</a></li>
+        <li><a href="como-jogar.html">How to Play</a></li>
+        <li><a href="conquistas.html">Endings</a></li>
+        <li><a href="tecnologias.html">Technology</a></li>
+        <li><a href="desenvolvedor.html">Developer</a></li>
+        <li><a href="apoio.html">Project Support</a></li>
+        <li><a href="contato.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="seletor-idioma" aria-label="Language">
+      <a href="../contato.html" lang="pt-BR" hreflang="pt-BR">Português</a>
+      <a href="contato.html" lang="en" hreflang="en" aria-current="true">English</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <h2>Contact</h2>
+    <p>Found a bug, have a suggestion or want to share your escape? Use this form to simulate a message to the developer. This form is <strong>a demonstration</strong>: no real message is sent.</p>
+
+    <section aria-labelledby="form-titulo">
+      <h3 id="form-titulo">Get in touch</h3>
+      <form id="form-contato">
+        <fieldset>
+          <legend>Your details</legend>
+          <label for="nome">Name</label>
+          <input type="text" id="nome" name="nome" autocomplete="name" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </fieldset>
+
+        <fieldset>
+          <legend>Your message</legend>
+          <label for="assunto">Subject</label>
+          <select id="assunto" name="assunto" required>
+            <option value="">Select an option</option>
+            <optgroup label="Sobre o jogo">
+              <option value="bug">Report a bug</option>
+              <option value="sugestao">Suggestion</option>
+              <option value="final">Share my ending</option>
+            </optgroup>
+            <optgroup label="Outros">
+              <option value="outro">Another topic</option>
+            </optgroup>
+          </select>
+
+          <p>Did you finish the game?</p>
+          <input type="radio" id="fim-sim" name="terminou" value="sim">
+          <label for="fim-sim">Yes</label>
+          <input type="radio" id="fim-nao" name="terminou" value="nao">
+          <label for="fim-nao">Not yet</label>
+
+          <label for="mensagem">Message</label>
+          <textarea id="mensagem" name="mensagem" rows="5" maxlength="500" required></textarea>
+          <p><small id="contador">0/500</small></p>
+
+          <input type="checkbox" id="aceite" name="aceite" required>
+          <label for="aceite">I agree to receive a simulated email response.</label>
+        </fieldset>
+
+        <button type="submit" id="enviar-contato" disabled>Send</button>
+        <button type="reset">Clear</button>
+      </form>
+      <p id="retorno" role="status"></p>
+      <noscript><p>Enable JavaScript to use the demonstration form. For real contact, use the email address below.</p></noscript>
+    </section>
+
+    <section aria-labelledby="outros-titulo">
+      <h3 id="outros-titulo">Other channels</h3>
+      <address>
+        <ul>
+          <li>Email: <a href="mailto:00gabriel.dosantos@gmail.com">00gabriel.dosantos@gmail.com</a></li>
+          <li>Repository: <a href="https://github.com/GabrielRNunes/jogo-27g" target="_blank" rel="noopener noreferrer">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          <li>Developer: <a href="desenvolvedor.html">developer page</a></li>
+        </ul>
+      </address>
+    </section>
+  </main>
+
+  <aside aria-label="Play shortcut"><a class="cta-fixo" href="jogo.html">Play</a></aside>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Student project; characters and story are fictional.</p>
+    <p><a href="mapa-do-site.html">Site map</a> | <a href="#topo">Back to top</a></p>
+  </footer>
+</body>
+</html>

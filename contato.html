@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="contato.html">
+  <link rel="alternate" hreflang="en" href="en/contato.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <title>Contato | Protocolo Kairo</title>
@@ -9,9 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/paginas.css">
-  <script src="scripts/contato.js" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="css/paginas.css?v=20261106-idiomas">
+  <script src="scripts/idioma.js?v=20261106-idiomas" defer></script>
+  <script src="scripts/contato.js?v=20261106-idiomas" defer></script>
 </head>
 <body id="topo">
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -33,6 +36,10 @@
         <li><a href="apoio.html">Apoio ao Projeto</a></li>
         <li><a href="contato.html" aria-current="page">Contato</a></li>
       </ul>
+    </nav>
+    <nav class="seletor-idioma" aria-label="Idioma">
+      <a href="contato.html" lang="pt-BR" hreflang="pt-BR" aria-current="true">Português</a>
+      <a href="en/contato.html" lang="en" hreflang="en">English</a>
     </nav>
   </header>
 
@@ -80,10 +87,11 @@
           <label for="aceite">Concordo em receber uma resposta (fictícia) por e-mail.</label>
         </fieldset>
 
-        <button type="submit">Enviar</button>
+        <button type="submit" id="enviar-contato" disabled>Enviar</button>
         <button type="reset">Limpar</button>
       </form>
       <p id="retorno" role="status"></p>
+      <noscript><p>Ative o JavaScript para usar o formulário demonstrativo. Para contato real, utilize o e-mail abaixo.</p></noscript>
     </section>
 
     <section aria-labelledby="outros-titulo">

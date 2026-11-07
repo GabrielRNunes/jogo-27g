@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="alternate" hreflang="pt-BR" href="../jogo.html">
+  <link rel="alternate" hreflang="en" href="jogo.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <title>Play | Protocolo Kairo</title>
+  <meta name="description" content="Play Protocolo Kairo: solve puzzles, use your inventory and reprogram the lock before the alarm sounds in five minutes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="../css/paginas.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="../css/jogo.css?v=20261106-idiomas">
+  <link rel="stylesheet" href="../css/dialogo.css?v=20261106-idiomas">
+  <script src="../scripts/dados/ingles.js?v=20261106-idiomas" defer></script>
+  <script src="../scripts/idioma.js?v=20261106-idiomas" defer></script>
+  <script src="../scripts/jogo.js?v=20261106-idiomas" defer></script>
+</head>
+<body id="topo">
+  <a href="#conteudo" class="pular">Skip to content</a>
+
+  <header>
+    <h1>Protocolo Kairo</h1>
+    <p>Escape Room</p>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jogo.html" aria-current="page">Play Now</a></li>
+        <li><a href="historia.html">The Story</a></li>
+        <li><a href="cenarios.html">Locations</a></li>
+        <li><a href="itens.html">Items</a></li>
+        <li><a href="como-jogar.html">How to Play</a></li>
+        <li><a href="conquistas.html">Endings</a></li>
+        <li><a href="tecnologias.html">Technology</a></li>
+        <li><a href="desenvolvedor.html">Developer</a></li>
+        <li><a href="apoio.html">Project Support</a></li>
+        <li><a href="contato.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="seletor-idioma" aria-label="Language">
+      <a href="../jogo.html" lang="pt-BR" hreflang="pt-BR">Português</a>
+      <a href="jogo.html" lang="en" hreflang="en" aria-current="true">English</a>
+    </nav>
+    <p class="aviso-idioma">Switching languages restarts the game.</p>
+  </header>
+
+  <noscript><p class="aviso-compatibilidade">Enable JavaScript to play. The story, instructions and location pages remain available through the menu.</p></noscript>
+
+  <main id="conteudo">
+    <h2>Play</h2>
+
+    <section class="status" aria-label="Game status">
+      <p>Time: <strong id="relogio">5:00</strong><span id="status-cronometro" role="status" aria-live="polite">Waiting to start</span></p>
+      <p>Mistakes: <strong id="erros">0</strong></p>
+      <button type="button" id="btn-diario" disabled>Investigation log</button>
+      <button type="button" id="btn-tela-cheia" hidden>Fullscreen</button>
+      <details class="controle-audio">
+        <summary>Ambient sound (optional)</summary>
+        <audio id="audio-ambiente" controls loop preload="none" aria-label="Protocolo Kairo instrumental soundtrack">
+          <source src="../assets/ambiente-kairo.wav" type="audio/wav">
+          Your browser does not support audio.
+        </audio>
+        <p>Play or pause the soundtrack whenever you like. The game countdown continues.</p>
+      </details>
+    </section>
+
+    <section id="intro" aria-labelledby="intro-titulo">
+      <h3 id="intro-titulo">Mission briefing</h3>
+      <p id="estado-carregamento" role="status">Loading controls. If this message remains, reload the page and check that JavaScript is enabled in an up-to-date browser.</p>
+      <p>The world final starts at 6 p.m., but Kairo has been missing since the previous night. As the organization’s IT technician, you enter his private suite to check the records. Your badge permits entry, but the missing occupant permission activates containment: you are trapped with five minutes to investigate and reprogram the Exit Corridor lock.</p>
+      <p>Explore five rooms, collect clues and discover what Kairo left behind. When the countdown ends, security takes over and stops your investigation. Invalid codes and wrong wires cost ten seconds; time, mistakes and discoveries determine the ending.</p>
+      <p>Use the mouse or <kbd>Tab</kbd> and <kbd>Enter</kbd> to interact. Select inventory items before using them. The countdown starts after you finish or skip the introduction. During a run, opening the binary calculator pauses time; collapsing it or closing the panel resumes the countdown. Other panels do not pause.</p>
+      <button type="button" id="btn-iniciar" disabled>Start</button>
+    </section>
+
+    <section id="dialogo" class="dialogo" aria-labelledby="dialogo-titulo" hidden>
+      <h3 id="dialogo-titulo" class="visually-hidden">Story</h3>
+      <img id="dialogo-cena" class="dialogo-cena" src="../assets/en/historia/impacto.svg" alt="Lock panel flashing red: access denied, lockdown activated" width="1600" height="500" hidden>
+      <div class="dialogo-caixa">
+        <div class="dialogo-linha">
+          <img id="dialogo-retrato" class="dialogo-retrato" src="../assets/historia/narrador.svg" alt="" width="200" height="200">
+          <div aria-live="polite" aria-atomic="true">
+          <p id="dialogo-nome" class="falante"></p>
+          <p id="dialogo-texto" class="fala"></p>
+        </div>
+        </div>
+        <div class="dialogo-botoes">
+          <button type="button" id="btn-pular">Skip story</button>
+          <button type="button" id="btn-proxima">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="jogo" aria-label="Game area" hidden>
+      <h3 id="nome-cenario" tabindex="-1">Location</h3>
+      <div id="cenario" class="cenario"></div>
+      <p id="mensagem" role="status" aria-live="polite"></p>
+      <details id="atalhos-cenario">
+        <summary>Objects and connections in this room</summary>
+        <p>You can also explore with the buttons below, without having to select small targets in the scene.</p>
+        <div id="lista-acoes-cenario" class="acoes-cenario"></div>
+      </details>
+      <section aria-labelledby="inv-titulo">
+        <h3 id="inv-titulo">Inventory</h3>
+        <ul id="inventario"></ul>
+      </section>
+    </section>
+  </main>
+
+  <div id="fundo-dialogo" class="fundo-dialogo" hidden aria-hidden="true"></div>
+
+  <dialog id="painel" aria-labelledby="painel-titulo">
+    <h3 id="painel-titulo">Panel</h3>
+    <div id="painel-corpo"></div>
+    <button type="button" id="btn-fechar-painel">Close</button>
+  </dialog>
+
+  <dialog id="diario" aria-labelledby="diario-titulo" aria-describedby="diario-descricao">
+    <div class="diario-cabecalho">
+      <p class="diario-sobretitulo">Protocolo Kairo · Investigation record</p>
+      <h3 id="diario-titulo">Investigation log</h3>
+      <p id="diario-descricao">Review discoveries and incidents, newest first. Each timestamp shows how much countdown time remained when the entry was recorded.</p>
+      <p id="diario-resumo" class="diario-resumo">No entries in this run.</p>
+    </div>
+    <div id="diario-registros" class="diario-registros" tabindex="0" role="region" aria-label="Investigation entries">
+      <ol id="lista-log" reversed></ol>
+    </div>
+    <div class="diario-rodape">
+      <p>During a run, reading the log does not pause the countdown.</p>
+      <button type="button" id="btn-fechar-diario">Return to the investigation</button>
+    </div>
+  </dialog>
+
+  <dialog id="final" aria-labelledby="final-titulo">
+    <img id="final-imagem" class="final-imagem" src="../assets/en/finais/perfeito.svg" alt="" width="1600" height="600">
+    <h3 id="final-titulo">Game over</h3>
+    <p id="final-texto"></p>
+    <p id="final-resumo"></p>
+    <p class="final-fim">THE END</p>
+    <button type="button" id="btn-reiniciar">Play again</button>
+    <a class="final-link" href="conquistas.html">View all endings</a>
+  </dialog>
+
+  <footer>
+    <p>&copy; 2026 Protocolo Kairo. Student project; characters and story are fictional.</p>
+    <p><a href="mapa-do-site.html">Site map</a> | <a href="#topo">Back to top</a></p>
+  </footer>
+</body>
+</html>
