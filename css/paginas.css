@@ -1,4 +1,7 @@
 /* paginas.css - componentes das páginas (carregar DEPOIS do style.css) */
+/* O cabeçalho usa Grid para organizar marca, idioma e navegação.
+   As regras seguintes cuidam do conteúdo e do rodapé; as media queries
+   reorganizam esses componentes conforme o espaço disponível. */
 /* ---------- Cabeçalho e menu ---------- */
 header {
   display: grid;

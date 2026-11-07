@@ -13,11 +13,7 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   let agora = 0;
   let proximoId = 1;
   const tarefas = new Map();
-  const eventos = {};
-  const eventosMedia = [];
   const consultaMedia = { matches: Boolean(opcoes.menuPequeno) };
-  if (opcoes.menuLegado) consultaMedia.addListener = fn => eventosMedia.push(fn);
-  else consultaMedia.addEventListener = (tipo, fn) => eventosMedia.push(fn);
   let documento;
 
   function combina(elemento, seletor) {
@@ -148,7 +144,6 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   documento.body = documento.querySelector('body');
   documento.activeElement = documento.body;
   documento.documentElement = documento.querySelector('html');
-  documento.addEventListener = (tipo, fn) => { (eventos[tipo] ||= []).push(fn); };
   documento.fullscreenEnabled = !opcoes.semTelaCheia;
   if (!opcoes.semTelaCheia) {
     documento.documentElement.requestFullscreen = () => {
@@ -165,11 +160,11 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   const matematica = Object.create(Math);
   let numeroSorteio = 0;
   matematica.random = () => opcoes.sorteios ? opcoes.sorteios[numeroSorteio++ % opcoes.sorteios.length] : 0;
+  const janela = {
+    matchMedia: opcoes.semMatchMedia ? undefined : () => consultaMedia
+  };
   const contexto = vm.createContext({
-    document: documento, window: {
-      addEventListener: documento.addEventListener,
-      matchMedia: opcoes.semMatchMedia ? undefined : () => consultaMedia
-    },
+    document: documento, window: janela,
     Date: RelogioFalso, Math: matematica, console,
     setTimeout: (fn, ms) => agendar(fn, ms), clearTimeout: id => tarefas.delete(id),
     setInterval: (fn, ms) => agendar(fn, ms, ms), clearInterval: id => tarefas.delete(id),
@@ -215,10 +210,23 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   return {
     executar, buscar, avancar, enviar, clicarObjeto, clicarItem, documento, tarefas,
     atrasar(ms) { agora += ms; },
-    evento(tipo, dados = {}) { for (const fn of eventos[tipo] || []) fn(dados); },
+    // Simula a propagação usada pelo projeto: document antes de window.
+    // Cancelar o comportamento padrão não interrompe a propagação da tecla.
+    evento(tipo, dados = {}) {
+      const evento = { defaultPrevented: false, ...dados };
+      const prevenirOriginal = evento.preventDefault;
+      evento.preventDefault = function () {
+        this.defaultPrevented = true;
+        if (prevenirOriginal) prevenirOriginal.call(this);
+      };
+      const nomeEvento = 'on' + tipo;
+      if (documento[nomeEvento]) documento[nomeEvento](evento);
+      if (janela[nomeEvento]) janela[nomeEvento](evento);
+    },
     redimensionarMenu(pequeno) {
       consultaMedia.matches = pequeno;
-      for (const fn of eventosMedia) fn();
+      if (!opcoes.semEventoMedia && consultaMedia.onchange) consultaMedia.onchange();
+      if (janela.onresize) janela.onresize();
     }
   };
 }
@@ -569,10 +577,10 @@ function executarTestes() {
     assert.equal(menu.open, false);
     assert.equal(a.documento.activeElement, menu.querySelector('summary'));
   });
-  teste('Menu mantém links disponíveis sem matchMedia e suporta listener antigo', () => {
+  teste('Menu mantém links disponíveis sem matchMedia e usa redimensionamento como alternativa', () => {
     const semAPI = criarAmbiente('contato', { semMatchMedia: true });
     assert.equal(semAPI.buscar('.menu-navegacao').open, true);
-    const legado = criarAmbiente('contato', { menuPequeno: true, menuLegado: true });
+    const legado = criarAmbiente('contato', { menuPequeno: true, semEventoMedia: true });
     assert.equal(legado.buscar('.menu-navegacao').open, false);
     legado.redimensionarMenu(false); assert.equal(legado.buscar('.menu-navegacao').open, true);
   });
@@ -654,6 +662,35 @@ function executarTestes() {
     a.evento('keydown', { key: 'Escape', defaultPrevented: false });
     assert.equal(menu.open, true);
     assert.equal(a.documento.activeElement, a.buscar('#painel-corpo input'));
+  });
+
+  teste('Teclado continua atendendo diário e menu depois do minigame', () => {
+    const a = partida({ semDialogoNativo: true, menuPequeno: true });
+    const menu = a.buscar('.menu-navegacao');
+    menu.open = true;
+    a.clicarObjeto('combo');
+    for (let i = 0; i < 5; i++) a.evento('keydown', { key: 'ArrowUp' });
+    assert.equal(a.executar('objetos.combo.resolvido'), true);
+    a.executar('abrirDiario()');
+    a.buscar('#btn-fechar-diario').focus();
+    a.evento('keydown', { key: 'Tab' });
+    assert.equal(a.documento.activeElement.id, 'diario-registros');
+    a.evento('keydown', { key: 'Escape' });
+    assert.equal(a.buscar('#diario').open, false);
+    assert.equal(menu.open, true);
+    a.evento('keydown', { key: 'Escape' });
+    assert.equal(menu.open, false);
+    assert.equal(a.documento.activeElement, menu.querySelector('summary'));
+  });
+  teste('Redimensionar dentro da mesma faixa preserva a escolha de abrir o menu', () => {
+    const a = criarAmbiente('contato', { menuPequeno: true });
+    const menu = a.buscar('.menu-navegacao');
+    menu.open = true;
+    a.redimensionarMenu(true);
+    assert.equal(menu.open, true);
+    a.redimensionarMenu(false);
+    a.redimensionarMenu(true);
+    assert.equal(menu.open, false);
   });
 
   return { total: aprovados.length, aprovados };

@@ -4,7 +4,7 @@ Revisão local atualizada em 7 de novembro de 2026. Esta revisão não inclui co
 
 ## O que pode ser afirmado
 
-- A suíte de regressão passou em 52 testes automatizados de lógica e estrutura.
+- A suíte de regressão passou em 54 testes automatizados de lógica e estrutura.
 - Foram simuladas presença e ausência de dialog nativo, indisponibilidade e falha de tela cheia, temporizadores atrasados, uso por teclado e botões de toque.
 - Os 28 SVGs do projeto foram analisados como XML sem erro.
 - As referências e âncoras locais das 24 páginas (12 em português e 12 em inglês) foram conferidas, sem IDs duplicados ou meta descriptions repetidas.
@@ -162,3 +162,12 @@ Esses testes usam o navegador integrado e viewports controlados. Não equivalem 
 - Reservado espaço da barra de rolagem vertical, com alternativa para navegadores sem scrollbar-gutter.
 - Atualizadas as URLs das folhas de estilo alteradas nas páginas correspondentes. Briefing e introdução também seguem a coluna compartilhada. Mantidos os HTMLs na raiz e em en/ e a documentação em docs/.
 - Os 52 testes simulados passaram; a reconferência visual da correção depende da publicação. Sem commit ou push nesta etapa.
+
+
+## Regra adicional de eventos — 07/11/2026
+
+- Eventos do jogo e menu usam propriedades `on...`; o simulador segue a mesma organização. A busca no código atual não encontrou os métodos proibidos de criação de elementos e registro de ouvintes.
+- O teclado do jogo mantém um tratamento central para foco dos diálogos e callbacks dos minigames; o menu respeita as teclas já tratadas. Mudanças de largura dentro da mesma faixa preservam a abertura manual do menu.
+- Comentários no JavaScript e mapas de leitura nos quatro CSS explicam as responsabilidades; o guia detalha atribuição de funções, delegação, montagem do HTML e propagação do teclado.
+- 54 testes simulados aprovados, incluindo a transição do minigame para o diário/menu e redimensionamento sem mudança de faixa. As versões dos scripts foram atualizadas nos 24 HTMLs para renovar o cache após a publicação.
+- Esta alteração ainda precisa de reconferência no navegador após publicar. Não representa garantia em todos os navegadores ou sistemas. Sem commit ou push nesta etapa.

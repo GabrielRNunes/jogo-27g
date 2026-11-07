@@ -1,4 +1,7 @@
 /* style.css - base do site: variáveis, reset, corpo e acessibilidade */
+/* Leia primeiro este arquivo. paginas.css complementa os componentes comuns;
+   jogo.css e dialogo.css acrescentam as regras específicas da partida.
+   Seletores com # apontam IDs; com . apontam classes; :focus indica foco do teclado. */
 /* Estas variáveis são compartilhadas pelas páginas: mudar uma cor aqui atualiza seus usos. */
 :root {
   --bg: #0d0a14;

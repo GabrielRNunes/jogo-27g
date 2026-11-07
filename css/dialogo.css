@@ -1,4 +1,6 @@
 /* dialogo.css - retratos e quadro de impacto da história (carregar depois do jogo.css) */
+/* Também apresenta diário e finais. Aqui ficam aparência e dimensões;
+   abrir, fechar, devolver o foco e preencher os textos são tarefas do JavaScript. */
 .dialogo-cena {
   display: block;
   width: 100%;

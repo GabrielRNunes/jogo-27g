@@ -274,11 +274,20 @@ function navegarNoDialogoAlternativo(evento) {
   }
 }
 
-document.addEventListener('keydown', navegarNoDialogoAlternativo);
-
 // Um callback é uma função passada para ser chamada depois. Cada enigma fornece os seus.
 // O mesmo painel HTML atende a códigos, fios e setas, conforme essas funções.
 let painelAtual = {}; // funções do painel aberto: aoEnviar, aoClicar, aoTecla, aoFechar
+
+// Uma propriedade on... recebe uma função por vez. Por isso, o teclado fica
+// sempre nesta função: primeiro cuida do foco e depois do minigame aberto.
+// Abrir ou fechar um painel troca os callbacks, sem substituir este evento.
+function tratarTeclaDoJogo(evento) {
+  navegarNoDialogoAlternativo(evento);
+  if (evento.defaultPrevented) return;
+  if (dialogoAberto(buscarElemento('#painel')) && painelAtual.aoTecla) {
+    painelAtual.aoTecla(evento);
+  }
+}
 
 function abrirPainel(titulo, corpo, funcoes = {}) {
   if (estado.fim) return;
@@ -286,14 +295,12 @@ function abrirPainel(titulo, corpo, funcoes = {}) {
   painelAtual = funcoes;
   buscarElemento('#painel-titulo').textContent = traduzir(titulo);
   buscarElemento('#painel-corpo').innerHTML = traduzirHTML(corpo);
-  document.onkeydown = funcoes.aoTecla || null;
   abrirDialogo(buscarElemento('#painel'));
 }
 
 function limparPainel() {
   if (painelAtual.aoFechar) painelAtual.aoFechar();
   definirPausaCalculo(false);
-  document.onkeydown = null;
   painelAtual = {};
 }
 
@@ -1227,6 +1234,7 @@ buscarElemento('#btn-pular').onclick = terminarHistoria;
 buscarElemento('#btn-tela-cheia').onclick = alternarTelaCheia;
 buscarElemento('#btn-tela-cheia').hidden = !document.fullscreenEnabled || typeof document.documentElement.requestFullscreen !== 'function'; // some onde o navegador não suporta
 document.onfullscreenchange = atualizarBotaoTelaCheia;     // também reage ao Esc
+document.onkeydown = tratarTeclaDoJogo;
 function abrirDiario() {
   if (estado.fim) return;
   contarSegundo();
@@ -1258,8 +1266,8 @@ buscarElemento('#final').oncancel = manterFinalAberto;
 atualizarRelogio();
 
 // Reconcilia a contagem ao voltar de uma aba oculta ou do histórico do navegador.
-document.addEventListener('visibilitychange', contarSegundo);
-window.addEventListener('pageshow', contarSegundo);
+document.onvisibilitychange = contarSegundo;
+window.onpageshow = contarSegundo;
 // Estes controles só são liberados após a preparação dos eventos e da interface.
 buscarElemento('#btn-iniciar').disabled = false;
 buscarElemento('#btn-diario').disabled = false;

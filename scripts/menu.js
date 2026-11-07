@@ -8,8 +8,13 @@
   if (!menu || typeof window.matchMedia !== 'function') return;
   const telaPequena = window.matchMedia('(max-width: 700px)');
   const botaoMenu = menu.querySelector('summary');
+  let estavaEmTelaPequena = null;
 
   function ajustarMenu() {
+    // Só muda a abertura ao cruzar o limite. Redimensionar dentro da mesma
+    // faixa não deve fechar um menu que a pessoa abriu manualmente.
+    if (estavaEmTelaPequena === telaPequena.matches) return;
+    estavaEmTelaPequena = telaPequena.matches;
     const focoDentro = menu.contains(document.activeElement);
     menu.open = !telaPequena.matches;
     // Ao recolher por mudança de largura, o foco não deve ficar em um link oculto.
@@ -24,10 +29,10 @@
   }
 
   ajustarMenu();
-  if (typeof telaPequena.addEventListener === 'function') {
-    telaPequena.addEventListener('change', ajustarMenu);
-  } else if (typeof telaPequena.addListener === 'function') {
-    telaPequena.addListener(ajustarMenu);
-  }
-  document.addEventListener('keydown', fecharComEscape);
+  telaPequena.onchange = ajustarMenu;
+  // O redimensionamento também cobre navegadores que não avisam a mudança da consulta.
+  window.onresize = ajustarMenu;
+  // Teclas sobem do elemento para document e depois para window. O jogo trata
+  // seus diálogos em document; o menu só age se a tecla ainda estiver disponível.
+  window.onkeydown = fecharComEscape;
 })();

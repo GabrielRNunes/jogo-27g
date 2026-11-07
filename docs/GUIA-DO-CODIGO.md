@@ -91,6 +91,12 @@ O DOM é a representação da página em objetos acessíveis pelo JavaScript. `b
 
 O evento fica no contêiner do inventário. Isso se chama **delegação de eventos**: não é preciso cadastrar um evento para cada botão novo. O cenário e a lista textual também compartilham o mesmo tratamento de interação.
 
+Para a regra adicional da avaliação, os eventos usam propriedades como `onclick`, `onsubmit`, `oninput` e `onkeydown`. Atribuir `botao.onclick = minhaFuncao` guarda a função para o clique futuro; escrever `minhaFuncao()` executaria imediatamente. Cada propriedade guarda um único tratamento: uma nova atribuição substitui a anterior.
+
+Por isso, `document.onkeydown` aponta sempre para `tratarTeclaDoJogo()`. Essa função primeiro mantém o foco no diálogo alternativo e trata Escape; se a tecla não foi consumida, encaminha para `painelAtual.aoTecla`, usado pelo minigame de setas. Fechar o painel limpa seus callbacks, preservando o tratamento geral do teclado. O menu usa `window.onkeydown` e respeita uma tecla já tratada pelo jogo. Eventos de teclado sobem do elemento até o documento e a janela.
+
+As telas variáveis são montadas como strings de HTML em `innerHTML`; os elementos permanentes já estão nos arquivos HTML. Não há chamadas aos métodos proibidos de criação de elementos ou de registro de ouvintes. `window.onresize` complementa `consulta.onchange` no menu; apenas cruzar o limite de largura altera sua abertura, preservando a escolha manual dentro da mesma faixa.
+
 `textContent` insere texto. `innerHTML` insere marcação criada pelo próprio projeto. O conteúdo digitado na calculadora é validado antes de compor os passos exibidos; `traduzirHTML()` não deve ser confundida com uma função para tornar HTML arbitrário de usuários seguro.
 
 ## 6. Relógio e pausa pedagógica
@@ -172,6 +178,6 @@ Para os testes, com Node.js disponível:
 node tests/regressao.cjs
 ```
 
-A suíte atual reúne 52 verificações de lógica e estrutura. O DOM, o relógio e as APIs são simulados. Ela verifica, por exemplo, percursos, finais, pausa, itens, idiomas e referências locais; não confirma renderização, áudio ou comportamento de todos os navegadores e sistemas. Os limites estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
+A suíte atual reúne 54 verificações de lógica e estrutura. O DOM, o relógio e as APIs são simulados. Ela verifica, por exemplo, percursos, finais, pausa, itens, idiomas e referências locais; não confirma renderização, áudio ou comportamento de todos os navegadores e sistemas. Os limites estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
 
 O projeto é de Gabriel e recebeu assistência de IA, registrada em [CREDITOS.md](CREDITOS.md). A apresentação técnica deve refletir esse processo e explicar os comportamentos que podem ser demonstrados no código.

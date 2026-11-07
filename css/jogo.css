@@ -1,5 +1,7 @@
-/* Estilos do jogo. Carregue DEPOIS do style.css.
-   Troque só as variáveis para mudar a paleta inteira. */
+/* Estilos do jogo. Carregue depois de style.css e paginas.css.
+   Roteiro de leitura: painel de estado, cena e objetos, inventário, diálogos,
+   adaptações de tela e imagens por idioma. As media queries ajustam a mesma
+   interface: não criam outra partida. As variáveis de cor mantêm a paleta comum. */
 :root {
   --bg: #0d0a14;
   --painel: #17121f;
