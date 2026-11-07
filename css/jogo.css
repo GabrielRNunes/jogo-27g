@@ -274,10 +274,6 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
   justify-content: flex-end;
   margin-top: 0.75rem;
 }
-#dialogo-progresso {
-  margin-right: auto;
-  color: #b9c0d4;
-}
 
 /* ---------- Tela cheia: esconde o que não é jogo e usa a altura da tela ---------- */
 :fullscreen header,
@@ -317,4 +313,21 @@ pre, .sequencia { font-size: 1.4rem; color: var(--neon); }
 }
 :fullscreen .dialogo {
   min-height: calc(100vh - 9rem);
+}
+
+/* Controles nativos: som opcional, sem reprodução automática. */
+.controle-audio {
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--fonte-corpo);
+}
+.controle-audio audio {
+  display: block;
+  width: min(100%, 18rem);
+  margin-top: 0.75rem;
+}
+.controle-audio p {
+  max-width: 30ch;
+  font-size: 0.85rem;
+  margin-bottom: 0;
 }

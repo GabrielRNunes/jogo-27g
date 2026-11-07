@@ -9,10 +9,10 @@ const campoMensagem = document.querySelector('#mensagem');
 const contador = document.querySelector('#contador');
 
 const RESPOSTAS = [
-  'A equipe analisou seu relato com a atenção de um técnico de TI em lockdown.',
-  'Mensagem recebida. O Kairo mandou lembranças, mas não disse de onde.',
-  'Obrigado! Sua mensagem foi arquivada no diário de bordo da organização.',
-  'Recebido. A segurança foi avisada, mas está demorando para chegar.'
+  'Simulação concluída. Nenhuma mensagem foi enviada ao desenvolvedor.',
+  'Este protocolo é demonstrativo e não corresponde a um atendimento real.',
+  'Relato de teste processado apenas nesta página. Nenhum e-mail foi enviado.',
+  'Demonstração concluída. Para um contato real, utilize o e-mail informado abaixo.'
 ];
 
 function atualizarContador() {

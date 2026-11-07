@@ -11,9 +11,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;family=Caveat:wght@500;700&amp;display=swap">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/paginas.css">
-  <link rel="stylesheet" href="css/jogo.css?v=20261106-sem-bilhete">
-  <link rel="stylesheet" href="css/dialogo.css">
-  <script src="scripts/jogo.js?v=20261106-lixeira-bilhete" defer></script>
+  <link rel="stylesheet" href="css/jogo.css?v=20261106-revisao-narrativa">
+  <link rel="stylesheet" href="css/dialogo.css?v=20261106-revisao-narrativa">
+  <script src="scripts/jogo.js?v=20261106-revisao-narrativa" defer></script>
 </head>
 <body id="topo">
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
@@ -46,12 +46,21 @@
       <p>Erros: <strong id="erros">0</strong></p>
       <button type="button" id="btn-diario">Diário de bordo</button>
       <button type="button" id="btn-tela-cheia">Tela cheia</button>
+      <details class="controle-audio">
+        <summary>Som ambiente (opcional)</summary>
+        <audio id="audio-ambiente" controls loop preload="none" aria-label="Trilha instrumental do Protocolo Kairo">
+          <source src="assets/ambiente-kairo.wav" type="audio/wav">
+          Seu navegador não suporta áudio.
+        </audio>
+        <p>Inicie ou pause a trilha quando quiser. O cronômetro da partida continua.</p>
+      </details>
     </section>
 
     <section id="intro" aria-labelledby="intro-titulo">
-      <h3 id="intro-titulo">Briefing</h3>
-      <p>Você é o técnico de TI da organização. Ao entrar no quarto do jogador Kairo, a fechadura eletrônica entra em lockdown: em 5 minutos o alarme dispara e a segurança chega. Reprograme a fechadura e descubra por que ele sumiu antes da final. Cada código errado custa 10 segundos, e o final depende do tempo restante e do que você descobrir.</p>
-      <p>Clique (ou use Tab e Enter) nos objetos destacados. Itens do inventário precisam ser selecionados antes de usar. O relógio só começa depois da história.</p>
+      <h3 id="intro-titulo">Briefing da missão</h3>
+      <p>A final mundial começa às 18h, mas Kairo está desaparecido desde a noite anterior. Como técnico de TI da organização, você entra na ala privativa dele para verificar os registros. Sua credencial libera a entrada, mas a falta de permissão do morador ativa a contenção: você fica isolado com cinco minutos para investigar e reprogramar a fechadura do corredor de saída.</p>
+      <p>Explore os cinco ambientes, reúna as pistas e descubra o que Kairo deixou para trás. Quando a contagem termina, a segurança assume o local e encerra sua investigação. Códigos inválidos e fios errados custam 10 segundos; o desfecho considera o tempo, as falhas e suas descobertas.</p>
+      <p>Use o mouse ou <kbd>Tab</kbd> e <kbd>Enter</kbd> para interagir. Selecione os itens no inventário antes de usá-los. O relógio só começa ao terminar ou pular a introdução.</p>
       <button type="button" id="btn-iniciar">Começar</button>
     </section>
 
@@ -67,7 +76,6 @@
         </div>
         </div>
         <div class="dialogo-botoes">
-          <span id="dialogo-progresso"></span>
           <button type="button" id="btn-pular">Pular história</button>
           <button type="button" id="btn-proxima">Próxima</button>
         </div>
@@ -108,7 +116,7 @@
   </dialog>
 
   <footer>
-    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico, todos os nomes são fictícios.</p>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; personagens e enredo são fictícios.</p>
     <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
   </footer>
 </body>

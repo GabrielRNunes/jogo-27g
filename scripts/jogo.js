@@ -49,7 +49,7 @@ function formatarTempo(segundosTotais) {
 /* ---------- Itens (objeto de textos) ---------- */
 const ITENS = {
   pendrive: { nome: 'Pen drive', descricao: 'Pen drive preto com a etiqueta "treino". Deve abrir em algum PC.' },
-  cartao: { nome: 'Cartão de acesso', descricao: 'Cartão magnético com a sigla SRV. Parece servir para a sala de servidores.' },
+  cartao: { nome: 'Cartão de acesso', descricao: 'Cartão magnético com a sigla SRV. Parece servir para o leitor do rack de servidores.' },
   bilhete: { nome: 'Bilhete do Kairo', descricao: 'Bilhete dobrado: "Fui por vontade própria. Se achar isto, não chame a segurança."' }
 };
 
@@ -594,7 +594,7 @@ const objetos = {
     resolvido: false,
     interagir() {
       const cofre = this;
-      if (this.resolvido) return mensagem('O cofre está aberto. O troféu falso brilha lá dentro.');
+      if (this.resolvido) return mensagem('O cofre está aberto. O fragmento de PIN já foi registrado no diário de bordo.');
       abrirPainel('Cofre do troféu', criarFormularioCodigo('Código de 3 dígitos:', 3), {
         aoEnviar: function (codigoDigitado) {
           if (codigoDigitado !== CODIGOS.cofre) {
@@ -734,7 +734,7 @@ function iniciar() {
   buscarElemento('#jogo').hidden = false;
   atualizarCenario();
   atualizarInventario();
-  registrar('Lockdown ativado. Você tem 5 minutos para reprogramar a fechadura antes da segurança chegar.');
+  registrar('Contenção ativa. Você tem 5 minutos para reunir as pistas e reprogramar a fechadura do corredor de saída.');
   estado.cronometro = setInterval(contarSegundo, 1000);
 }
 
@@ -749,19 +749,62 @@ function contarSegundo() {
    O relógio só começa quando o diálogo termina.
    ========================================================= */
 const HISTORIA = [
-  { quem: 'narrador', nome: 'Narrador', texto: 'Gaming house da organização, 9h02 da manhã da final. O ar-condicionado zumbe, os corredores estão vazios e há uma notícia que ninguém quer dar: o jogador favorito sumiu.' },
-  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Técnico, aqui é a Central. O quarto do Kairo está trancado por dentro e ninguém o vê desde as 22h de ontem. A final começa às 18h. Preciso dessa porta aberta.' },
-  { quem: 'voce', nome: 'Você', texto: 'A fechadura programável é do meu sistema, eu mesmo a configurei no mês passado. Dá para abrir sem arrombar a porta.' },
-  { quem: 'voce', nome: 'Você', texto: 'Alguém tentou ligar para ele?' },
-  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Dezenas de vezes. Celular desligado. A última coisa que ele pediu foi para não ser incomodado, e o registro da fechadura mostra a entrada dele às 23h41. Saída, nenhuma.' },
-  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Faça isso rápido e sem barulho. Se a imprensa descobrir que o favorito sumiu horas antes da final, a organização perde patrocinador antes do almoço.' },
-  { quem: 'narrador', nome: 'Narrador', texto: 'Você respira fundo e encosta o crachá no leitor. A luz fica verde por meio segundo. Depois, vermelha.' },
-  { quem: 'sistema', nome: 'Sistema da fechadura', texto: 'Credencial reconhecida. Verificando permissão de acesso ao quarto...' },
-  { quem: 'sistema', nome: 'Sistema da fechadura', texto: 'ACESSO NÃO AUTORIZADO. LOCKDOWN ATIVADO. ALARME E SEGURANÇA EM 5 MINUTOS.', cena: true },
-  { quem: 'voce', nome: 'Você', texto: 'Não, não, não. Eu tenho autorização, isso devia abrir!' },
-  { quem: 'seguranca', nome: 'Central de Segurança (rádio)', texto: 'Técnico? O alerta apareceu aqui na Central. O protocolo isola tudo por dentro e a equipe chega em cinco minutos. Dê um jeito de sair antes disso.' },
-  { quem: 'voce', nome: 'Você', texto: 'Se me encontrarem dentro do quarto dele, ninguém vai acreditar que eu só vim abrir a porta.' },
-  { quem: 'narrador', nome: 'Narrador', texto: 'A única saída é reprogramar a fechadura pelo painel do corredor, antes do alarme. Cada sala guarda uma peça e cada erro custa dez segundos. O relógio começa agora.' }
+  {
+    "quem": "narrador",
+    "nome": "Narrador",
+    "texto": "15 de novembro de 2026, 9h02. A final mundial começa às 18h. Kairo não compareceu ao treino das 6h e não responde às tentativas de contato. A última entrada registrada na ala privativa dele foi às 23h41 da noite anterior. Não há registro de saída."
+  },
+  {
+    "quem": "seguranca",
+    "nome": "Central de Segurança",
+    "texto": "Precisamos verificar a ala e preservar os registros. Você tem autorização para a manutenção, mas o acesso aos ambientes privativos depende da permissão do morador."
+  },
+  {
+    "quem": "voce",
+    "nome": "Técnico de TI",
+    "texto": "Configurei esse sistema no mês passado. Minha credencial permite entrar para manutenção. Vou verificar o terminal do quarto e procurar indícios do que aconteceu."
+  },
+  {
+    "quem": "seguranca",
+    "nome": "Central de Segurança",
+    "texto": "O último contato visual com Kairo foi às 22h, depois do treino. O registro das 23h41 confirma que ele voltou à ala, mas não esclarece o que ocorreu depois. Não trate a ausência de um registro como prova de que ele continua aí."
+  },
+  {
+    "quem": "narrador",
+    "nome": "Narrador",
+    "texto": "A credencial libera a entrada. Assim que você cruza a porta, a fechadura se fecha atrás de você. O indicador de acesso muda de verde para vermelho."
+  },
+  {
+    "quem": "sistema",
+    "nome": "Sistema de acesso",
+    "texto": "Credencial de manutenção reconhecida. Permissão do morador ausente. Protocolo de contenção ativado. Alarme geral e intervenção da segurança em cinco minutos.",
+    "cena": true
+  },
+  {
+    "quem": "voce",
+    "nome": "Técnico de TI",
+    "texto": "A entrada foi aceita, mas a permissão interna não foi liberada. A ala está isolada. O painel do corredor de saída ainda permite reprogramar a fechadura com o PIN de recuperação."
+  },
+  {
+    "quem": "seguranca",
+    "nome": "Central de Segurança",
+    "texto": "Recebemos o alerta. A equipe vai assumir o local quando a contagem terminar. Até lá, reúna as pistas e tente reverter o bloqueio. Depois da intervenção, sua investigação será encerrada."
+  },
+  {
+    "quem": "sistema",
+    "nome": "Sistema de acesso",
+    "texto": "Códigos inválidos e falhas no quadro de fusíveis antecipam a intervenção em dez segundos por ocorrência. O acesso de manutenção permanece sob registro."
+  },
+  {
+    "quem": "voce",
+    "nome": "Técnico de TI",
+    "texto": "Vou seguir as pistas entre os ambientes, recuperar o PIN e sair antes da intervenção. O que Kairo deixou aqui pode esclarecer por que ele desapareceu."
+  },
+  {
+    "quem": "narrador",
+    "nome": "Narrador",
+    "texto": "À sua frente estão cinco ambientes interligados. Observe os objetos, confronte as pistas e decida o que vale investigar. Quando você avançar, começa a contagem de cinco minutos."
+  }
 ];
 
 function mostrarFala() {
@@ -772,7 +815,6 @@ function mostrarFala() {
   buscarElemento('#dialogo-texto').textContent = fala.texto;
   buscarElemento('#dialogo-retrato').src = `assets/historia/${fala.quem}.svg`;
   buscarElemento('#dialogo-cena').hidden = !fala.cena; // quadro de impacto só na fala do lockdown
-  buscarElemento('#dialogo-progresso').textContent = `${estado.fala + 1} / ${HISTORIA.length}`;
   buscarElemento('#btn-proxima').textContent = ultima ? 'Começar o lockdown' : 'Próxima';
 }
 
@@ -821,25 +863,25 @@ function atualizarBotaoTelaCheia() {
 const FINAIS = {
   perfeito: {
     titulo: 'Final: Fuga Perfeita',
-    texto: 'Você reprogramou a fechadura com tempo de sobra, saiu sem acionar nada e a segurança chegou a um corredor vazio.',
+    texto: 'Você reprogramou a fechadura com pelo menos dois minutos restantes e no máximo uma falha. Saiu antes do alarme geral; quando a segurança assumiu a ala, o corredor estava vazio.',
     imagem: 'assets/finais/perfeito.svg',
-    alt: 'Tira de quadrinhos em três quadros: sua mão digita o PIN no teclado, e o aviso BIP confirma; a porta destrava com um CLAC; você, aliviado e de fone no pescoço, vê o corredor vazio e livre diante do amanhecer.'
+    alt: 'Tira de quadrinhos em três quadros: sua mão digita o PIN no teclado, e o aviso BIP confirma; a porta destrava com um CLAC; você, aliviado e de fone no pescoço, vê o corredor vazio sob a luz da manhã.'
   },
   sequelas: {
     titulo: 'Final: Fuga com Sequelas',
-    texto: 'Você saiu, mas os erros e a demora dispararam o alarme parcial. Câmeras gravaram seu rosto e a organização vai pedir explicações.',
-    imagem: 'assets/finais/sequelas.svg',
-    alt: 'Tira de quadrinhos em três quadros: o teclado mostra ERRO e faz BZZT; uma câmera de segurança com olho vermelho e a marca REC vigia você; você, assustado, foge sob a luz vermelha do alarme.'
+    texto: 'Você reprogramou a fechadura antes de a contagem terminar, mas com menos de dois minutos restantes ou mais de uma falha. Os registros de acesso e as câmeras identificam sua passagem; a segurança vai pedir esclarecimentos.',
+    imagem: 'assets/finais/sequelas.svg?v=20261106-revisao-narrativa',
+    alt: 'Tira de quadrinhos em três quadros: o teclado confirma o acesso com um BIP; uma câmera de segurança com olho vermelho e a marca REC vigia você; você, assustado, foge sob uma luz vermelha de alerta.'
   },
   capturado: {
     titulo: 'Final: Capturado',
-    texto: 'O relógio zerou. A segurança abriu a porta e encontrou um técnico de TI, um quarto revirado e nenhuma explicação.',
+    texto: 'A contagem terminou antes de você reprogramar a fechadura. A segurança assumiu a ala e interrompeu a investigação. Você foi retido para prestar esclarecimentos sobre o acesso de manutenção.',
     imagem: 'assets/finais/capturado.svg',
     alt: 'Tira de quadrinhos em três quadros: um relógio digital marca 0:00 com o alarme tocando; dois guardas em silhueta abrem a porta com um CLAC; você, assustado, ergue as mãos. Game over.'
   },
   secreto: {
     titulo: 'Final Secreto: Ele Quis Sumir',
-    texto: 'Com o bilhete em mãos você entende: Kairo fugiu por vontade própria. Você sai e apaga os registros da fechadura. Ninguém jamais saberá onde ele está.',
+    texto: 'O bilhete revela que Kairo saiu por vontade própria. Com a fechadura reprogramada antes do fim da contagem, você apaga os registros locais da sua passagem e deixa a ala. O motivo da ausência está esclarecido; o paradeiro dele continua desconhecido.',
     imagem: 'assets/finais/secreto.svg',
     alt: 'Tira de quadrinhos em três quadros: você lê o bilhete do Kairo, que diz que ele foi por vontade própria; o painel da fechadura apaga os registros até 100 por cento; ao longe, a silhueta de Kairo caminha por uma estrada sob a lua.'
   }

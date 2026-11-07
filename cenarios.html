@@ -37,7 +37,7 @@
 
   <main id="conteudo">
     <h2>Cenários</h2>
-    <p>A <i lang="en">gaming house</i> tem 5 ambientes navegáveis, todos na ala privativa do Kairo. Eles se conectam por portas e por um alçapão, e cada um tem objetos que dependem de outros, em salas diferentes.</p>
+    <p>A <i lang="en">gaming house</i> tem 5 ambientes navegáveis, todos na ala privativa do Kairo. Eles se conectam por portas e por um alçapão, e algumas pistas e mecanismos se complementam entre salas.</p>
 
     <section aria-labelledby="mapa-titulo">
       <h3 id="mapa-titulo">Mapa da casa</h3>
@@ -78,7 +78,7 @@
           <tbody>
             <tr><th scope="row"><a href="#quarto">Quarto do Kairo</a></th><td>3</td><td>Sala de Treino</td></tr>
             <tr><th scope="row"><a href="#treino">Sala de Treino</a></th><td>3</td><td>Quarto, Cozinha, Servidores</td></tr>
-            <tr><th scope="row"><a href="#cozinha">Cozinha</a></th><td>1 (e algo fora do comum)</td><td>Sala de Treino</td></tr>
+            <tr><th scope="row"><a href="#cozinha">Cozinha</a></th><td>2</td><td>Sala de Treino</td></tr>
             <tr><th scope="row"><a href="#servidores">Sala de Servidores</a></th><td>2</td><td>Treino, Corredor</td></tr>
             <tr><th scope="row"><a href="#corredor">Corredor de Saída</a></th><td>1</td><td>Servidores</td></tr>
           </tbody>
@@ -89,7 +89,7 @@
     <section id="quarto">
       <h3>Quarto do Kairo</h3>
       <img class="cena-img" src="assets/cenas/quarto.svg" alt="Quarto do Kairo: cama de lado, calendário e pôster da final na parede, terminal sobre uma mesa, cômoda com cadeado e a porta para a Sala de Treino." width="1600" height="900" loading="lazy">
-      <p>O mês de novembro marca o grande dia. Entre a preparação no treino e os sistemas a serem desvendados, este é o ponto de partida para a próxima etapa.</p>
+      <p>Ponto de entrada na ala privativa. O calendário situa a final em 15 de novembro e ajuda a interpretar as primeiras pistas. A gaveta e o terminal revelam informações necessárias em outros ambientes.</p>
       <ul>
         <li>Calendário da final</li>
         <li>Gaveta com cadeado</li>
@@ -100,7 +100,7 @@
     <section id="treino">
       <h3>Sala de Treino</h3>
       <img class="cena-img" src="assets/cenas/treino.svg" alt="Sala de Treino: painel de comandos com setas, quadro com cidade à noite, PC do setup com cadeira gamer, cofre com um troféu em cima, portas laterais e um alçapão no chão que leva aos servidores." width="1600" height="900" loading="lazy">
-      <p>No <i lang="en">setup</i> e equipamentos, ficam os puzzles mais mecânicos, conectando a passagem para a cozinha e para os servidores.</p>
+      <p>O painel de comandos libera a leitura de mídia no PC. O arquivo encontrado ali exige interpretar números binários; uma calculadora opcional explica a conta. A sala também dá acesso à cozinha e ao alçapão dos servidores.</p>
       <ul>
         <li>Painel de comandos</li>
         <li>PC do setup</li>
@@ -110,17 +110,18 @@
 
     <section id="cozinha">
       <h3>Cozinha</h3>
-      <img class="cena-img" src="assets/cenas/cozinha-pagina.svg" alt="Cozinha: geladeira com cadeado, armários azuis, bancada com pia e micro-ondas, porta para a Sala de Treino e uma lixeira no canto." width="1600" height="900" loading="lazy">
-      <p>Local de descanso e apoio durante a rotina de treino. Contém uma geladeira trancada e <em>elementos ocultos a serem examinados. </em></p>
+      <img class="cena-img" src="assets/cenas/cozinha.svg?v=20261106-sem-bilhete" alt="Cozinha: geladeira com cadeado, armários azuis, bancada com pia e micro-ondas, porta para a Sala de Treino e uma lixeira no canto." width="1600" height="900" loading="lazy">
+      <p>Ambiente de apoio à rotina de treino. A geladeira guarda um item útil para os servidores. Outros objetos comuns também podem ser examinados; vale observar além dos equipamentos eletrônicos.</p>
       <ul>
         <li>Geladeira com cadeado</li>
+        <li>Lixeira</li>
       </ul>
     </section>
 
     <section id="servidores">
       <h3>Sala de Servidores</h3>
       <img class="cena-img" src="assets/cenas/servidores.svg" alt="Sala de Servidores: quadro de fusíveis com quatro fios coloridos, três racks com um leitor de cartão ao lado, escada de volta à Sala de Treino e porta de aço para o corredor." width="1600" height="900" loading="lazy">
-      <p>Racks, infraestrutura de cabos e um painel elétrico principal. Como centro técnico da estrutura, o setor alimenta todos os sistemas e possui acesso exclusivo por um alçapão na sala de treino.</p>
+      <p>Racks, infraestrutura de cabos e um painel elétrico principal. Como centro técnico da estrutura, o setor alimenta todos os sistemas e se conecta à sala de treino por um alçapão e ao corredor de saída por uma porta.</p>
       <ul>
         <li>Quadro de fusíveis</li>
         <li>Rack de servidores</li>
@@ -130,7 +131,7 @@
     <section id="corredor">
       <h3>Corredor de Saída</h3>
       <img class="cena-img" src="assets/cenas/corredor.svg" alt="Corredor de Saída: parede de tijolos, porta de serviço à esquerda e a grande porta de saída com a fechadura programável de teclado numérico e luz vermelha." width="1600" height="900" loading="lazy">
-      <p>A etapa final consiste em uma fechadura programável que exige um PIN de seis dígitos. O resultado é determinado pelo tempo acumulado, pela precisão nos testes e pelos elementos coletados ao longo do percurso.</p>
+      <p>A etapa final consiste em uma fechadura programável que exige um PIN de seis dígitos. O resultado é determinado pelo tempo restante, pelas falhas e pelos elementos coletados ao longo do percurso.</p>
       <ul>
         <li>Fechadura programável</li>
       </ul>
@@ -140,7 +141,7 @@
   <aside aria-label="Atalho para o jogo"><a class="cta-fixo" href="jogo.html">Jogar</a></aside>
 
   <footer>
-    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; nomes e marcas são fictícios.</p>
+    <p>&copy; 2026 Protocolo Kairo. Projeto acadêmico; personagens e enredo são fictícios.</p>
     <p><a href="mapa-do-site.html">Mapa do site</a> | <a href="#topo">Voltar ao topo</a></p>
   </footer>
 </body>

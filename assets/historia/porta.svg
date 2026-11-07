@@ -1,29 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
-<defs>
-<filter id="tinta" x="-2%" y="-2%" width="104%" height="104%">
-  <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="4" result="r"/>
-  <feDisplacementMap in="SourceGraphic" in2="r" scale="5" xChannelSelector="R" yChannelSelector="G"/>
-</filter>
-<filter id="grao" x="0" y="0" width="100%" height="100%">
-  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="9" result="n"/>
-  <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.9 0 0 0 -0.8"/>
-</filter>
-<filter id="brilho" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
-<pattern id="hachura" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
-  <line x1="0" y1="0" x2="0" y2="16" stroke="#17110f" stroke-width="3" opacity=".6"/>
-</pattern>
-<pattern id="tijolo" width="80" height="40" patternUnits="userSpaceOnUse">
-  <rect x="0" y="0" width="80" height="20" fill="#9c4f47" stroke="#17110f" stroke-width="3"/>
-  <rect x="-40" y="20" width="80" height="20" fill="#8a443f" stroke="#17110f" stroke-width="3"/>
-  <rect x="40" y="20" width="80" height="20" fill="#a55a50" stroke="#17110f" stroke-width="3"/>
-</pattern>
-<pattern id="azulejo" width="40" height="40" patternUnits="userSpaceOnUse">
-  <rect width="40" height="40" fill="#e9dfc9" stroke="#17110f" stroke-width="2" opacity=".95"/>
-</pattern>
-<linearGradient id="led" x1="0" x2="1"><stop offset="0" stop-color="#58b3b0"/><stop offset=".5" stop-color="#c35f86"/><stop offset="1" stop-color="#58b3b0"/></linearGradient>
-<radialGradient id="vig" cx="50%" cy="48%" r="75%"><stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".66"/></radialGradient>
-<radialGradient id="luz" cx="50%" cy="38%" r="55%"><stop offset="0" stop-color="#ffe7b0" stop-opacity=".30"/><stop offset="1" stop-color="#ffe7b0" stop-opacity="0"/></radialGradient>
-</defs>
-<g filter="url(#tinta)"><rect x="-20" y="-20" width="1640" height="620" fill="#4a3f6b"/><rect x="0" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="80" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="160" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="240" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="320" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="400" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="480" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="560" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="640" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="720" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="800" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="880" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="960" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="1040" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="1120" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="1200" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="1280" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="1360" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="1440" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="1520" y="0" width="40" height="600" fill="#000" opacity=".05"/><rect x="-20" y="430" width="1640" height="170" fill="#37305a"/><line x1="-20" y1="430" x2="1620" y2="430" stroke="#17110f" stroke-width="5" stroke-linecap="round" /><rect x="-20" y="600" width="1640" height="320" fill="#2b2430"/><line x1="-1600" y1="600" x2="-4266.666666666667" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-1400" y1="600" x2="-3844.4444444444443" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-1200" y1="600" x2="-3422.2222222222226" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-1000" y1="600" x2="-3000.0" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-800" y1="600" x2="-2577.777777777778" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-600" y1="600" x2="-2155.5555555555557" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-400" y1="600" x2="-1733.3333333333335" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-200" y1="600" x2="-1311.1111111111113" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="0" y1="600" x2="-888.8888888888889" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="200" y1="600" x2="-466.66666666666674" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="400" y1="600" x2="-44.44444444444446" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="600" y1="600" x2="377.77777777777777" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="800" y1="600" x2="800.0" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="1000" y1="600" x2="1222.2222222222222" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="1200" y1="600" x2="1644.4444444444443" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="1400" y1="600" x2="2066.666666666667" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="1600" y1="600" x2="2488.8888888888887" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="1800" y1="600" x2="2911.1111111111113" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="2000" y1="600" x2="3333.3333333333335" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="2200" y1="600" x2="3755.5555555555557" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="2400" y1="600" x2="4177.777777777777" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="2600" y1="600" x2="4600.0" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="2800" y1="600" x2="5022.222222222223" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="3000" y1="600" x2="5444.444444444444" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".55"/><line x1="-20" y1="630" x2="1620" y2="630" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".5"/><line x1="-20" y1="672" x2="1620" y2="672" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".5"/><line x1="-20" y1="728" x2="1620" y2="728" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".5"/><line x1="-20" y1="805" x2="1620" y2="805" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".5"/><line x1="-20" y1="900" x2="1620" y2="900" stroke="#1a1420" stroke-width="3" stroke-linecap="round" opacity=".5"/><rect x="-20" y="570" width="1640" height="30" rx="0" fill="#1f2a33" stroke="#17110f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" /><line x1="-20" y1="600" x2="1620" y2="600" stroke="#17110f" stroke-width="6" stroke-linecap="round" /><rect x="-20" y="-20" width="1640" height="120" fill="url(#hachura)" opacity=".55"/><rect x="604" y="94" width="392" height="506" rx="0" fill="#4a2d21" stroke="#17110f" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /><rect x="620" y="110" width="360" height="490" rx="0" fill="#6a4130" stroke="#17110f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" /><rect x="677.6" y="149.2" width="244.8" height="176.4" rx="0" fill="#4a2d21" stroke="#17110f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity=".55"/><rect x="677.6" y="374.6" width="244.8" height="176.4" rx="0" fill="#4a2d21" stroke="#17110f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity=".55"/><circle cx="922.4" cy="355.0" r="9" fill="#d8a948" stroke="#17110f" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" /><rect x="818.0" y="110" width="162.0" height="490" fill="#000" opacity="0.18"/><rect x="690.0" y="174" width="220" height="74" rx="8" fill="#d8a948" stroke="#17110f" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /><rect x="702.0" y="186" width="196" height="50" rx="4" fill="#b8892f" stroke="#17110f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" /><text x="800.0" y="224" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="40" font-weight="800" fill="#17110f" text-anchor="middle">KAIRO</text><rect x="696.0" y="180" width="208" height="10" fill="#fff" opacity="0.35"/><circle cx="800.0" cy="300" r="11" fill="#7f8a93" stroke="#17110f" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" /><circle cx="800.0" cy="300" r="4" fill="#17110f" stroke="#17110f" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" /><rect x="868.4" y="331.0" width="108" height="190" rx="14" fill="#c35f86" stroke="#17110f" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" /><rect x="878.4" y="341.0" width="88" height="170" rx="10" fill="none" stroke="#17110f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-opacity=".35"/><text x="922.4" y="417.0" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#e6d5b8" text-anchor="middle" stroke="#17110f" stroke-width="4" paint-order="stroke">NÃO</text><text x="922.4" y="455.0" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#e6d5b8" text-anchor="middle" stroke="#17110f" stroke-width="3" paint-order="stroke">PERTURBE</text><line x1="888.4" y1="475.0" x2="956.4" y2="475.0" stroke="#e6d5b8" stroke-width="3" stroke-linecap="round" /><circle cx="922.4" cy="359.0" r="15" fill="#d8a948" stroke="#17110f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" /><circle cx="922.4" cy="359.0" r="5" fill="#17110f" stroke="#17110f" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /><circle cx="1095" cy="325" r="150" fill="#e2697d" opacity=".28" filter="url(#brilho)"/><rect x="1050" y="270" width="90" height="170" rx="10" fill="#1f2a33" stroke="#17110f" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" /><circle cx="1095" cy="306" r="13" fill="#c84a5a" stroke="#17110f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" /><circle cx="1095" cy="306" r="34" fill="#e2697d" opacity=".55" filter="url(#brilho)"/><rect x="1064" y="352" width="62" height="14" rx="3" fill="#0f1418" stroke="#17110f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" /><rect x="1070" y="382" width="50" height="34" rx="4" fill="#e6d5b8" stroke="#17110f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" /><line x1="1074" y1="392" x2="1116" y2="392" stroke="#17110f" stroke-width="3" stroke-linecap="round" /><rect x="1076" y="400" width="12" height="10" rx="0" fill="#d8a948" stroke="#17110f" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /><rect x="630" y="591" width="340" height="9" fill="#ffb3a8"/><path d="M0 0 L240 0 L0 640 Z" fill="#000" stroke="#17110f" stroke-width="0" stroke-linejoin="round" stroke-linecap="round" opacity=".3"/><path d="M1600 900 L1360 900 L1600 120 Z" fill="#000" stroke="#17110f" stroke-width="0" stroke-linejoin="round" stroke-linecap="round" opacity=".3"/></g>
-<rect width="1600" height="900" fill="url(#vig)"/><rect width="1600" height="900" filter="url(#grao)" opacity=".4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="titulo descricao">
+  <title id="titulo">Ala privativa de Kairo em contenção</title>
+  <desc id="descricao">Corredor de uma instalação de treinamento. Uma porta reforçada de madeira escura identifica a ala de Kairo. Um terminal vermelho sinaliza contenção ativa.</desc>
+  <defs>
+    <linearGradient id="parede" x2="1" y2="0"><stop stop-color="#141923"/><stop offset=".55" stop-color="#39404b"/><stop offset="1" stop-color="#191c28"/></linearGradient>
+    <linearGradient id="madeira" x2="1" y2=".15"><stop stop-color="#211b1b"/><stop offset=".48" stop-color="#483329"/><stop offset="1" stop-color="#241d20"/></linearGradient>
+    <linearGradient id="metal" x2="1"><stop stop-color="#151b23"/><stop offset=".3" stop-color="#73808c"/><stop offset=".55" stop-color="#353e49"/><stop offset="1" stop-color="#11161f"/></linearGradient>
+    <linearGradient id="piso" x2="0" y2="1"><stop stop-color="#141925"/><stop offset="1" stop-color="#343640"/></linearGradient>
+    <radialGradient id="luz"><stop stop-color="#eed7af" stop-opacity=".23"/><stop offset="1" stop-color="#eed7af" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vermelho"><stop stop-color="#ff5c56" stop-opacity=".27"/><stop offset="1" stop-color="#ff5c56" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vinheta"><stop offset=".5" stop-color="#060913" stop-opacity="0"/><stop offset="1" stop-color="#060913" stop-opacity=".68"/></radialGradient>
+    <filter id="sombra" x="-30%" y="-20%" width="160%" height="150%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-opacity=".65"/></filter>
+    <pattern id="veios" width="36" height="160" patternUnits="userSpaceOnUse"><path d="M6 0v160M21 0v160M28 0v160" stroke="#c4a17f" stroke-opacity=".07"/><path d="M13 0q-5 40 0 80t0 80" fill="none" stroke="#080c14" stroke-opacity=".24"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="#10141e"/>
+  <path d="M0 0H1600V722H0Z" fill="url(#parede)"/>
+  <path d="M0 0L470 92V718L0 860Z" fill="#1a202b"/>
+  <path d="M1600 0L1395 98V718L1600 835Z" fill="#151c28"/>
+  <path d="M0 725H1600V900H0Z" fill="url(#piso)"/>
+  <g stroke="#79808c" stroke-opacity=".15" fill="none">
+    <path d="M0 804H1600M0 862H1600M800 725L260 900M800 725L1420 900M800 725L755 900"/>
+    <path d="M72 20V733M260 54V721M1380 90V723M1500 50V760"/>
+  </g>
+  <path d="M0 716H1600" stroke="#0a101a" stroke-width="18"/>
+  <path d="M0 706H1600" stroke="#6f7783" stroke-width="2" stroke-opacity=".45"/>
+  <ellipse cx="835" cy="230" rx="690" ry="360" fill="url(#luz)"/>
+  <ellipse cx="1175" cy="470" rx="295" ry="330" fill="url(#vermelho)"/>
+  <g filter="url(#sombra)">
+    <rect x="548" y="64" width="543" height="719" rx="5" fill="#080e18"/>
+    <rect x="562" y="78" width="515" height="696" rx="3" fill="url(#metal)"/>
+    <rect x="582" y="94" width="474" height="668" fill="#0c111a"/>
+    <rect x="593" y="103" width="450" height="650" fill="url(#madeira)"/>
+    <rect x="593" y="103" width="450" height="650" fill="url(#veios)"/>
+    <path d="M613 123H1023V732H613Z" fill="none" stroke="#c4a17f" stroke-opacity=".2"/>
+    <path d="M620 134V721M1015 134V721" stroke="#080d16" stroke-opacity=".6" stroke-width="3"/>
+    <rect x="672" y="181" width="288" height="125" rx="3" fill="#101722" stroke="#a38a64" stroke-width="2"/>
+    <text x="816" y="214" fill="#b9b2a6" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" letter-spacing="4">ALA PRIVATIVA</text>
+    <text x="816" y="267" fill="#e5cfab" text-anchor="middle" font-family="Arial, sans-serif" font-size="43" font-weight="700" letter-spacing="8">KAIRO</text>
+    <path d="M702 286H930" stroke="#a38a64" stroke-opacity=".55"/>
+    <rect x="965" y="407" width="50" height="136" rx="4" fill="#121923" stroke="#89939e" stroke-opacity=".5"/>
+    <rect x="976" y="447" width="24" height="59" rx="5" fill="url(#metal)"/>
+    <path d="M988 455H924" stroke="#0a111a" stroke-width="20" stroke-linecap="round"/>
+    <path d="M988 451H924" stroke="#9ba5ad" stroke-width="10" stroke-linecap="round"/>
+    <rect x="593" y="738" width="450" height="14" fill="#111924"/>
+    <path d="M607 754H1030" stroke="#a48a60" stroke-width="2" stroke-opacity=".7"/>
+  </g>
+  <g filter="url(#sombra)">
+    <rect x="1154" y="292" width="168" height="285" rx="9" fill="#101722" stroke="#707b89" stroke-width="2"/>
+    <rect x="1166" y="305" width="144" height="6" rx="3" fill="#fa625a"/>
+    <rect x="1170" y="330" width="136" height="126" rx="4" fill="#22181f" stroke="#84464a"/>
+    <path d="M1224 369v-12a14 14 0 0 1 28 0v12" stroke="#ff8e83" stroke-width="4" fill="none"/>
+    <rect x="1219" y="367" width="38" height="30" rx="4" fill="#d76a64"/>
+    <circle cx="1238" cy="380" r="3" fill="#24161c"/>
+    <text x="1238" y="421" fill="#ffc4b9" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" letter-spacing="1">CONTENÇÃO</text>
+    <text x="1238" y="440" fill="#ffc4b9" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" letter-spacing="2">ATIVA</text>
+    <rect x="1176" y="478" width="124" height="52" rx="5" fill="#222b36" stroke="#66727f"/>
+    <path d="M1190 493h36v21h-36zM1195 499h21" fill="none" stroke="#aab5bc" stroke-width="2"/>
+    <path d="M1245 495q12 9 0 18M1253 490q20 14 0 28" fill="none" stroke="#aab5bc" stroke-width="2"/>
+    <text x="1238" y="554" fill="#a5acb7" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" letter-spacing="1.3">CONTROLE DE ACESSO</text>
+  </g>
+  <g>
+    <rect x="150" y="291" width="242" height="153" rx="4" fill="#101722" stroke="#5a6575"/>
+    <rect x="150" y="291" width="5" height="153" fill="#b29c79"/>
+    <text x="174" y="326" fill="#a8a8b6" font-family="Arial, sans-serif" font-size="11" letter-spacing="1">CENTRO DE TREINAMENTO</text>
+    <text x="174" y="368" fill="#dfd8ca" font-family="Arial, sans-serif" font-size="25" font-weight="700">ACESSO RESTRITO</text>
+    <text x="174" y="403" fill="#a3acb9" font-family="Arial, sans-serif" font-size="15">Somente pessoal autorizado</text>
+  </g>
+  <rect x="581" y="44" width="478" height="10" rx="4" fill="#f3dbb1" opacity=".78"/>
+  <path d="M1150 627H1319M1150 641H1251" stroke="#777e8c" stroke-opacity=".35" stroke-width="3"/>
+  <rect width="1600" height="900" fill="url(#vinheta)"/>
 </svg>
