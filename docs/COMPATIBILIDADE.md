@@ -140,3 +140,17 @@ Base funcional: commit d56e102, já presente no início desta revisão. Nesta et
 - Nenhum erro apareceu no console durante esses fluxos. Viewports restaurados ao concluir a verificação.
 
 Esses testes usam o navegador integrado e viewports controlados. Não equivalem a teste em aparelhos físicos, em todos os mecanismos de navegador ou com leitor de tela. A matriz de sistemas operacionais e a validação formal HTML5 continuam pendentes. A tentativa anterior no validador externo encontrou uma verificação de segurança, que não foi contornada.
+
+## Revisão geral de largura e organização — 7 de novembro de 2026
+
+- Conferidas no navegador integrado as 24 páginas publicadas, em 320, 768 e 1280px. No jogo, o menu também foi medido em 375, 458, 700, 701 e 900px. Nenhum link do menu ultrapassou a janela nessas condições; o corte lateral relatado não foi reproduzido.
+- Encontrada largura excedente em Tecnologias PT/EN a 320px: a tabela rolava no seu contêiner, mas descrições absolutas visualmente ocultas podiam ampliar o documento. O CSS local agora torna tabela-rolagem um bloco de referência posicionado, limitando também esses elementos ao contêiner.
+- Reforçada a capacidade de encolher e quebrar linha dos links, itens e contêineres do menu. Não foi usado overflow-x: hidden no corpo para esconder conteúdo.
+- O Nu Html Checker retornou zero erros para jogo.html, en/jogo.html, index.html, historia.html e cenarios.html. Houve um aviso de aria-hidden redundante nas duas páginas do jogo; o atributo foi retirado localmente, preservando hidden.
+- A validação externa foi interrompida ao consultar itens.html, pois o serviço voltou a apresentar uma verificação de segurança. As outras 19 páginas não receberam validação formal nesta rodada.
+- Mantidos HTMLs portugueses na raiz e ingleses em en/, preservando URLs. Guias, créditos e relatórios movidos para docs/; READMEs permanecem na raiz e os links foram atualizados.
+- Cabeçalhos e blocos head das 24 páginas tiveram indentação padronizada; acrescentadas explicações da navegação e da contenção da tabela.
+- A inspeção visual desta rodada se refere à versão já publicada. O navegador não alcançou o servidor local temporário de teste; ele foi encerrado. A renderização do CSS corrigido deve ser reconferida após a publicação.
+- Validação formal completa, leitor de tela e matriz de sistemas reais continuam pendentes. Não foi declarada ausência universal de bugs.
+- Alterações locais, sem commit ou push nesta revisão.
+- Conferência final local: 52 testes de regressão aprovados, 24 HTMLs com estrutura e conteúdo preservados, 37 referências locais da documentação válidas, seis arquivos JavaScript com sintaxe válida e 28 SVGs com XML válido. A comparação com o commit anterior confirmou que o HTML mudou somente em indentação, comentários, versão do CSS e atributo redundante do fundo.

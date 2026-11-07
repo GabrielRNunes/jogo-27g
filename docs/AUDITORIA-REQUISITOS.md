@@ -20,7 +20,7 @@ Persistem verificações importantes: validação formal de HTML, teste com leit
 | Multimídia | Ilustrações SVG/PNG e áudio WAV com controles nativos e reprodução opcional | Implementado; audição e reprodução real precisam de conferência |
 | Tags semânticas | `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`, entre outras | Implementado |
 | Formulário de contato fake | `contato.html` e `scripts/contato.js`: validação, contador e resposta simulada sem envio | Implementado e testado em simulação |
-| HTML válido | IDs, referências e estrutura foram conferidos por verificações locais | Validação formal HTML5 pendente |
+| HTML válido | IDs, referências e estrutura foram conferidos por verificações locais | Cinco páginas publicadas consultadas sem erros; validação das demais e da revisão local ainda pendente |
 | Acessível a pessoas com deficiência visual | Botões nativos, nomes acessíveis, foco, atalhos, lista textual das cenas, status, inventário selecionável e diálogos | Recursos implementados; teste completo com leitor de tela pendente |
 | CSS externo | Quatro folhas em `css/` | Implementado |
 | Seletores avançados e hover | Seletores de atributos, `:not()`, `:nth-child()`, `:first-of-type`, `:focus-visible` e `:hover` | Implementado |
@@ -89,7 +89,7 @@ O intervalo de 2 a 5 minutos é uma meta de ritmo a ensaiar, não uma duração 
 
 ## O que falta comprovar antes da entrega
 
-1. **Validação HTML5:** executar as páginas portuguesas e inglesas no [Nu HTML Checker](https://validator.w3.org/nu/) e revisar os resultados. Conferência de fechamento de tags não equivale a validação formal.
+1. **Validação HTML5:** cinco páginas publicadas foram consultadas no [Nu HTML Checker](https://validator.w3.org/nu/) sem erros. Foram corrigidos localmente dois avisos redundantes. Falta validar as demais páginas e reconferir a revisão publicada; o serviço voltou a apresentar uma verificação de segurança.
 2. **Acessibilidade prática:** completar uma partida por teclado e com leitor de tela, principalmente sequência de fios, painel de setas, diálogos e inventário. Conferir se a ordem dos fios é anunciada com tempo suficiente.
 3. **Interface real:** verificar tela pequena, zoom de 200%, tela cheia, diálogos longos e seleção de itens nos navegadores usados na avaliação. A matriz mais ampla está em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
 4. **Publicação:** abrir as duas versões na Vercel após o deploy e verificar navegação, imagens, áudio e uma partida completa. A verificação pelo navegador integrado confirmou o acesso às duas versões do jogo e os novos fluxos de menu, painel e fusíveis. Continuam pendentes a conferência completa das demais páginas e os testes indicados em COMPATIBILIDADE.md.
@@ -102,3 +102,7 @@ A suíte `node tests/regressao.cjs` reúne 52 testes de lógica e estrutura com 
 ## Ajustes de acessibilidade e fluidez aprovados
 
 Os três ajustes foram conferidos: menu recolhível móvel com links completos no desktop, briefing sem painel antes do jogo e fusíveis com repetição e avanço individual dos sinais. A revisão incluiu 52 testes simulados e testes publicados em português e inglês, nas dimensões documentadas em COMPATIBILIDADE.md. A introdução, as instruções detalhadas e os controles do jogo foram reorganizados sem alterar o total de cenários, objetos ou finais.
+
+## Resultado da revisão geral
+
+As 24 páginas foram inspecionadas no navegador integrado em três larguras. O menu não apresentou corte nas condições verificadas. Foi corrigida localmente uma causa de largura excedente na tabela de tecnologias; a reconferência visual dessa correção depende da publicação. Os documentos técnicos foram reunidos nesta pasta, com referências atualizadas e HTMLs públicos mantidos nos mesmos endereços. O registro detalhado está em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).

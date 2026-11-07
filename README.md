@@ -36,7 +36,7 @@ To run the automated checks, install Node.js and execute from the project direct
 node tests/regressao.cjs
 ```
 
-The suite uses only built-in Node.js modules. Its 52 checks cover game routes, endings, countdown behavior, calculator pause, keyboard/touch-button handlers, optional APIs, contact simulation, both languages and local page references. The DOM and browser APIs are simulated: these checks do not establish visual compatibility across browsers or operating systems. See [COMPATIBILIDADE.md](COMPATIBILIDADE.md) for coverage and pending manual checks.
+The suite uses only built-in Node.js modules. Its 52 checks cover game routes, endings, countdown behavior, calculator pause, keyboard/touch-button handlers, optional APIs, contact simulation, both languages and local page references. The DOM and browser APIs are simulated: these checks do not establish visual compatibility across browsers or operating systems. See [COMPATIBILIDADE.md](docs/COMPATIBILIDADE.md) for coverage and pending manual checks.
 
 ## Technology and structure
 
@@ -53,6 +53,7 @@ The suite uses only built-in Node.js modules. Its 52 checks cover game routes, e
 ```text
 *.html                  Portuguese pages
 en/                     English pages with matching filenames
+docs/                   Code walkthrough, credits and review reports
 css/                    Shared styles
 scripts/jogo.js         Shared rules, state and interactions
 scripts/contato.js      Demonstration contact form
@@ -74,13 +75,15 @@ The countdown reconciles actual elapsed time when a suspended tab resumes. The b
 
 ## Code walkthrough
 
-The [technical walkthrough in Portuguese](GUIA-DO-CODIGO.md) explains the game flow, key functions and a demonstration sequence using the actual source code. It includes puzzle solutions.
+The [documentation index](docs/README.md) lists the technical guides and review reports.
+
+The [technical walkthrough in Portuguese](docs/GUIA-DO-CODIGO.md) explains the game flow, key functions and a demonstration sequence using the actual source code. It includes puzzle solutions.
 
 ## Authorship and AI assistance
 
 Gabriel defines the project’s direction and is responsible for its presentation and review. Codex (OpenAI) assisted with implementation, debugging, text revision, translation, educational interactions, documentation and checks. Claude (Anthropic) was also used during development. The door illustration was generated with AI; its generation prompt is recorded in `assets/historia/porta-kairo.prompt.txt`.
 
-AI assistance is part of the development history and is not a claim of unaided implementation or of endorsement by OpenAI or Anthropic. See [the project’s support page](apoio.html) and [credits](CREDITOS.md).
+AI assistance is part of the development history and is not a claim of unaided implementation or of endorsement by OpenAI or Anthropic. See [the project’s support page](apoio.html) and [credits](docs/CREDITOS.md).
 
 ## Contact
 

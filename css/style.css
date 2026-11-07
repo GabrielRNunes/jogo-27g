@@ -57,6 +57,8 @@ p, li, dd, a { overflow-wrap: anywhere; }
   z-index: 20;
 }
 .visually-hidden {
+  /* Mantém descrições na árvore de acessibilidade sem reservar espaço visual.
+     Contêineres com rolagem devem conter esses elementos (position: relative). */
   position: absolute;
   width: 1px;
   height: 1px;

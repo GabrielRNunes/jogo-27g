@@ -38,6 +38,15 @@ header > .menu-navegacao {
   min-width: 0;
 }
 .menu-navegacao > summary { display: none; }
+/* A lista precisa poder encolher dentro do grid do cabeçalho. Os links quebram linha. */
+.menu-navegacao nav,
+.menu-navegacao ul,
+.menu-navegacao li {
+  min-width: 0;
+  max-width: 100%;
+}
+.menu-navegacao nav { width: 100%; }
+.menu-navegacao a { white-space: normal; overflow-wrap: anywhere; }
 
 /* Links nativos: acessíveis por teclado e disponíveis sem JavaScript. */
 .seletor-idioma {
@@ -216,6 +225,11 @@ summary:hover {
 
 /* ---------- Tabelas ---------- */
 .tabela-rolagem {
+  /* Contém também os textos acessíveis posicionados nas células. Sem isso, esses
+     elementos absolutos podem ampliar a página mesmo com a tabela em overflow. */
+  position: relative;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
 }
 table {

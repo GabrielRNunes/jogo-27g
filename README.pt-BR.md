@@ -24,7 +24,7 @@ Com Node.js instalado, os testes são executados na pasta do projeto:
 node tests/regressao.cjs
 ```
 
-São 52 verificações de lógica e estrutura, com DOM e APIs simulados, sem bibliotecas externas. Elas cobrem percursos, finais, relógio, pausa pedagógica, comandos por teclado e botões de toque, APIs opcionais, formulário, idiomas e referências locais. Não substituem testes visuais em navegadores e sistemas reais. A cobertura e as verificações pendentes estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
+São 52 verificações de lógica e estrutura, com DOM e APIs simulados, sem bibliotecas externas. Elas cobrem percursos, finais, relógio, pausa pedagógica, comandos por teclado e botões de toque, APIs opcionais, formulário, idiomas e referências locais. Não substituem testes visuais em navegadores e sistemas reais. A cobertura e as verificações pendentes estão em [COMPATIBILIDADE.md](docs/COMPATIBILIDADE.md).
 
 ## O que o projeto oferece
 
@@ -51,7 +51,7 @@ O formulário de contato é demonstrativo: não envia mensagens.
 
 ## Organização e aprendizado
 
-As páginas em português ficam na raiz e as equivalentes em inglês em `en/`. Os estilos ficam em `css/`, as imagens e o áudio em `assets/` e os testes em `tests/`.
+As páginas em português ficam na raiz e as equivalentes em inglês em `en/`. Os estilos ficam em `css/`, as imagens e o áudio em `assets/`, os testes em `tests/` e os guias, créditos e relatórios em `docs/`.
 
 `scripts/jogo.js` concentra regras e interações; `scripts/contato.js` contém a simulação do formulário; `scripts/idioma.js` traduz a interface e resolve caminhos de recursos; `scripts/dados/ingles.js` reúne as traduções. `scripts/menu.js` organiza o menu responsivo com controles nativos. Os nomes no código permanecem em português para apoiar o aprendizado, e as duas versões compartilham as regras.
 
@@ -59,13 +59,15 @@ O trabalho exercita HTML semântico, CSS responsivo, funções, objetos, arrays,
 
 ## Guia do código
 
-O [guia técnico](GUIA-DO-CODIGO.md) explica o fluxo da partida, as funções principais e uma sequência de demonstração, com exemplos reais do código. Contém soluções dos enigmas.
+O [índice de documentação](docs/README.md) reúne os guias e relatórios.
+
+O [guia técnico](docs/GUIA-DO-CODIGO.md) explica o fluxo da partida, as funções principais e uma sequência de demonstração, com exemplos reais do código. Contém soluções dos enigmas.
 
 ## Autoria e apoio de IA
 
 Gabriel define a direção do projeto e é responsável por sua apresentação e revisão. O Codex, da OpenAI, apoiou implementação, depuração, textos, tradução, recursos pedagógicos, documentação e verificações. O Claude, da Anthropic, também foi utilizado durante o desenvolvimento. A ilustração da porta foi gerada por IA; o prompt está em `assets/historia/porta-kairo.prompt.txt`.
 
-Esse registro torna explícita a assistência recebida. Não representa implementação sem apoio nem endosso das empresas ao projeto. Consulte [Apoio ao Projeto](apoio.html) e [CREDITOS.md](CREDITOS.md).
+Esse registro torna explícita a assistência recebida. Não representa implementação sem apoio nem endosso das empresas ao projeto. Consulte [Apoio ao Projeto](apoio.html) e [CREDITOS.md](docs/CREDITOS.md).
 
 ## Contato
 

@@ -10,17 +10,17 @@ O Protocolo Kairo é um jogo e site estáticos, criados com HTML, CSS e JavaScri
 
 | Arquivo | O que explicar |
 | --- | --- |
-| [jogo.html](jogo.html) | Painel de controles, inventário, introdução, área da cena e diálogos |
-| [css/style.css](css/style.css) | Cores, fontes, regras básicas e foco visível |
-| [css/paginas.css](css/paginas.css) | Componentes comuns do site, navegação e rodapé |
-| [css/jogo.css](css/jogo.css) | Cena, botões interativos, painel lateral e adaptação às telas |
-| [css/dialogo.css](css/dialogo.css) | Retratos, diário e tela de final |
-| [scripts/jogo.js](scripts/jogo.js) | Regras, estado e interações |
-| [scripts/idioma.js](scripts/idioma.js) | Tradução da interface e caminhos das imagens |
-| [scripts/dados/ingles.js](scripts/dados/ingles.js) | Dicionário de textos em inglês |
-| [scripts/contato.js](scripts/contato.js) | Formulário demonstrativo, sem envio real |
-| [scripts/menu.js](scripts/menu.js) | Menu nativo recolhível, largura da tela, Escape e retorno de foco |
-| [tests/regressao.cjs](tests/regressao.cjs) | Verificações automatizadas com DOM e relógio simulados |
+| [jogo.html](../jogo.html) | Painel de controles, inventário, introdução, área da cena e diálogos |
+| [css/style.css](../css/style.css) | Cores, fontes, regras básicas e foco visível |
+| [css/paginas.css](../css/paginas.css) | Componentes comuns do site, navegação e rodapé |
+| [css/jogo.css](../css/jogo.css) | Cena, botões interativos, painel lateral e adaptação às telas |
+| [css/dialogo.css](../css/dialogo.css) | Retratos, diário e tela de final |
+| [scripts/jogo.js](../scripts/jogo.js) | Regras, estado e interações |
+| [scripts/idioma.js](../scripts/idioma.js) | Tradução da interface e caminhos das imagens |
+| [scripts/dados/ingles.js](../scripts/dados/ingles.js) | Dicionário de textos em inglês |
+| [scripts/contato.js](../scripts/contato.js) | Formulário demonstrativo, sem envio real |
+| [scripts/menu.js](../scripts/menu.js) | Menu nativo recolhível, largura da tela, Escape e retorno de foco |
+| [tests/regressao.cjs](../tests/regressao.cjs) | Verificações automatizadas com DOM e relógio simulados |
 
 ## 2. Sequência de demonstração
 
@@ -148,7 +148,13 @@ O bilhete é opcional: examinar a lixeira abre a interação; somente clicar par
 
 As páginas portuguesas ficam na raiz; as inglesas ficam em `en/`. O seletor usa links. As duas versões carregam o mesmo `jogo.js`; o dicionário inglês entra antes de `idioma.js` e do jogo. A tradução altera a apresentação e os caminhos das artes com texto, preservando as regras.
 
+A ordem de carregamento começa em `style.css`, segue para `paginas.css` e, no jogo, termina em `jogo.css` e `dialogo.css`. Os estilos mais específicos complementam os anteriores. Por isso, alterações de componentes comuns precisam ser conferidas em todas as páginas.
+
 No CSS, variáveis definem cores e famílias de fontes. Grid organiza cena e painel; media queries reorganizam a interface quando a largura diminui. As posições dos objetos são percentuais sobre uma ilustração de proporção fixa.
+
+Na tabela, `.tabela-rolagem` usa `overflow-x: auto` para conter a rolagem e `position: relative` para conter as descrições absolutas de acessibilidade nas células. Sem esse vínculo, um texto visualmente oculto pode ampliar a largura da página. A correção mantém o conteúdo acessível e evita esconder a falha com `overflow-x: hidden` no corpo.
+
+Os HTMLs permanecem na raiz e em `en/`; guias e relatórios ficam em `docs/`. O [índice da documentação](README.md) descreve a organização.
 
 O menu usa `details` e `summary` nativos. O HTML começa aberto como alternativa sem JavaScript. `scripts/menu.js` usa `matchMedia()` para recolher em larguras de até 700px e manter aberto no desktop. Escape recolhe o menu móvel e devolve o foco ao controle; diálogos abertos têm prioridade no tratamento dessa tecla.
 
