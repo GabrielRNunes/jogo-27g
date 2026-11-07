@@ -1170,28 +1170,31 @@ function atualizarBotaoTelaCheia() {
 /* =========================================================
    FINAIS
    ========================================================= */
+// Dados de apresentação: mudar estas mensagens não altera as condições dos finais.
+// decidirFinal() escolhe a fuga; finalizar() apresenta texto, imagem e resumo.
+// O agradecimento é fixo no HTML de cada idioma e aparece em qualquer desfecho.
 const FINAIS = {
   perfeito: {
     titulo: 'Final: Fuga Perfeita',
-    texto: 'Você reprogramou a fechadura com pelo menos dois minutos restantes e no máximo uma falha. Saiu antes do alarme geral; quando a segurança assumiu a ala, o corredor estava vazio.',
+    texto: 'A fechadura cede e o corredor de saída ainda está vazio. Você deixa a ala antes do alarme geral, com tempo de sobra e poucos rastros. A fuga está concluída, mas o desaparecimento de Kairo continua sem explicação.',
     imagem: 'assets/finais/perfeito.svg?v=20261106-pin-concatenado',
     alt: 'Tira de quadrinhos em três quadros: sua mão digita o PIN no teclado, e o aviso BIP confirma; a porta destrava com um CLAC; você, aliviado e de fone no pescoço, vê o corredor vazio sob a luz da manhã.'
   },
   sequelas: {
     titulo: 'Final: Fuga com Sequelas',
-    texto: 'Você reprogramou a fechadura antes de a contagem terminar, mas com menos de dois minutos restantes ou mais de uma falha. Os registros de acesso e as câmeras identificam sua passagem; a segurança vai pedir esclarecimentos.',
+    texto: 'A porta se abre antes do fim da contagem. Você consegue sair, mas os registros de acesso e as câmeras documentam sua passagem. A investigação termina com uma consequência: agora, a segurança também quer ouvir a sua versão.',
     imagem: 'assets/finais/sequelas.svg?v=20261106-revisao-narrativa',
     alt: 'Tira de quadrinhos em três quadros: o teclado confirma o acesso com um BIP; uma câmera de segurança com olho vermelho e a marca REC vigia você; você, assustado, foge sob uma luz vermelha de alerta.'
   },
   capturado: {
     titulo: 'Final: Capturado',
-    texto: 'A contagem terminou antes de você reprogramar a fechadura. A segurança assumiu a ala e interrompeu a investigação. Você foi retido para prestar esclarecimentos sobre o acesso de manutenção.',
+    texto: 'O alarme encerra sua janela de acesso. Antes que a fechadura seja reprogramada, a segurança assume a ala e interrompe a investigação. Você é retido para prestar esclarecimentos; as pistas reunidas até aqui não bastaram para abrir a saída a tempo.',
     imagem: 'assets/finais/capturado.svg',
     alt: 'Tira de quadrinhos em três quadros: um relógio digital marca 0:00 com o alarme tocando; dois guardas em silhueta abrem a porta com um CLAC; você, assustado, ergue as mãos. Game over.'
   },
   secreto: {
     titulo: 'Final Secreto: Ele Quis Sumir',
-    texto: 'O bilhete revela que Kairo saiu por vontade própria. Com a fechadura reprogramada antes do fim da contagem, você apaga os registros locais da sua passagem e deixa a ala. Você descobriu que a ausência foi uma escolha; a motivação e o paradeiro dele continuam desconhecidos.',
+    texto: 'O bilhete muda o sentido da investigação: Kairo saiu por vontade própria. Você reprograma a fechadura, apaga os registros locais da sua passagem e deixa a ala antes do fim da contagem. Não encontrou Kairo, mas descobriu algo que os demais desconhecem: ele escolheu partir. Seus motivos e seu destino permanecem em aberto.',
     imagem: 'assets/finais/secreto.svg',
     alt: 'Tira de quadrinhos em três quadros: você lê o bilhete do Kairo, que diz que ele foi por vontade própria; o painel da fechadura apaga os registros até 100 por cento; ao longe, a silhueta de Kairo caminha por uma estrada sob a lua.'
   }

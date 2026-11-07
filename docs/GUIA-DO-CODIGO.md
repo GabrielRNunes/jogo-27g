@@ -181,3 +181,24 @@ node tests/regressao.cjs
 A suíte atual reúne 54 verificações de lógica e estrutura. O DOM, o relógio e as APIs são simulados. Ela verifica, por exemplo, percursos, finais, pausa, itens, idiomas e referências locais; não confirma renderização, áudio ou comportamento de todos os navegadores e sistemas. Os limites estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
 
 O projeto é de Gabriel e recebeu assistência de IA, registrada em [CREDITOS.md](CREDITOS.md). A apresentação técnica deve refletir esse processo e explicar os comportamentos que podem ser demonstrados no código.
+
+## 11. Perguntas para ensaiar com o código aberto
+
+Use esta tabela para localizar um exemplo real e explicá-lo com suas palavras. Os comentários ajudam a consultar; conseguir prever o resultado de uma pequena mudança é uma boa forma de conferir a compreensão.
+
+| Pergunta possível | Onde olhar e o que demonstrar |
+| --- | --- |
+| Por que usar objetos? | Compare `objetos.gaveta` e `objetos.fusiveis`: cada um reúne propriedades de estado e métodos de interação. |
+| Qual a diferença entre objeto e vetor? | `estado` reúne propriedades nomeadas; `estado.inventario` mantém uma coleção de IDs percorrida para montar os botões. |
+| Como um clique chega ao enigma? | Siga `interagirComCenario()`, o atributo `data-obj` e o método `interagir()`; explique a delegação no contêiner. |
+| Por que atribuir uma função sem parênteses ao evento? | Compare `onclick = comecarHistoria` com uma chamada `comecarHistoria()`: cadastrar a ação para depois e executá-la agora têm efeitos diferentes. |
+| Como o mesmo diálogo atende a enigmas diferentes? | `abrirPainel()` recebe callbacks; `painelAtual` guarda as funções da interação aberta. O fechamento cancela tarefas pendentes. |
+| Por que o relógio não subtrai apenas um a cada intervalo? | `Date.now()` mede o tempo realmente decorrido. A frequência do intervalo pode atrasar quando a aba fica oculta. |
+| O que fica aleatório? | Localize `Math.random()` nos minigames e no contato. Os códigos fixos de `CODIGOS` não são sorteados. |
+| Como funcionam as traduções? | `traduzir()` consulta o dicionário; as duas versões compartilham estado, enigmas e condições dos finais. |
+| Por que o final secreto tem prioridade? | Leia a ordem de `decidirFinal()`. `FINAIS` guarda a apresentação; a condição está na função. O agradecimento é texto fixo nos dois HTMLs. |
+| Como o CSS adapta a interface? | Mostre uma media query, a grade da partida e as posições percentuais dos objetos. Explique o espaço disponível antes e depois da mudança de largura. |
+| O que decide qual estilo aparece? | Considere ordem dos arquivos, especificidade do seletor e herança. Uma variável como `--largura-conteudo` permite compartilhar a mesma medida. |
+| O que os testes comprovam? | Mostre um percurso da suíte e uma falha que ele detectaria. O DOM simulado verifica lógica; leitura por leitor de tela e aparência exigem testes reais. |
+
+Para estudar por partes: comece por estado e gaveta; depois siga inventário, relógio e um minigame; termine com finais, tradução e CSS. Não é necessário decorar o arquivo, mas é importante reconhecer os dados, explicar as funções e relacionar cada decisão ao comportamento demonstrado. Esta revisão mantém a estrutura destinada ao portfólio; nenhuma simplificação funcional foi aplicada.
