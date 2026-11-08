@@ -89,7 +89,7 @@ O intervalo de 2 a 5 minutos é uma meta de ritmo a ensaiar, não uma duração 
 
 ## O que falta comprovar antes da entrega
 
-1. **Validação HTML5:** cinco páginas publicadas foram consultadas no [Nu HTML Checker](https://validator.w3.org/nu/) sem erros. Foram corrigidos localmente dois avisos redundantes. Falta validar as demais páginas e reconferir a revisão publicada; o serviço voltou a apresentar uma verificação de segurança.
+1. **Validação HTML5 concluída:** os 24 arquivos locais da versão atual foram enviados ao Nu HTML Checker em 07/11/2026, às 21h36 (Brasília), com zero erros e zero avisos. O relatório está em [validacao-html.json](validacao-html.json), com hash de cada HTML. Revalidar se o HTML mudar; a validação não comprova acessibilidade completa.
 2. **Acessibilidade prática:** completar uma partida por teclado e com leitor de tela, principalmente sequência de fios, painel de setas, diálogos e inventário. Conferir se a ordem dos fios é anunciada com tempo suficiente.
 3. **Interface real:** verificar tela pequena, zoom de 200%, tela cheia, diálogos longos e seleção de itens nos navegadores usados na avaliação. A matriz mais ampla está em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
 4. **Publicação:** abrir as duas versões na Vercel após o deploy e verificar navegação, imagens, áudio e uma partida completa. A verificação pelo navegador integrado confirmou o acesso às duas versões do jogo e os novos fluxos de menu, painel e fusíveis. Continuam pendentes a conferência completa das demais páginas e os testes indicados em COMPATIBILIDADE.md.
@@ -97,7 +97,7 @@ O intervalo de 2 a 5 minutos é uma meta de ritmo a ensaiar, não uma duração 
 
 ## Evidência automatizada
 
-A suíte `node tests/regressao.cjs` reúne 56 testes de lógica e estrutura com DOM, relógio e APIs simulados. A auditoria também percorreu a navegação local e conferiu contagens e métodos dos objetos. Esses resultados não comprovam renderização real, HTML formalmente válido, reprodução de áudio, acessibilidade completa ou nota final.
+A suíte `node tests/regressao.cjs` reúne 56 testes de lógica e estrutura com DOM, relógio e APIs simulados. A auditoria também percorreu a navegação local e conferiu contagens e métodos dos objetos. A suíte não comprova renderização real, reprodução de áudio, acessibilidade completa ou nota final. A validade HTML foi verificada separadamente pelo Nu HTML Checker, conforme o relatório vinculado acima.
 
 ## Ajustes de acessibilidade e fluidez aprovados
 
@@ -115,7 +115,7 @@ O deslocamento relatado era do título Jogar. O main do jogo utiliza até 1320px
 
 Os requisitos funcionais centrais estão implementados; não é necessário acrescentar enigmas para atingir as quantidades pedidas. Faltam comprovar os critérios abaixo:
 
-- Concluir a validação formal HTML5 das 24 páginas e da versão revisada. A rodada anterior validou cinco páginas publicadas sem erros, não todas.
+- Validação formal HTML5 concluída nas 24 páginas locais: zero erros e zero avisos. Conferir se a publicação corresponde à versão validada e revalidar após alterações no HTML.
 - Completar uma partida com leitor de tela e teclado, incluindo fios, setas, inventário e diálogos. Os controles acessíveis e testes simulados não substituem essa experiência.
 - Cronometrar a demonstração em 2–5 minutos de tempo total. A contagem ativa tem cinco minutos; introdução e pausa binária podem alongar a sessão.
 - Conferir a publicação final, recursos de mídia e telas no navegador usado pelo professor. A comparação com as tags vistas em aula depende da lista dessa aula.

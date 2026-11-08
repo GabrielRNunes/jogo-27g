@@ -180,3 +180,14 @@ Esses testes usam o navegador integrado e viewports controlados. Não equivalem 
 - Eventos de mouse e foco usam propriedades `on...` e delegação. O foco tem prioridade; sair com o mouse não apaga o nome de um objeto focado. Trocar de sala limpa a identificação anterior.
 - 56 testes simulados aprovados, incluindo esses fluxos nos dois idiomas. Versões de CSS e JavaScript renovadas nas duas páginas do jogo. A renderização com 200% deve ser reconferida após publicar; os testes de DOM não comprovam dimensões reais.
 - Nenhuma opção de gratificação foi adicionada. A prioridade indicada pelo autor é a entrega avaliativa até 18/11/2026 às 20h; monetização será considerada em uma etapa posterior. Sem commit ou push nesta revisão.
+
+
+## Validação formal completa — 07/11/2026
+
+- Os 24 HTMLs locais (12 PT e 12 EN) foram enviados ao serviço oficial Nu HTML Checker: **zero erros e zero avisos**. Execução encerrada às 21h36 de Brasília (08/11/2026 às 00h36 UTC). Isso resolve a pendência de validação HTML registrada nas etapas anteriores deste histórico.
+- Evidência: [validacao-html.json](validacao-html.json), com resultado por arquivo e hash SHA-256 do conteúdo enviado. O relatório refere-se ao HTML local; não certifica que um deploy posterior usa os mesmos arquivos.
+- Repetição: `node tests/validar-html.cjs`, na raiz, com Node.js 18+ e acesso à internet. O script envia apenas os HTMLs públicos ao serviço externo, salva o relatório e sinaliza erro de validação. Falha de rede interrompe a execução; não é considerada aprovação. O validador é uma ferramenta de desenvolvimento, não uma dependência do jogo.
+- Conferência estática adicional: 24 páginas com idioma e atalho para o conteúdo, 24 imagens com atributo alt (vazio quando decorativo), 14 campos de formulário com label associado e nenhum tabindex positivo. Não foram encontradas falhas nesses critérios específicos. Os diálogos, rótulos dinâmicos e avisos de status também foram revisados no código.
+- Os 56 testes de regressão passaram novamente, incluindo foco alternativo, teclado, controles por toque, pausa, finais e nomes dos objetos nos dois idiomas. A busca nos scripts e testes não encontrou os métodos proibidos pela avaliação.
+- A execução real com leitor de tela continua pendente. Marcação e foco simulados não comprovam anúncios falados, ordem de leitura ou ritmo de interação. Nenhuma homologação com NVDA, Narrador, VoiceOver ou TalkBack foi declarada.
+- Sem alteração de interface, regras, commit ou push nesta etapa.

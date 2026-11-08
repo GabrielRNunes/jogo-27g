@@ -1,0 +1,177 @@
+{
+  "executadoEm": "2026-11-08T00:36:34.746Z",
+  "servico": "https://validator.w3.org/nu/?out=json",
+  "totalPaginas": 24,
+  "erros": 0,
+  "avisos": 0,
+  "paginas": [
+    {
+      "arquivo": "apoio.html",
+      "sha256": "8b6a47711d4d48bdbcebfa39181f750781ead6c3d2e591b282882ad6b4ff8945",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "cenarios.html",
+      "sha256": "2cbce5d1d3479bd3265950197eafffa34ba1e2377c60ff32c3856e470919c657",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "como-jogar.html",
+      "sha256": "304f902ebe824b5266fffe2d8321abd8e0480e58f0bdbfdc8500eb17a4d4d20e",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "conquistas.html",
+      "sha256": "16dec478f453ea7dac3b52e4705b21d2f5706f8ee19f00b852a3ce8fc2c659d8",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "contato.html",
+      "sha256": "710ae1f3da7cf81d8585d68efadd1fcdee589109ee658b1d3c6034b374443af6",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "desenvolvedor.html",
+      "sha256": "3c95cd5d588bcfa2155b21c10dca00ebbd4e2b12c329c61a4ed24a4d37bf36fd",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "historia.html",
+      "sha256": "3a049ec8c1b7de0372e2ec0bbb99264fa6aad0266796e906c55b830b7157f73f",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "index.html",
+      "sha256": "2c58b4c578d88e176de362c3f63db84f45933203c8a8a8066f787519ace8e8b6",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "itens.html",
+      "sha256": "b5fa6a2cd5dadab0a6599a2977a2d8351003239ad24d90174c95abb50c888087",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "jogo.html",
+      "sha256": "ac8af3d73587d841bd6579fd0c55457a7658de07eba2582ffbe8e566ca46d67c",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "mapa-do-site.html",
+      "sha256": "34f6bff5b66dd028c5423f953fbc02153aaed9b02f850ede094c38c1526d6c99",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "tecnologias.html",
+      "sha256": "287b037b9837154aaf3a6f21ebc7c046052fa9dce312b9a88234bbbe51a93d1e",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/apoio.html",
+      "sha256": "f1a90ae596d272528b465c4f493848927f58c0be4946c3b3b4bcf22e31ccfbb3",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/cenarios.html",
+      "sha256": "5353abfb9a9246dd18f58d47a0106406f1bcfa583592f5df01f0519da8a67b16",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/como-jogar.html",
+      "sha256": "34b5a6dd3e6ad5ff290a466e9358a9341239d2dd5a345b9d2ad93072ff160bea",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/conquistas.html",
+      "sha256": "7d33963dbc4eb1dfcd15b1c6cd8ee9d1b30871f67b0dd18504d32d10c1000a1f",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/contato.html",
+      "sha256": "c84f5a98bb399fb7d2c1b6db9e8f2fbe4247a3fe643e81895fd21af8aed94a26",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/desenvolvedor.html",
+      "sha256": "ee33fb46b68d3a38fc7659227dc404c9202b4cb79e1546c4bdc7a286be1d508c",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/historia.html",
+      "sha256": "77e6d065216ea1a7f48572cb9dbc0fdec57c7967715c57ad98d05cff0eb581b7",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/index.html",
+      "sha256": "d2815ad295ea650cb9ae13ff6a9aa78cd45574649fb8755f57a15da55fca221a",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/itens.html",
+      "sha256": "8879548aa54a0aabfc2fd724162449cb11e1ed07918708e2cea44abe49b774d6",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/jogo.html",
+      "sha256": "3f9ce7d8798b31c749f007354b8df4f0ce85c59998bc40acf9294570461786ed",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/mapa-do-site.html",
+      "sha256": "9068d2a9684c7a95cae6bbf6ec52f5c66b5be31ffc7c09af03802cc9688b3df8",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    },
+    {
+      "arquivo": "en/tecnologias.html",
+      "sha256": "bd4fa32c3d563563172eac486bfbb743f87d2894833e3a966205893a5d2be474",
+      "erros": 0,
+      "avisos": 0,
+      "mensagens": []
+    }
+  ]
+}

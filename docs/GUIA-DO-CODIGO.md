@@ -21,6 +21,7 @@ O Protocolo Kairo é um jogo e site estáticos, criados com HTML, CSS e JavaScri
 | [scripts/contato.js](../scripts/contato.js) | Formulário demonstrativo, sem envio real |
 | [scripts/menu.js](../scripts/menu.js) | Menu nativo recolhível, largura da tela, Escape e retorno de foco |
 | [tests/regressao.cjs](../tests/regressao.cjs) | Verificações automatizadas com DOM e relógio simulados |
+| [tests/validar-html.cjs](../tests/validar-html.cjs) | Envio dos HTMLs públicos ao validador oficial e gravação do relatório; ferramenta de desenvolvimento que exige internet |
 
 ## 2. Sequência de demonstração
 
