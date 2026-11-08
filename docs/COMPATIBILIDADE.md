@@ -4,7 +4,7 @@ Revisão local atualizada em 7 de novembro de 2026. Esta revisão não inclui co
 
 ## O que pode ser afirmado
 
-- A suíte de regressão passou em 54 testes automatizados de lógica e estrutura.
+- A suíte de regressão passou em 56 testes automatizados de lógica e estrutura.
 - Foram simuladas presença e ausência de dialog nativo, indisponibilidade e falha de tela cheia, temporizadores atrasados, uso por teclado e botões de toque.
 - Os 28 SVGs do projeto foram analisados como XML sem erro.
 - As referências e âncoras locais das 24 páginas (12 em português e 12 em inglês) foram conferidas, sem IDs duplicados ou meta descriptions repetidas.
@@ -50,7 +50,7 @@ Com Node.js instalado, execute na pasta do projeto:
 node tests/regressao.cjs
 ~~~
 
-A suíte usa apenas módulos nativos do Node.js. Os testes atuais foram executados pelo runtime Node disponibilizado nesta sessão. O comando node não está disponível no PATH do terminal deste computador; para usar o comando acima diretamente, é necessário que a instalação local esteja acessível no terminal.
+A suíte usa apenas módulos nativos do Node.js. Os testes foram executados pelo runtime Node disponibilizado nesta sessão. Na conferência mais recente, o comando node também estava disponível no terminal e executou a suíte diretamente.
 
 O DOM, os eventos close, o relógio e as APIs opcionais são simulados. A suíte não renderiza CSS, não reproduz áudio, não emula um leitor de tela e não substitui os mecanismos de Chromium, Gecko ou WebKit.
 
@@ -171,3 +171,12 @@ Esses testes usam o navegador integrado e viewports controlados. Não equivalem 
 - Comentários no JavaScript e mapas de leitura nos quatro CSS explicam as responsabilidades; o guia detalha atribuição de funções, delegação, montagem do HTML e propagação do teclado.
 - 54 testes simulados aprovados, incluindo a transição do minigame para o diário/menu e redimensionamento sem mudança de faixa. As versões dos scripts foram atualizadas nos 24 HTMLs para renovar o cache após a publicação.
 - Esta alteração ainda precisa de reconferência no navegador após publicar. Não representa garantia em todos os navegadores ou sistemas. Sem commit ou push nesta etapa.
+
+
+## Rótulos dos objetos com zoom — 07/11/2026
+
+- O autor informou ter concluído uma partida, navegação e testes nos dois idiomas sem erros; no teste com zoom de 200%, encontrou o nome do painel de comandos quebrando letra por letra sobre a imagem. Este é um relato do autor, não uma nova homologação de todos os ambientes.
+- A causa era o texto dentro da pequena área percentual do botão. Os nomes agora aparecem na faixa `rotulo-cenario`, abaixo da ilustração, com largura de conteúdo e quebra por palavras. Os botões conservam seus nomes acessíveis e o destaque visual; a faixa visual não duplica o anúncio pelo leitor de tela.
+- Eventos de mouse e foco usam propriedades `on...` e delegação. O foco tem prioridade; sair com o mouse não apaga o nome de um objeto focado. Trocar de sala limpa a identificação anterior.
+- 56 testes simulados aprovados, incluindo esses fluxos nos dois idiomas. Versões de CSS e JavaScript renovadas nas duas páginas do jogo. A renderização com 200% deve ser reconferida após publicar; os testes de DOM não comprovam dimensões reais.
+- Nenhuma opção de gratificação foi adicionada. A prioridade indicada pelo autor é a entrega avaliativa até 18/11/2026 às 20h; monetização será considerada em uma etapa posterior. Sem commit ou push nesta revisão.

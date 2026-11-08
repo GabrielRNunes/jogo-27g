@@ -693,6 +693,30 @@ function executarTestes() {
     assert.equal(menu.open, false);
   });
 
+  for (const idioma of ['pt', 'en']) teste('Nome do objeto fora da imagem respeita mouse, foco e troca de sala: ' + idioma, () => {
+    const a = partida({ idioma });
+    a.executar("irPara('treino')");
+    const cena = a.buscar('#cenario');
+    const painel = a.buscar('#cenario [data-obj="combo"]');
+    const pc = a.buscar('#cenario [data-obj="pc"]');
+    const rotulo = a.buscar('#rotulo-cenario');
+    cena.onmouseover({ type: 'mouseover', target: painel });
+    assert.equal(rotulo.textContent, idioma === 'en' ? 'Command panel' : 'Painel de comandos');
+    assert.equal(painel.querySelector('span'), null);
+    cena.onfocusin({ type: 'focusin', target: pc });
+    cena.onmouseout({ type: 'mouseout', relatedTarget: null });
+    assert.equal(rotulo.textContent, pc.getAttribute('aria-label'));
+    cena.onfocusout({ type: 'focusout', relatedTarget: a.buscar('#btn-diario') });
+    assert.equal(rotulo.textContent, '');
+    cena.onmouseover({ type: 'mouseover', target: painel });
+    a.executar("irPara('quarto')");
+    assert.equal(rotulo.textContent, '');
+    const gaveta = a.buscar('#cenario [data-obj="gaveta"]');
+    cena.onfocusin({ type: 'focusin', target: gaveta });
+    assert.equal(rotulo.textContent, gaveta.getAttribute('aria-label'));
+    assert.equal(rotulo.getAttribute('aria-hidden'), 'true');
+  });
+
   return { total: aprovados.length, aprovados };
 }
 

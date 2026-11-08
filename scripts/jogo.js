@@ -913,12 +913,32 @@ function criarBotaoCenario(rotulo, posicao, classe, dados) {
   const [esquerda, topo, largura, altura] = posicao;
   return `<button type="button" class="hotspot ${classe}" ${dados}
     style="left:${esquerda}%;top:${topo}%;width:${largura}%;height:${altura}%"
-    aria-label="${rotulo}"><span>${rotulo}</span></button>`;
+    aria-label="${rotulo}"></button>`;
+}
+
+// Guardamos separadamente mouse e teclado: sair com o mouse não apaga o nome
+// do objeto que ainda tem foco. O foco tem prioridade quando ambos existem.
+let botaoSobPonteiro = null;
+let botaoComFoco = null;
+
+function atualizarRotuloDoCenario(evento) {
+  const area = buscarElemento('#cenario');
+  const saindo = evento.type === 'mouseout' || evento.type === 'focusout';
+  const destino = saindo ? evento.relatedTarget : evento.target;
+  const candidato = destino && typeof destino.closest === 'function' ? destino.closest('.hotspot') : null;
+  const botao = candidato && area.contains(candidato) ? candidato : null;
+  if (evento.type === 'mouseover' || evento.type === 'mouseout') botaoSobPonteiro = botao;
+  else botaoComFoco = botao;
+  const ativo = botaoComFoco || botaoSobPonteiro;
+  buscarElemento('#rotulo-cenario').textContent = ativo ? ativo.getAttribute('aria-label') : '';
 }
 
 // Gera a imagem interativa e a lista textual a partir dos mesmos dados e destinos.
 // As duas formas de explorar usam o mesmo evento; não há uma segunda lógica para toque.
 function atualizarCenario() {
+  botaoSobPonteiro = null;
+  botaoComFoco = null;
+  buscarElemento('#rotulo-cenario').textContent = '';
   const cenarioAtual = CENARIOS[estado.cenario];
   let conteudo = '';
 
@@ -971,6 +991,11 @@ function interagirComCenario(evento) {
 }
 
 buscarElemento('#cenario').onclick = interagirComCenario;
+// Os eventos ficam na cena e atendem também aos botões recriados ao trocar de sala.
+buscarElemento('#cenario').onmouseover = atualizarRotuloDoCenario;
+buscarElemento('#cenario').onmouseout = atualizarRotuloDoCenario;
+buscarElemento('#cenario').onfocusin = atualizarRotuloDoCenario;
+buscarElemento('#cenario').onfocusout = atualizarRotuloDoCenario;
 buscarElemento('#lista-acoes-cenario').onclick = interagirComCenario;
 
 function atualizarMarcas() {

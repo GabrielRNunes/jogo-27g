@@ -13,11 +13,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&amp;display=swap">
   <link rel="stylesheet" href="../css/style.css?v=20261107-titulos">
   <link rel="stylesheet" href="../css/paginas.css?v=20261107-titulos">
-  <link rel="stylesheet" href="../css/jogo.css?v=20261107-titulos">
+  <link rel="stylesheet" href="../css/jogo.css?v=20261107-rotulos">
   <link rel="stylesheet" href="../css/dialogo.css?v=20261107-diario">
   <script src="../scripts/dados/ingles.js?v=20261107-finais" defer></script>
   <script src="../scripts/idioma.js?v=20261107-interface" defer></script>
-  <script src="../scripts/jogo.js?v=20261107-finais" defer></script>
+  <script src="../scripts/jogo.js?v=20261107-rotulos" defer></script>
   <script src="../scripts/menu.js?v=20261107-eventos" defer></script>
 </head>
 <body id="topo" class="pagina-jogo">
@@ -119,6 +119,8 @@
         <section id="jogo" aria-label="Game area" hidden>
           <h3 id="nome-cenario" tabindex="-1">Location</h3>
           <div id="cenario" class="cenario"></div>
+          <!-- Buttons already have accessible names; this caption repeats them visually. -->
+          <p id="rotulo-cenario" class="rotulo-cenario" aria-hidden="true"></p>
           <p id="mensagem" role="status" aria-live="polite"></p>
           <details id="atalhos-cenario">
             <summary>Objects and connections in this room</summary>

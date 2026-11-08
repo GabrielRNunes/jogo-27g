@@ -164,6 +164,8 @@ Os HTMLs permanecem na raiz e em `en/`; guias e relatórios ficam em `docs/`. O 
 
 O menu usa `details` e `summary` nativos. O HTML começa aberto como alternativa sem JavaScript. `scripts/menu.js` usa `matchMedia()` para recolher em larguras de até 700px e manter aberto no desktop. Escape recolhe o menu móvel e devolve o foco ao controle; diálogos abertos têm prioridade no tratamento dessa tecla.
 
+Os botões sobre a ilustração usam áreas percentuais, que podem ficar estreitas com zoom. Por isso, seus nomes não ficam dentro dos botões: `atualizarRotuloDoCenario()` preenche uma faixa abaixo da imagem, ao receber mouse ou foco. O nome acessível permanece em `aria-label`; a faixa usa `aria-hidden` para evitar repetição. As referências ao botão sob o ponteiro e ao botão focado são independentes, com prioridade para o foco, e são limpas ao trocar de sala.
+
 O painel da partida começa com `hidden`. `iniciar()` o revela e adiciona `em-partida` ao contêiner, permitindo a disposição lateral no desktop. Nas telas menores, tempo, botões e inventário usam espaçamentos compactos. As instruções completas continuam disponíveis em um bloco recolhível no briefing.
 
 Exemplos concretos de apoio à acessibilidade: botões nativos para objetos, lista textual alternativa, setas clicáveis, `aria-pressed` na seleção de itens, rótulos dos controles, foco visível e diálogos com alternativa à API nativa. Esses recursos não equivalem a uma auditoria completa com leitores de tela.
@@ -178,7 +180,7 @@ Para os testes, com Node.js disponível:
 node tests/regressao.cjs
 ```
 
-A suíte atual reúne 54 verificações de lógica e estrutura. O DOM, o relógio e as APIs são simulados. Ela verifica, por exemplo, percursos, finais, pausa, itens, idiomas e referências locais; não confirma renderização, áudio ou comportamento de todos os navegadores e sistemas. Os limites estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
+A suíte atual reúne 56 verificações de lógica e estrutura. O DOM, o relógio e as APIs são simulados. Ela verifica, por exemplo, percursos, finais, pausa, itens, idiomas e referências locais; não confirma renderização, áudio ou comportamento de todos os navegadores e sistemas. Os limites estão em [COMPATIBILIDADE.md](COMPATIBILIDADE.md).
 
 O projeto é de Gabriel e recebeu assistência de IA, registrada em [CREDITOS.md](CREDITOS.md). A apresentação técnica deve refletir esse processo e explicar os comportamentos que podem ser demonstrados no código.
 

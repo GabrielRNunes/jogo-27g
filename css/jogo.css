@@ -196,17 +196,19 @@ button[aria-pressed="true"] {
   align-items: flex-end;
   justify-content: center;
 }
-.hotspot span {
-  font-size: 0.875rem;
-  background: rgba(0, 0, 0, 0.75);
+/* O nome usa a largura da cena, não a área pequena do objeto. Reservar uma
+   linha evita deslocar o conteúdo ao explorar; nomes longos podem ocupar mais. */
+.rotulo-cenario {
+  min-height: 2em;
+  margin: 0;
+  padding: .25rem .5rem;
+  background: var(--painel);
   color: var(--texto);
-  padding: 2px 4px;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.hotspot:hover span,
-.hotspot:focus-visible span {
-  opacity: 1;
+  font-family: var(--fonte-corpo);
+  font-size: 1rem;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 .hotspot:hover,
 .hotspot:focus-visible {
@@ -423,7 +425,6 @@ pre, .sequencia {
 
 /* ---------- Responsivo ---------- */
 @media (max-width: 600px) {
-  .hotspot span { font-size: 0.75rem; }
   .status { gap: 0.75rem; }
   #painel {
     width: calc(100% - 1rem);

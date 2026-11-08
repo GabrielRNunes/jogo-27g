@@ -213,3 +213,12 @@
 - Comentários no JavaScript e mapas de leitura nos quatro CSS explicam as responsabilidades; o guia detalha atribuição de funções, delegação, montagem do HTML e propagação do teclado.
 - 54 testes simulados aprovados, incluindo a transição do minigame para o diário/menu e redimensionamento sem mudança de faixa. As versões dos scripts foram atualizadas nos 24 HTMLs para renovar o cache após a publicação.
 - Esta alteração ainda precisa de reconferência no navegador após publicar. Não representa garantia em todos os navegadores ou sistemas. Sem commit ou push nesta etapa.
+
+
+## Rótulos dos objetos com zoom — 07/11/2026
+
+- O autor informou ter concluído uma partida, navegação e testes nos dois idiomas sem erros; no teste com zoom de 200%, encontrou o nome do painel de comandos quebrando letra por letra sobre a imagem. Este é um relato do autor, não uma nova homologação de todos os ambientes.
+- A causa era o texto dentro da pequena área percentual do botão. Os nomes agora aparecem na faixa `rotulo-cenario`, abaixo da ilustração, com largura de conteúdo e quebra por palavras. Os botões conservam seus nomes acessíveis e o destaque visual; a faixa visual não duplica o anúncio pelo leitor de tela.
+- Eventos de mouse e foco usam propriedades `on...` e delegação. O foco tem prioridade; sair com o mouse não apaga o nome de um objeto focado. Trocar de sala limpa a identificação anterior.
+- 56 testes simulados aprovados, incluindo esses fluxos nos dois idiomas. Versões de CSS e JavaScript renovadas nas duas páginas do jogo. A renderização com 200% deve ser reconferida após publicar; os testes de DOM não comprovam dimensões reais.
+- Nenhuma opção de gratificação foi adicionada. A prioridade indicada pelo autor é a entrega avaliativa até 18/11/2026 às 20h; monetização será considerada em uma etapa posterior. Sem commit ou push nesta revisão.

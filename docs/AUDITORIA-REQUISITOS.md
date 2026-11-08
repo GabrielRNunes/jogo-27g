@@ -97,7 +97,7 @@ O intervalo de 2 a 5 minutos é uma meta de ritmo a ensaiar, não uma duração 
 
 ## Evidência automatizada
 
-A suíte `node tests/regressao.cjs` reúne 54 testes de lógica e estrutura com DOM, relógio e APIs simulados. A auditoria também percorreu a navegação local e conferiu contagens e métodos dos objetos. Esses resultados não comprovam renderização real, HTML formalmente válido, reprodução de áudio, acessibilidade completa ou nota final.
+A suíte `node tests/regressao.cjs` reúne 56 testes de lógica e estrutura com DOM, relógio e APIs simulados. A auditoria também percorreu a navegação local e conferiu contagens e métodos dos objetos. Esses resultados não comprovam renderização real, HTML formalmente válido, reprodução de áudio, acessibilidade completa ou nota final.
 
 ## Ajustes de acessibilidade e fluidez aprovados
 
