@@ -9,8 +9,11 @@
   margin-bottom: 0.75rem;
   object-fit: contain;
   background: #1a1118;
-  border: 1px solid var(--neon);
-  animation: alerta 0.6s ease-in-out 3;
+  /* O vermelho permanece mesmo sem animação. Dois ciclos de dois segundos
+     dão quatro segundos de realce; a imagem só sai ao avançar a fala. */
+  border: 2px solid var(--alerta);
+  box-shadow: 0 0 0 2px rgba(226, 105, 125, 0.18), 0 0 1rem rgba(226, 105, 125, 0.3);
+  animation: alerta 2s ease-in-out 2;
 }
 .dialogo-linha {
   display: flex;
@@ -29,13 +32,14 @@
 }
 @keyframes alerta {
   0%, 100% { filter: none; }
-  50% { filter: brightness(1.7) saturate(1.5); }
+  50% { filter: brightness(1.35) saturate(1.2); }
 }
 @media (max-width: 600px) {
   .dialogo-linha { flex-direction: column; }
   .dialogo-retrato { width: 4.5rem; height: 4.5rem; }
 }
 @media (prefers-reduced-motion: reduce) {
+  /* Preserva o contorno e o brilho estáticos, respeitando a preferência de movimento. */
   .dialogo-cena { animation: none; }
 }
 :fullscreen .dialogo-cena {

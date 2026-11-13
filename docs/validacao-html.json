@@ -1,5 +1,5 @@
 {
-  "executadoEm": "2026-11-13T19:23:01.275Z",
+  "executadoEm": "2026-11-13T20:44:21.845Z",
   "servico": "https://validator.w3.org/nu/?out=json",
   "totalPaginas": 24,
   "erros": 0,
@@ -70,7 +70,7 @@
     },
     {
       "arquivo": "jogo.html",
-      "sha256": "e7d4cd0496c9db48076140e79903d16a30c84f5dc99788f100b3b797bd885385",
+      "sha256": "87484d2b59900c07bc6a1c403e865fad30bdb7defd31d171fcc7275612aa096a",
       "erros": 0,
       "avisos": 0,
       "mensagens": []
@@ -154,7 +154,7 @@
     },
     {
       "arquivo": "en/jogo.html",
-      "sha256": "41a0ed9cff5be858c7c0e30e232dfbc968a06d5285ec80870efa3b8a2c5f13ef",
+      "sha256": "77e354e3749856640e67bb775f4f0eb99c7760a0274ff165957281d57a4dc8eb",
       "erros": 0,
       "avisos": 0,
       "mensagens": []

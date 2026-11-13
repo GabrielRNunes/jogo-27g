@@ -250,3 +250,10 @@
 - Recursos atuais preservados: `assets/favicon.png`, `assets/ambiente-kairo.wav`, `assets/historia/porta-kairo.png` e as artes de cozinha usadas no CSS. Os retratos da introdução e as variantes inglesas foram conferidos também pelos caminhos montados no JavaScript. O prompt da imagem foi mantido como documentação do recurso.
 - 56 testes aprovados após a limpeza. Os 24 HTMLs não mudaram e seus hashes continuam correspondendo ao relatório de validação com zero erros e zero avisos; não foi necessária outra submissão ao validador. Nenhuma regra ou interface foi alterada.
 - Os arquivos retirados permanecem recuperáveis no histórico do Git após registrar a mudança. Sem commit ou push nesta etapa.
+
+## Destaque do sistema de acesso — 13/11/2026
+
+- Ajuste autorizado pelo autor após análise das gravações de Chrome e Firefox: o painel estava visível, mas o piscar não ficou perceptível nos quadros observados.
+- O realce agora usa dois ciclos suaves de dois segundos, totalizando quatro segundos, com borda vermelha e brilho estáticos. A preferência de movimento reduzido continua desativando apenas a animação.
+- A imagem permanece até o jogador avançar a fala. Não há atraso obrigatório, avanço automático ou alteração do cronômetro da partida. A mudança é compartilhada por português e inglês.
+- 56 testes aprovados. Os 24 HTMLs foram revalidados: zero erros e zero avisos; relatório atualizado. A versão do CSS foi renovada nas duas páginas para evitar cache antigo. A aparência desta revisão ainda deve ser conferida após publicar. Sem commit ou push.
