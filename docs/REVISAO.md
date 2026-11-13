@@ -257,3 +257,11 @@
 - O realce agora usa dois ciclos suaves de dois segundos, totalizando quatro segundos, com borda vermelha e brilho estáticos. A preferência de movimento reduzido continua desativando apenas a animação.
 - A imagem permanece até o jogador avançar a fala. Não há atraso obrigatório, avanço automático ou alteração do cronômetro da partida. A mudança é compartilhada por português e inglês.
 - 56 testes aprovados. Os 24 HTMLs foram revalidados: zero erros e zero avisos; relatório atualizado. A versão do CSS foi renovada nas duas páginas para evitar cache antigo. A aparência desta revisão ainda deve ser conferida após publicar. Sem commit ou push.
+
+
+## Exceção autorizada para o alerta — 13/11/2026
+
+- O autor autorizou explicitamente que somente o painel de contenção anime mesmo com movimento reduzido. Três ciclos lentos de dois segundos totalizam seis segundos; borda e brilho permanecem após a animação.
+- A regra específica tem prioridade sobre os bloqueios gerais do CSS. As demais animações continuam desativadas quando há preferência de movimento reduzido. A fala avança manualmente; o cronômetro não mudou.
+- 56 testes aprovados. A prévia local não foi acessível pelo navegador integrado; a aparência desta revisão precisa de conferência após publicar.
+- O serviço limitou a rodada completa de validação com HTTP 429. Em seguida, os dois HTMLs alterados foram revalidados individualmente, sem erros ou avisos; os outros 22 mantêm os hashes da validação anterior. O relatório foi atualizado e os 24 hashes foram conferidos. Sem commit ou push.

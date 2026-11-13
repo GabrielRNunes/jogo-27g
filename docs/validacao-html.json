@@ -70,10 +70,11 @@
     },
     {
       "arquivo": "jogo.html",
-      "sha256": "87484d2b59900c07bc6a1c403e865fad30bdb7defd31d171fcc7275612aa096a",
+      "sha256": "20ed2e14776f82c8c47a6ad87339769c7067191aa9745158498a0172acdba995",
       "erros": 0,
       "avisos": 0,
-      "mensagens": []
+      "mensagens": [],
+      "revalidadoEm": "2026-11-13T20:52:18.344Z"
     },
     {
       "arquivo": "mapa-do-site.html",
@@ -154,10 +155,11 @@
     },
     {
       "arquivo": "en/jogo.html",
-      "sha256": "77e354e3749856640e67bb775f4f0eb99c7760a0274ff165957281d57a4dc8eb",
+      "sha256": "87826bd7ad78eb4fa8532f0f5618b2bf375b859d475a44f86d5e7ade74d4ca42",
       "erros": 0,
       "avisos": 0,
-      "mensagens": []
+      "mensagens": [],
+      "revalidadoEm": "2026-11-13T20:52:18.344Z"
     },
     {
       "arquivo": "en/mapa-do-site.html",
@@ -173,5 +175,6 @@
       "avisos": 0,
       "mensagens": []
     }
-  ]
+  ],
+  "atualizadoEm": "2026-11-13T20:52:18.344Z"
 }
