@@ -1,12 +1,12 @@
 # Robustez e compatibilidade do Protocolo Kairo
 
-Revisão local atualizada em 7 de novembro de 2026. Esta revisão não inclui commit, push ou publicação.
+Revisão atualizada em 13 de novembro de 2026. A última conferência incluiu código local e o alerta de contenção publicado na Vercel; não houve commit ou push nesta etapa.
 
 ## O que pode ser afirmado
 
 - A suíte de regressão passou em 56 testes automatizados de lógica e estrutura.
 - Foram simuladas presença e ausência de dialog nativo, indisponibilidade e falha de tela cheia, temporizadores atrasados, uso por teclado e botões de toque.
-- Os 28 SVGs do projeto foram analisados como XML sem erro.
+- Os 24 SVGs atuais foram analisados como XML sem erro; a contagem considera a remoção dos quatro SVGs antigos registrada no histórico.
 - As referências e âncoras locais das 24 páginas (12 em português e 12 em inglês) foram conferidas, sem IDs duplicados ou meta descriptions repetidas.
 - Os testes simulados não equivalem a uma homologação visual. A seção de verificação publicada registra os fluxos adicionais conferidos no navegador integrado; não há homologação de todos os sistemas operacionais.
 
@@ -223,3 +223,14 @@ Esses testes usam o navegador integrado e viewports controlados. Não equivalem 
 - A regra específica tem prioridade sobre os bloqueios gerais do CSS. As demais animações continuam desativadas quando há preferência de movimento reduzido. A fala avança manualmente; o cronômetro não mudou.
 - 56 testes aprovados. A prévia local não foi acessível pelo navegador integrado; a aparência desta revisão precisa de conferência após publicar.
 - O serviço limitou a rodada completa de validação com HTTP 429. Em seguida, os dois HTMLs alterados foram revalidados individualmente, sem erros ou avisos; os outros 22 mantêm os hashes da validação anterior. O relatório foi atualizado e os 24 hashes foram conferidos. Sem commit ou push.
+
+
+## Conferência final antes da apresentação — 13/11/2026
+
+- Nenhuma nova falha funcional foi encontrada nas verificações executadas; não houve mudança de interface ou regras. A documentação foi atualizada para a contagem atual de 24 SVGs.
+- 56 testes de regressão aprovados; sintaxe válida nos sete arquivos JavaScript de aplicação e ferramentas; busca sem ocorrências dos métodos proibidos nos scripts da aplicação.
+- As 24 páginas são alcançáveis por links desde a entrada. As referências locais e âncoras dos HTMLs passaram na suíte; foram conferidas também dez referências de recursos no CSS e 45 links locais da documentação.
+- Os hashes dos 24 HTMLs correspondem ao relatório de validação formal, sem erros ou avisos. Nenhum HTML foi alterado nesta revisão.
+- Os 24 SVGs restantes têm XML válido. Os recursos carregados por caminhos dinâmicos foram considerados na conferência.
+- Na Vercel, a primeira fala do Sistema de acesso exibiu o painel com a imagem carregada. O estilo efetivo indicou animação alerta, duração de dois segundos e três ciclos, com variação de brilho observada e preferência de movimento reduzido ativa. Isso confirma que a exceção específica está publicada.
+- Limites: não foi executada uma nova partida completa no navegador nesta etapa; os percursos completos foram exercitados pela suíte. Continua sem execução comprovada nesta sessão a partida com leitor de tela. Não há certificação de todos os navegadores e sistemas, nem garantia de ausência universal de falhas. Sem commit ou push.
