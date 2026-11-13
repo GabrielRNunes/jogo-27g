@@ -14,7 +14,7 @@ Projeto principal de portfólio de **Gabriel Roberto Dos Santos N. Corrêa**, de
 - [Site em inglês](https://jogo-27g.vercel.app/en/index.html)
 - O seletor de idioma aparece em todas as páginas. A troca reinicia a partida; não há salvamento de progresso entre páginas ou sessões.
 
-As rotas acima correspondem à publicação prevista do repositório. Alterações locais só aparecem na internet depois do deploy.
+Alterações locais só aparecem no site publicado depois do deploy.
 
 Para executar localmente, baixe ou clone o repositório e abra `index.html` em um navegador atualizado, mantendo as pastas. Para inglês, abra `en/index.html`. Não há instalação de dependências, compilação, backend ou banco de dados. O jogo precisa de JavaScript habilitado.
 
@@ -24,7 +24,7 @@ Com Node.js instalado, os testes são executados na pasta do projeto:
 node tests/regressao.cjs
 ```
 
-São 52 verificações de lógica e estrutura, com DOM e APIs simulados, sem bibliotecas externas. Elas cobrem percursos, finais, relógio, pausa pedagógica, comandos por teclado e botões de toque, APIs opcionais, formulário, idiomas e referências locais. Não substituem testes visuais em navegadores e sistemas reais. A cobertura e as verificações pendentes estão em [COMPATIBILIDADE.md](docs/COMPATIBILIDADE.md).
+A suíte contém 56 testes e usa somente módulos nativos do Node.js. Ela executa os scripts em uma simulação local de página e relógio para conferir percursos, finais, tempo, inventário, controles, idiomas e referências. Não é carregada pelos HTMLs e não adiciona bibliotecas ao jogo. Instruções e limites estão em [tests/README.md](tests/README.md).
 
 ## O que o projeto oferece
 
@@ -49,11 +49,11 @@ São 52 verificações de lógica e estrutura, com DOM e APIs simulados, sem bib
 
 O formulário de contato é demonstrativo: não envia mensagens.
 
-## Organização e aprendizado
+## Organização do código
 
 As páginas em português ficam na raiz e as equivalentes em inglês em `en/`. Os estilos ficam em `css/`, as imagens e o áudio em `assets/`, os testes em `tests/` e os guias, créditos e relatórios em `docs/`.
 
-`scripts/jogo.js` concentra regras e interações; `scripts/contato.js` contém a simulação do formulário; `scripts/idioma.js` traduz a interface e resolve caminhos de recursos; `scripts/dados/ingles.js` reúne as traduções. `scripts/menu.js` organiza o menu responsivo com controles nativos. Os nomes no código permanecem em português para apoiar o aprendizado, e as duas versões compartilham as regras.
+`scripts/jogo.js` concentra regras e interações; `scripts/contato.js` contém a simulação do formulário; `scripts/idioma.js` traduz a interface e resolve caminhos de recursos; `scripts/dados/ingles.js` reúne as traduções. `scripts/menu.js` organiza o menu responsivo com controles nativos. Os nomes no código estão em português; as duas versões compartilham as regras.
 
 O trabalho exercita HTML semântico, CSS responsivo, funções, objetos, arrays, manipulação do DOM, delegação de eventos, controle de estado e Git. O relógio considera o tempo decorrido, inclusive após a suspensão de uma aba, e preserva frações de segundo durante a pausa da calculadora. Tela cheia é opcional e os diálogos têm alternativa quando a API nativa não existe.
 

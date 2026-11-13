@@ -1,6 +1,6 @@
 # Guia do código — Protocolo Kairo
 
-Material de consulta para compreender e apresentar o projeto. Os nomes abaixo correspondem às funções e aos arquivos reais. A apresentação pode alternar entre o navegador e o editor, usando a busca pelo nome da função.
+Referência técnica para compreender o fluxo, localizar responsabilidades e manter o projeto. Os nomes abaixo correspondem às funções e aos arquivos reais; os exemplos também podem orientar uma demonstração no navegador e no editor.
 
 Este guia inclui soluções dos enigmas. Ele é documentação técnica, não uma página de dicas para o jogador.
 
@@ -185,9 +185,9 @@ A suíte atual reúne 56 verificações de lógica e estrutura. O DOM, o relógi
 
 O projeto é de Gabriel e recebeu assistência de IA, registrada em [CREDITOS.md](CREDITOS.md). A apresentação técnica deve refletir esse processo e explicar os comportamentos que podem ser demonstrados no código.
 
-## 11. Perguntas para ensaiar com o código aberto
+## 11. Decisões de implementação — referência rápida
 
-Use esta tabela para localizar um exemplo real e explicá-lo com suas palavras. Os comentários ajudam a consultar; conseguir prever o resultado de uma pequena mudança é uma boa forma de conferir a compreensão.
+Esta tabela relaciona conceitos a exemplos reais do código. Os comentários explicam a responsabilidade de cada bloco; as funções e os testes permitem verificar o comportamento descrito.
 
 | Pergunta possível | Onde olhar e o que demonstrar |
 | --- | --- |

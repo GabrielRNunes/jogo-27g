@@ -2,6 +2,7 @@
 /* Também apresenta diário e finais. Aqui ficam aparência e dimensões;
    abrir, fechar, devolver o foco e preencher os textos são tarefas do JavaScript. */
 .dialogo-cena {
+  /* contain mostra a arte inteira; altura e largura limitam o espaço ocupado. */
   display: block;
   width: 100%;
   height: 12rem;

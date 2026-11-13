@@ -14,7 +14,7 @@ The primary portfolio project by **Gabriel Roberto Dos Santos N. Corrêa**, deve
 - [English website](https://jogo-27g.vercel.app/en/index.html)
 - Choose Português or English on any page. Switching languages starts a new game; progress is not saved between pages or sessions.
 
-The links reflect the repository’s intended deployment routes. New local changes appear online only after deployment.
+Local changes appear on the published site after deployment.
 
 ## Features
 
@@ -36,7 +36,7 @@ To run the automated checks, install Node.js and execute from the project direct
 node tests/regressao.cjs
 ```
 
-The suite uses only built-in Node.js modules. Its 52 checks cover game routes, endings, countdown behavior, calculator pause, keyboard/touch-button handlers, optional APIs, contact simulation, both languages and local page references. The DOM and browser APIs are simulated: these checks do not establish visual compatibility across browsers or operating systems. See [COMPATIBILIDADE.md](docs/COMPATIBILIDADE.md) for coverage and pending manual checks.
+The suite has 56 checks and uses only built-in Node.js modules. It runs the scripts against a local page and clock simulation to check routes, endings, timing, inventory, controls, languages and file references. HTML pages do not load the suite, and it adds no libraries to the game. See [tests/README.md](tests/README.md) for instructions and limitations.
 
 ## Technology and structure
 
@@ -67,9 +67,9 @@ tests/regressao.cjs     Dependency-free simulated regression suite
 
 The contact form is a local demonstration and sends no messages.
 
-## Learning and design decisions
+## Design decisions
 
-The project practices semantic HTML, responsive CSS, functions, objects, arrays, event delegation, state transitions, timers and Git. Source identifiers remain in Portuguese to support the author’s learning; both languages use the same game logic.
+The project practices semantic HTML, responsive CSS, functions, objects, arrays, event delegation, state transitions, timers and Git. Source identifiers are in Portuguese; both languages use the same game logic.
 
 The countdown reconciles actual elapsed time when a suspended tab resumes. The binary aid preserves partial seconds during its pause. Fullscreen is optional, and dialogs have an alternative when the native API is unavailable. These choices address concrete failure cases without adding a framework or backend.
 

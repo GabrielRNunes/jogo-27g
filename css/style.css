@@ -4,6 +4,7 @@
    Seletores com # apontam IDs; com . apontam classes; :focus indica foco do teclado. */
 /* Estas variáveis são compartilhadas pelas páginas: mudar uma cor aqui atualiza seus usos. */
 :root {
+  /* Tokens de apresentação: cada var(...) reaproveita estes valores. */
   --bg: #0d0a14;
   --painel: #17121f;
   --texto: #ece7f4;

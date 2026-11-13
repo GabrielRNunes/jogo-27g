@@ -1,12 +1,12 @@
 # Conferência dos requisitos — Protocolo Kairo
 
-Revisão de 7 de novembro de 2026, baseada no enunciado fornecido e no código do repositório. Base funcional atual: commit `d56e102`, com atualização local da documentação nesta revisão. Este documento distingue implementação de validação; não atribui uma nota nem substitui a avaliação do professor.
+Revisão atualizada em 13 de novembro de 2026, baseada no enunciado fornecido e no código do repositório. Este documento relaciona requisitos, implementação e evidências; não atribui uma nota nem substitui a avaliação do professor.
 
 ## Resultado geral
 
 Os requisitos funcionais centrais estão implementados. Há 12 páginas em português, 11 objetos interativos modelados, cinco ambientes e quatro finais. As 12 versões inglesas são adicionais e não foram usadas para inflar a contagem mínima de páginas.
 
-Persistem verificações importantes: validação formal de HTML, teste com leitor de tela, conferência visual em navegadores reais, conferência completa da publicação e ensaio cronometrado da experiência. A lista exata de tags vistas em aula também não foi fornecida.
+Os 24 HTMLs passaram na validação formal registrada em `validacao-html.json`. O autor informou ter conferido partida completa, idiomas, navegação e zoom; essas verificações não equivalem a uma homologação de todos os navegadores. Permanecem sem comprovação nesta documentação a partida com leitor de tela e o tempo medido da demonstração. A lista exata de tags vistas em aula também não foi fornecida.
 
 ## Site — HTML e CSS
 

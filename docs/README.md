@@ -1,6 +1,6 @@
 # Documentação do Protocolo Kairo
 
-Os READMEs da raiz apresentam o portfólio. Esta pasta reúne o material técnico e de consulta:
+Os READMEs da raiz apresentam a experiência, os recursos e a execução do projeto. Esta pasta documenta a implementação, as decisões e as evidências de verificação para manutenção e revisão técnica.
 
 - [Guia do código](GUIA-DO-CODIGO.md): conceitos, funções e sequência de apresentação. Inclui soluções dos enigmas.
 - [Requisitos](AUDITORIA-REQUISITOS.md): comparação com o enunciado e os objetivos do projeto.
@@ -8,6 +8,7 @@ Os READMEs da raiz apresentam o portfólio. Esta pasta reúne o material técnic
 - [Relatório de validação HTML](validacao-html.json): resultado do Nu HTML Checker para os 24 arquivos e hashes dos conteúdos validados. Para repetir, execute `node tests/validar-html.cjs` com internet; o comando envia os HTMLs públicos ao serviço oficial.
 - [Créditos](CREDITOS.md): autoria e recursos utilizados.
 - [Histórico de revisão](REVISAO.md): registro das alterações e das verificações de cada etapa.
+- [Ferramentas de verificação](../tests/README.md): execução, funcionamento e limites dos testes, separados da aplicação publicada.
 
 ## Organização dos arquivos
 

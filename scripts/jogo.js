@@ -129,6 +129,8 @@ function erro(motivo) {
   if (estado.tempo === 0) finalizar('capturado');
 }
 
+// Converte os registros do estado em cartões de leitura. O histórico permanece
+// no estado; esta função apenas atualiza a apresentação e o resumo do diário.
 function atualizarDiario() {
   let conteudo = '';
   let falhas = 0;
@@ -163,6 +165,7 @@ function atualizarDiario() {
 }
 
 /* ---------- Inventário ---------- */
+// Evita coletar duas cópias do mesmo item e refaz os botões após a coleta.
 function adicionarItem(id) {
   if (!estado.inventario.includes(id)) estado.inventario.push(id);
   atualizarInventario();
@@ -207,7 +210,7 @@ function selecionarItem(evento) {
 
 buscarElemento('#inventario').onclick = selecionarItem;
 
-/* ---------- Painel (dialog nativo = acessível, Esc fecha) ---------- */
+/* ---------- Painel: diálogo nativo e alternativa com controle de foco ---------- */
 // Navegadores com dialog nativo usam seus recursos de foco e modalidade.
 // A alternativa abaixo mantém os painéis utilizáveis quando showModal não existe.
 let dialogoAlternativo = null;
@@ -350,6 +353,8 @@ function enviarCodigo(evento) {
   }
 }
 
+// O clique chega ao contêiner. Os atributos data-* identificam qual ação
+// pertence ao painel aberto, sem cadastrar um evento em cada botão gerado.
 function clicarNoPainel(evento) {
   if (!partidaAtiva()) return;
   const botaoSeta = evento.target.closest('[data-tecla]');

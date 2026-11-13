@@ -10,6 +10,7 @@ Gabriel é responsável pela direção, pelas decisões e pela revisão do proje
 - **Cenários, retratos e finais SVG:** ilustrações presentes no projeto; variantes em inglês preservam os desenhos e traduzem seus textos.
 - **Som ambiente:** faixa instrumental preparada para o projeto, em `assets/ambiente-kairo.wav`, sem vozes.
 - **Tipografia:** Orbitron, servida pelo Google Fonts para títulos; textos e controles usam fontes locais do sistema. Referência: [Orbitron no Google Fonts](https://fonts.google.com/specimen/Orbitron).
+- **Ícone do site:** imagem fornecida pelo autor em 13/11/2026 e preservada em `assets/favicon.png`. Esse registro identifica a origem do arquivo recebido, sem atribuir licença ou autoria da arte a terceiros.
 
 Os nomes Codex, OpenAI, Claude e Anthropic identificam ferramentas utilizadas. Não indicam parceria, patrocínio ou endosso. Não foram adicionados logotipos dessas empresas.
 
@@ -22,3 +23,5 @@ Gabriel is responsible for the project’s direction, decisions and review. Deve
 The story door is AI-generated; its prompt is recorded beside the PNG. English SVG variants translate the existing illustrations without changing the drawings. The optional instrumental track was prepared for this project and has no vocals. Orbitron is served through Google Fonts for headings, with system fonts used for body text and controls.
 
 Tool names identify assistance, not sponsorship or endorsement. No company logos were added. These credits do not grant a general redistribution license; licensing and asset review before commercial distribution remain the author’s decisions.
+
+The website icon in `assets/favicon.png` was supplied by the author on 13 November 2026 and retained as provided. This records the source of the received file; it does not establish a separate license or third-party authorship.

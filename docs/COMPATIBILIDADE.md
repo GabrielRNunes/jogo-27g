@@ -191,3 +191,12 @@ Esses testes usam o navegador integrado e viewports controlados. Não equivalem 
 - Os 56 testes de regressão passaram novamente, incluindo foco alternativo, teclado, controles por toque, pausa, finais e nomes dos objetos nos dois idiomas. A busca nos scripts e testes não encontrou os métodos proibidos pela avaliação.
 - A execução real com leitor de tela continua pendente. Marcação e foco simulados não comprovam anúncios falados, ordem de leitura ou ritmo de interação. Nenhuma homologação com NVDA, Narrador, VoiceOver ou TalkBack foi declarada.
 - Sem alteração de interface, regras, commit ou push nesta etapa.
+
+
+## Ícone e documentação — 13/11/2026
+
+- A imagem fornecida pelo autor foi copiada sem alteração para `assets/favicon.png`; os 24 HTMLs usam o novo ícone com versão na URL para renovar o cache. A mudança afeta o ícone do navegador, não os títulos ou as artes das cenas.
+- Comentários por blocos descrevem regiões do HTML, regras de layout no CSS e responsabilidades de funções no JavaScript. Não houve mudança nas regras ou nos enigmas.
+- Os READMEs foram ajustados para apresentar uso, arquitetura e verificações de forma direta; a contagem antiga de 52 testes foi corrigida para 56. `tests/README.md` explica a simulação, os módulos nativos usados e a separação entre ferramentas de desenvolvimento e aplicação.
+- O enunciado fornecido proíbe frameworks e bibliotecas auxiliares de DOM/estado. A suíte usa código próprio e módulos nativos do Node.js, não é carregada por HTML e não acrescenta dependências ao jogo; por isso foi preservada. A restrição adicional de métodos informada pelo autor continua atendida. Isso não substitui a decisão de avaliação do professor.
+- Verificação: 56 testes aprovados, sintaxe JavaScript válida e nova rodada do Nu HTML Checker com zero erros e zero avisos nos 24 HTMLs. O relatório `validacao-html.json` foi atualizado. O teste prático com leitor de tela permanece pendente. Sem commit ou push nesta etapa.

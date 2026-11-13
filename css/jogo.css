@@ -163,6 +163,8 @@ button[aria-pressed="true"] {
 
 /* ---------- Cenário ---------- */
 .cenario {
+  /* Este contêiner é a referência dos botões absolutos. A proporção 16:9
+     mantém os pontos clicáveis alinhados com os objetos da ilustração. */
   position: relative;
   aspect-ratio: 16 / 9;
   width: 100%;

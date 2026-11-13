@@ -1,6 +1,11 @@
 // Execute com: node tests/regressao.cjs
 // Testes de lógica com DOM, relógio e APIs opcionais simulados, sem dependências.
 // Não substituem testes visuais em navegadores e dispositivos reais.
+// Este arquivo não é carregado por nenhum HTML. Node.js executa as verificações
+// fora do navegador. fs lê os arquivos; path resolve caminhos; vm executa os
+// scripts do jogo em um contexto separado; assert compara resultado e expectativa.
+// Os objetos abaixo imitam apenas as partes da página necessárias aos testes.
+// Essa simulação é código deste arquivo, não uma biblioteca de DOM ou estado.
 'use strict';
 
 const fs = require('node:fs');
@@ -9,6 +14,8 @@ const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const raiz = path.resolve(__dirname, '..');
 
+// 1. Ambiente isolado: cada teste começa com página, relógio e estado novos.
+// As opções simulam idioma, tamanho de tela e ausência de recursos do navegador.
 function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
   let agora = 0;
   let proximoId = 1;
@@ -124,6 +131,8 @@ function criarAmbiente(arquivo = 'jogo', opcoes = {}) {
     return el;
   }
 
+  // Leitura simplificada para a simulação. Não é um validador HTML nem reproduz
+  // todas as regras do navegador; a validade é conferida pelo Nu HTML Checker.
   function analisarHTML(html, pai) {
     const pilha = [pai];
     const semFilhos = new Set(['meta', 'link', 'input', 'img', 'source', 'br', 'hr', 'path', 'rect', 'line', 'circle', 'ellipse', 'stop']);
@@ -238,6 +247,8 @@ function partida(opcoes) {
   return a;
 }
 
+// 2. Percurso reutilizado: executa os enigmas com respostas conhecidas para
+// verificar a integração entre inventário, desbloqueios, relógio e desfecho.
 function resolverRota(a, toque = false) {
   a.clicarObjeto('calendario');
   a.clicarObjeto('gaveta'); a.enviar('1511');
@@ -257,6 +268,8 @@ function resolverRota(a, toque = false) {
   a.clicarObjeto('fechadura'); a.enviar('264781');
 }
 
+// 3. Casos de regressão: cada teste prepara uma situação e verifica o resultado.
+// assert interrompe a execução se a regra deixar de funcionar como esperado.
 function executarTestes() {
   const aprovados = [];
   function teste(nome, fn) { fn(); aprovados.push(nome); }

@@ -5,7 +5,7 @@
   <link rel="alternate" hreflang="pt-BR" href="../jogo.html">
   <link rel="alternate" hreflang="en" href="jogo.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="icon" type="image/png" href="../assets/favicon.png?v=20261113-logo">
   <title>Play | Protocolo Kairo</title>
   <meta name="description" content="Play Protocolo Kairo: solve puzzles, use your inventory and reprogram the lock before the alarm sounds in five minutes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,6 +52,8 @@
   </header>
 
   <noscript><p class="aviso-compatibilidade">Enable JavaScript to play. The story, instructions and location pages remain available through the menu.</p></noscript>
+
+  <!-- Conteúdo próprio da página; o atalho de teclado aponta para esta região. -->
 
   <main id="conteudo">
     <h2>Play</h2>
@@ -136,12 +138,14 @@
   <div id="fundo-dialogo" class="fundo-dialogo" hidden></div>
 
   <!-- Painel reutilizado pelos enigmas. Seu conteúdo e callbacks mudam no JavaScript. -->
+  <!-- Painel reutilizado pelos enigmas: jogo.js preenche o título e o conteúdo. -->
   <dialog id="painel" aria-labelledby="painel-titulo">
     <h3 id="painel-titulo">Panel</h3>
     <div id="painel-corpo"></div>
     <button type="button" id="btn-fechar-painel">Close</button>
   </dialog>
 
+  <!-- Histórico da partida; abrir o diário mantém a contagem ativa. -->
   <dialog id="diario" aria-labelledby="diario-titulo" aria-describedby="diario-descricao">
     <div class="diario-cabecalho">
       <h3 id="diario-titulo">Investigation log</h3>
@@ -157,6 +161,7 @@
     </div>
   </dialog>
 
+  <!-- Encerramento: a regra escolhe o final e preenche imagem, texto e resumo. -->
   <dialog id="final" aria-labelledby="final-titulo">
     <img id="final-imagem" class="final-imagem" src="../assets/en/finais/perfeito.svg" alt="" width="1600" height="600">
     <h3 id="final-titulo">Game over</h3>
