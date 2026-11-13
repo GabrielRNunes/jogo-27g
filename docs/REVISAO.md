@@ -242,3 +242,11 @@
 - Os READMEs foram ajustados para apresentar uso, arquitetura e verificações de forma direta; a contagem antiga de 52 testes foi corrigida para 56. `tests/README.md` explica a simulação, os módulos nativos usados e a separação entre ferramentas de desenvolvimento e aplicação.
 - O enunciado fornecido proíbe frameworks e bibliotecas auxiliares de DOM/estado. A suíte usa código próprio e módulos nativos do Node.js, não é carregada por HTML e não acrescenta dependências ao jogo; por isso foi preservada. A restrição adicional de métodos informada pelo autor continua atendida. Isso não substitui a decisão de avaliação do professor.
 - Verificação: 56 testes aprovados, sintaxe JavaScript válida e nova rodada do Nu HTML Checker com zero erros e zero avisos nos 24 HTMLs. O relatório `validacao-html.json` foi atualizado. O teste prático com leitor de tela permanece pendente. Sem commit ou push nesta etapa.
+
+
+## Limpeza de recursos substituídos — 13/11/2026
+
+- Removidos cinco arquivos sem referências de uso no site, nos scripts e nos testes: `assets/favicon.svg`, `assets/ambiente.mp3`, `assets/historia/porta.svg`, `assets/cenas/cozinha-pagina.svg` e `assets/en/cenas/cozinha-pagina.svg`.
+- Recursos atuais preservados: `assets/favicon.png`, `assets/ambiente-kairo.wav`, `assets/historia/porta-kairo.png` e as artes de cozinha usadas no CSS. Os retratos da introdução e as variantes inglesas foram conferidos também pelos caminhos montados no JavaScript. O prompt da imagem foi mantido como documentação do recurso.
+- 56 testes aprovados após a limpeza. Os 24 HTMLs não mudaram e seus hashes continuam correspondendo ao relatório de validação com zero erros e zero avisos; não foi necessária outra submissão ao validador. Nenhuma regra ou interface foi alterada.
+- Os arquivos retirados permanecem recuperáveis no histórico do Git após registrar a mudança. Sem commit ou push nesta etapa.
